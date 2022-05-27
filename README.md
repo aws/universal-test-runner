@@ -1,28 +1,25 @@
 # codeaws-test-runner
-* Add a brief paragraph or two that summarizes the purpose and function of this repository.
-* You could add relevant links for the consumers of this repository.
 
-## Usage
-* Define the purpose of the repository if this is going to be a tool, utility, library or a service.
-* Provide the instructions on how to consume this repository for the consumers.
+Experimental.
 
-## Get Started
-* Provide instructions on how to setup and use this repository for local machine development and testing.
+Runs tests for any language and any framework.
 
-## Prerequisites
-* Provide list of recommended modules and steps on how to install them.
+## Setup
+
+Make sure you're using the correct Node.js version (install nvm [here](https://github.com/nvm-sh/nvm) if needed):
 
 ```
-Setup examples:
-...
+nvm use
 ```
 
-## Install
-* Provide step-by-step guide on how to get the development environment running.
-* Provide test examples so as to perform a small demo.
+Install dependencies:
 
-## Testing
-* Provide commands and configuration details on how to test the repository.
+```
+npm install
+```
 
-## Contact
-* Provide contact details on how to contact the owners managing this repository.
+Run tests
+
+```
+npm test
+```
