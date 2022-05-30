@@ -1,6 +1,6 @@
 {
   "name": "@sentinel-internal/codeaws-test-runner",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "main": "dist/lib/src/index.js",
   "bin": {
     "codeaws-test-runner": "dist/lib/bin/cli.js"
