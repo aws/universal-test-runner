@@ -7,11 +7,13 @@
   },
   "scripts": {
     "test": "jest",
+    "test:ci": "npm test -- --coverage --reporters default --reporters jest-junit",
     "lint": "eslint --ext .js,.ts .",
     "compile": "tsc",
     "clean": "rm -rf dist",
     "prepack": "npm run clean && npm run compile",
-    "build": "npm run lint && npm run compile && npm test"
+    "build": "npm run lint && npm run compile && npm test",
+    "cli": "node ./dist/lib/bin/cli.js"
   },
   "files": [
     "dist/lib/src",
@@ -30,6 +32,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-prettier": "^4.0.0",
     "jest": "^28.1.0",
+    "jest-junit": "^13.2.0",
     "prettier": "^2.6.2",
     "typescript": "^4.7.2"
   },
