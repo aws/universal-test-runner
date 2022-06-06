@@ -6,9 +6,7 @@ import { hideBin } from 'yargs/helpers'
 import run from '../src'
 
 const argv = yargs(hideBin(process.argv))
-  .usage('Usage: $0 <framework> [args]')
-  .command('jest', 'Run jest tests')
-  .command('junit', 'Run junit tests')
+  .usage('Usage: $0 <adapter> [args]')
   .version()
   .alias('version', 'v')
   .help()
@@ -17,6 +15,10 @@ const argv = yargs(hideBin(process.argv))
   .strict(true)
   .parseSync()
 
-run(String(argv._[0]), {
-  testsToRun: process.env.TESTS_TO_RUN?.split('|') ?? [],
+const [adapter] = argv._
+
+const { CAWS_TEST_NAMES_TO_RUN = '' } = process.env
+
+run(String(adapter), {
+  testNamesToRun: CAWS_TEST_NAMES_TO_RUN.split('|'),
 })

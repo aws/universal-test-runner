@@ -1,8 +1,10 @@
 import run from '../src'
 
+jest.mock('../src/log')
+
 describe('dummy test', () => {
   it('passes', () => {
-    expect(() => run('blah', {})).toThrow()
+    expect(() => run('blah', { testNamesToRun: [] })).toThrow()
   })
 
   it('has a second test', () => {
