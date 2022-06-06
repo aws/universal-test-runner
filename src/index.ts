@@ -1,24 +1,23 @@
-import { spawnSync } from 'child_process'
-import { getRunner } from './runner'
+import path from 'path'
+
+import * as log from './log'
+import { Adapter } from './adapter'
 
 interface RunOptions {
-  testsToRun?: string[]
+  testNamesToRun?: string[]
 }
 
-function run(framework: string, { testsToRun = [] }: RunOptions) {
-  const runner = getRunner(framework)
-  const { executable } = runner
-  const args = runner.build({ testsToRun })
-  console.error(
-    `Running tests for ${framework}:`,
-    [executable].concat(args).join(' '),
-  )
+async function run(adapterModule: string, { testNamesToRun }: RunOptions) {
   try {
-    const { status } = spawnSync(executable, args, { stdio: 'inherit' })
-    console.error('Done.')
-    process.exit(status ?? 1)
+    const adapter: Adapter = await import(adapterModule).catch(
+      () => import(path.resolve(process.cwd(), adapterModule)),
+    )
+    log.stderr(`Running tests with adapter: ${adapterModule}`)
+    const { exitCode } = await adapter.executeTests({ testNamesToRun })
+    log.stderr('Done.')
+    process.exit(exitCode ?? 1)
   } catch (e) {
-    console.error('Failed to run tests.')
+    log.stderr('Failed to run tests.', e)
     process.exit(1)
   }
 }
