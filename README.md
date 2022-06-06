@@ -42,7 +42,7 @@ codeaws-test-runner must be invoked with an adapter that is responsible for
 executing the tests and reporting the status of the test execution back to the
 runner. Adapters must expose a function `executeTests` that accepts an object
 as its argument, and returns a result object. If there's an error that prevents
-tests from being executed, the adapter should throw an error. The adatper can
+tests from being executed, the adapter should throw an error. The adapter can
 also return a promise. A promise resolved with the result object indicates that
 the tests were executed, while a rejected promise indicates that there was an
 error that prevented the tests from being executed.
