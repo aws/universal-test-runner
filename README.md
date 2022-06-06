@@ -26,9 +26,15 @@ future versions of the protocol.
 The discovery protocol allows users to write their own custom runners that
 consume the environment variables directly.
 
-| Environment variable name | Description | Data type | Format | Example |
-| --- | --- | --- | --- | --- |
-| CAWS_TEST_NAMES_TO_RUN | Pipe-separated list of names of tests to be run. If not present, ALL tests that can be discovered should be run. | `name1|name2|name3` | `export CAWS_TEST_TO_RUN="test1|test2|test3"` |
+### CAWS_TEST_NAMES_TO_RUN
+
+Pipe-separated list of names of tests to be run. If not present, ALL tests that can be discovered should be run. 
+
+Format: `name1|name2|name3`
+
+Data type: string
+
+Example: `export CAWS_TEST_TO_RUN="test1|test2|test3"` 
 
 ## Test Adapters
 
