@@ -15,5 +15,5 @@
     "inlineSourceMap": true,
     "inlineSources": true
   },
-  "include": ["bin", "src", "tests"]
+  "include": ["src", "tests"]
 }

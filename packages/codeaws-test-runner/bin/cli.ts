@@ -3,7 +3,7 @@
 import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 
-import run from '../src'
+import run from '../src/run'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 <adapter> [args]')
