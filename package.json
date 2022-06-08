@@ -1,7 +1,8 @@
 {
   "private": true,
   "workspaces": [
-    "packages/*"
+    "packages/codeaws-test-runner",
+    "packages/codeaws-test-adapter-jest"
   ],
   "scripts": {
     "test": "jest",
@@ -10,8 +11,8 @@
     "compile": "npm run --workspaces compile",
     "clean": "npm run --workspaces clean",
     "build": "npm run lint && npm run compile && npm run test:ci",
-    "cli": "node ./packages/codeaws-test-runner/dist/lib/bin/cli.js",
-    "cli:jest": "npm run cli -- ./packages/codeaws-test-runner/dist/lib/src/adapters/jest.js"
+    "cli": "npx codeaws-test-runner",
+    "cli:jest": "npm run cli -- @sentinel-internal/codeaws-test-adapter-jest"
   },
   "license": "Apache-2.0",
   "devDependencies": {

@@ -1,4 +1,4 @@
-import run from '../src'
+import run from '../src/run'
 
 jest.mock('../src/log')
 

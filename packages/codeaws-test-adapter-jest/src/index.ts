@@ -1,7 +1,10 @@
 import path from 'path'
 import { spawnSync } from 'child_process'
 
-import { AdapterInput, AdapterOutput } from '../adapter'
+import {
+  AdapterInput,
+  AdapterOutput,
+} from '@sentinel-internal/codeaws-test-runner'
 
 export function executeTests({
   testNamesToRun = [],
