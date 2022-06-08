@@ -12,7 +12,7 @@ type Process = Pick<typeof process, 'exit'>
 async function run(
   adapterModule: string,
   { testNamesToRun }: RunOptions,
-  processObject: Process,
+  processObject: Process = process,
 ) {
   try {
     const adapter: Adapter = await import(adapterModule).catch(
