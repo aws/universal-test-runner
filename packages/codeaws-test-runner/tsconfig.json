@@ -4,8 +4,8 @@
     "esModuleInterop": true,
     "module": "commonjs",
     "declaration": true,
-    "outDir": "./dist/lib",
-    "declarationDir": "./dist/types",
+    "outDir": "dist/lib",
+    "declarationDir": "dist/types",
     "strict": true,
     "noImplicitAny": true,
     "strictNullChecks": true,
@@ -14,7 +14,7 @@
     "noImplicitReturns": true,
     "inlineSourceMap": true,
     "inlineSources": true,
-    "typeRoots": ["./node_modules/@types"]
+    "typeRoots": ["../../node_modules/@types"]
   },
   "include": ["bin", "src", "tests"]
 }
