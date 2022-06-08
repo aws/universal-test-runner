@@ -1,30 +1,23 @@
 {
-  "name": "@sentinel-internal/codeaws-test-runner",
-  "version": "0.1.0",
-  "main": "dist/lib/src/index.js",
-  "bin": {
-    "codeaws-test-runner": "dist/lib/bin/cli.js"
-  },
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
     "test": "jest",
     "test:ci": "npm test -- --coverage --reporters default --reporters jest-junit",
     "lint": "eslint --ext .js,.ts .",
-    "compile": "tsc",
-    "clean": "rm -rf dist",
-    "prepack": "npm run clean && npm run compile",
+    "compile": "npm run --workspaces compile",
+    "clean": "npm run --workspaces clean",
     "build": "npm run lint && npm run compile && npm run test:ci",
-    "cli": "node ./dist/lib/bin/cli.js"
+    "cli": "node ./packages/codeaws-test-runner/dist/lib/bin/cli.js",
+    "cli:jest": "npm run cli -- ./packages/codeaws-test-runner/dist/lib/src/adapters/jest.js"
   },
-  "files": [
-    "dist/lib/src",
-    "dist/lib/bin"
-  ],
   "license": "Apache-2.0",
   "devDependencies": {
     "@babel/preset-env": "^7.18.2",
     "@babel/preset-typescript": "^7.17.12",
     "@types/jest": "^27.5.1",
-    "@types/yargs": "^17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.26.0",
     "@typescript-eslint/parser": "^5.26.0",
     "babel-jest": "^28.1.0",
@@ -36,13 +29,10 @@
     "prettier": "^2.6.2",
     "typescript": "^4.7.2"
   },
-  "dependencies": {
-    "yargs": "^17.5.1"
-  },
   "jest": {
     "testPathIgnorePatterns": [
       "/node_modules/",
-      "<rootDir>/dist/"
+      "/dist/"
     ]
   }
 }

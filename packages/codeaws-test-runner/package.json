@@ -1,0 +1,24 @@
+{
+  "name": "@sentinel-internal/codeaws-test-runner",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "main": "dist/lib/src/index.js",
+  "bin": {
+    "codeaws-test-runner": "dist/lib/bin/cli.js"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "compile": "tsc",
+    "prepack": "npm run clean && npm run compile"
+  },
+  "files": [
+    "dist/lib/src",
+    "dist/lib/bin"
+  ],
+  "dependencies": {
+    "yargs": "^17.5.1"
+  },
+  "devDependencies": {
+    "@types/yargs": "^17.0.10"
+  }
+}

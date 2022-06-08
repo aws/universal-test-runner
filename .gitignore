@@ -1,6 +1,3 @@
 node_modules
-dist
-*.tgz
-package
 coverage
 junit.xml
