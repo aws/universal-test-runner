@@ -1,26 +1,28 @@
-import path from 'path'
-
-import * as log from './log'
-import { Adapter } from './adapter'
-
-interface RunOptions {
-  testNamesToRun?: string[]
-}
+import log from './log'
+import { loadAdapter, AdapterInput } from './adapter'
+import { DiscoveryResult } from './protocol'
 
 type Process = Pick<typeof process, 'exit'>
 
+function mapDiscoveryResultToAdapterInput(
+  discoveryResult: DiscoveryResult,
+): AdapterInput {
+  return {
+    testNamesToRun: discoveryResult.testNamesToRun,
+  }
+}
+
 async function run(
   adapterModule: string,
-  { testNamesToRun }: RunOptions,
-  processObject: Process = process,
+  discoveryResult: DiscoveryResult,
+  processObject: Process,
 ) {
   try {
-    const adapter: Adapter = await import(adapterModule).catch(
-      () => import(path.resolve(process.cwd(), adapterModule)),
-    )
-    log.stderr(`Running tests with adapter: ${adapterModule}`)
-    const { exitCode } = await adapter.executeTests({ testNamesToRun })
-    log.stderr('Done.')
+    const adapter = await loadAdapter(adapterModule)
+    const adapterInput = mapDiscoveryResultToAdapterInput(discoveryResult)
+    log.stderr('Calling executeTests on adapter...')
+    const { exitCode } = await adapter.executeTests(adapterInput)
+    log.stderr('Finished executing tests.')
     processObject.exit(exitCode ?? 1)
   } catch (e) {
     log.stderr('Failed to run tests.', e)

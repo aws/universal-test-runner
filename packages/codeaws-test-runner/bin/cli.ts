@@ -4,6 +4,7 @@ import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 
 import run from '../src/run'
+import discover from '../src/protocol'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 <adapter> [args]')
@@ -17,8 +18,6 @@ const argv = yargs(hideBin(process.argv))
 
 const [adapter] = argv._
 
-const { CAWS_TEST_NAMES_TO_RUN = '' } = process.env
+const discoveryResult = discover(process.env)
 
-run(String(adapter), {
-  testNamesToRun: CAWS_TEST_NAMES_TO_RUN.split('|'),
-})
+run(String(adapter), discoveryResult, process)

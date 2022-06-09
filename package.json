@@ -11,8 +11,8 @@
     "compile": "npm run --workspaces compile",
     "clean": "npm run --workspaces clean",
     "build": "npm run lint && npm run compile && npm run test:ci",
-    "cli": "npx codeaws-test-runner",
-    "cli:jest": "npm run cli -- @sentinel-internal/codeaws-test-adapter-jest"
+    "cli": "node ./node_modules/.bin/codeaws-test-runner",
+    "cli:jest": "npm run cli -- ./node_modules/@sentinel-internal/codeaws-test-adapter-jest"
   },
   "license": "Apache-2.0",
   "devDependencies": {
