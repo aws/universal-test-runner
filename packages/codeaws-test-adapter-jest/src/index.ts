@@ -3,14 +3,9 @@ import { spawnSync } from 'child_process'
 import { accessSync, constants } from 'fs'
 import log from './log'
 
-import {
-  AdapterInput,
-  AdapterOutput,
-} from '@sentinel-internal/codeaws-test-runner'
+import { AdapterInput, AdapterOutput } from '@sentinel-internal/codeaws-test-runner'
 
-export function executeTests({
-  testNamesToRun = [],
-}: AdapterInput): AdapterOutput {
+export function executeTests({ testNamesToRun = [] }: AdapterInput): AdapterOutput {
   const executable = path.resolve('.', 'node_modules', '.bin', 'jest')
   try {
     accessSync(executable, constants.X_OK)

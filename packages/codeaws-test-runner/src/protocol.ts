@@ -24,11 +24,7 @@ function mapEnvToResult<T>(
 
 function discover(env: Environment): DiscoveryResult {
   return {
-    testNamesToRun: mapEnvToResult(
-      env,
-      'CAWS_TEST_NAMES_TO_RUN',
-      discoverTestNamesToRun,
-    ),
+    testNamesToRun: mapEnvToResult(env, 'CAWS_TEST_NAMES_TO_RUN', discoverTestNamesToRun),
   }
 }
 

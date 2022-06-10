@@ -4,9 +4,7 @@ import { DiscoveryResult } from './protocol'
 
 type Process = Pick<typeof process, 'exit'>
 
-function mapDiscoveryResultToAdapterInput(
-  discoveryResult: DiscoveryResult,
-): AdapterInput {
+function mapDiscoveryResultToAdapterInput(discoveryResult: DiscoveryResult): AdapterInput {
   return {
     testNamesToRun: discoveryResult.testNamesToRun,
   }
