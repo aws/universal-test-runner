@@ -1,17 +1,28 @@
 /* eslint-disable no-console */
 
+type LogHandler = (...args: any[]) => void
+
 interface Logger {
-  stderr(...args: any[]): void
+  stderr: LogHandler
 }
 
-function prefix(fn: (...args: any[]) => void) {
+function prefix(fn: LogHandler, prefixString: string): LogHandler {
   return (...args: any[]): void => {
-    fn('[codeaws-test-runner]:', ...args)
+    fn(prefixString, ...args)
   }
 }
 
-const logger: Logger = {
-  stderr: prefix(console.error),
+export function makeLogger(methods: Logger, prefixString: string): Logger {
+  return {
+    stderr: prefix(methods.stderr, prefixString),
+  }
 }
 
-export default logger
+const LOG_PREFIX = '[codeaws-test-runner]:'
+
+export default makeLogger(
+  {
+    stderr: console.error,
+  },
+  LOG_PREFIX,
+)
