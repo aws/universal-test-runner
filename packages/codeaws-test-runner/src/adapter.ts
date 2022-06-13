@@ -1,4 +1,5 @@
 import log from './log'
+import path from 'path'
 
 export interface AdapterInput {
   testNamesToRun?: string[]
@@ -12,9 +13,14 @@ export interface Adapter {
   executeTests(options: AdapterInput): Promise<AdapterOutput> | AdapterOutput
 }
 
-export async function loadAdapter(adapterModule: string): Promise<Adapter> {
+type Process = Pick<typeof process, 'cwd'>
+
+export async function loadAdapter(adapterModule: string, processObject: Process): Promise<Adapter> {
   try {
-    const adapter = await import(adapterModule)
+    const adapterImportPath = adapterModule.startsWith('.')
+      ? path.join(processObject.cwd(), adapterModule)
+      : adapterModule
+    const adapter = await import(adapterImportPath)
     log.stderr('Loaded adapter from', adapterModule)
     return adapter
   } catch (e) {

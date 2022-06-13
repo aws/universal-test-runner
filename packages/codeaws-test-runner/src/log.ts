@@ -4,10 +4,14 @@ interface Logger {
   stderr(...args: any[]): void
 }
 
-class CodeAwsTestRunnerLogger implements Logger {
-  stderr(...args: any[]): void {
-    console.error('[codeaws-test-runner]:', ...args)
+function prefix(fn: (...args: any[]) => void) {
+  return (...args: any[]): void => {
+    fn('[codeaws-test-runner]:', ...args)
   }
 }
 
-export default new CodeAwsTestRunnerLogger()
+const logger: Logger = {
+  stderr: prefix(console.error),
+}
+
+export default logger

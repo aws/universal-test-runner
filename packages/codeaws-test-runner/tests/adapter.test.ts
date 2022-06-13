@@ -6,22 +6,37 @@ import path from 'path'
 jest.mock('../src/log')
 
 describe('Loading an adapter', () => {
-  it('loads the correct adapter', async () => {
-    const adapterPath = path.join(os.tmpdir(), `adapter-${Date.now()}.js`)
-    fs.writeFileSync(adapterPath, `exports.executeTests = () => ({ exitCode: 123 })`)
+  it('loads the correct adapter from an absolute path', async () => {
+    const fullAdapterPath = path.join(os.tmpdir(), `adapter-${Date.now()}.js`)
+    fs.writeFileSync(fullAdapterPath, `exports.executeTests = () => ({ exitCode: 123 })`)
 
-    const adapter = await loadAdapter(adapterPath)
+    const adapter = await loadAdapter(fullAdapterPath, process)
 
     expect(adapter.executeTests({ testNamesToRun: [] })).toEqual({ exitCode: 123 })
-    fs.unlinkSync(adapterPath)
+    fs.unlinkSync(fullAdapterPath)
   })
 
-  it('throws an error when failing to load the adapter', async () => {
-    expect.assertions(1)
-    try {
-      await loadAdapter('blah.js')
-    } catch (e: any) {
-      expect(e.code).toBe('MODULE_NOT_FOUND')
-    }
+  it('loads the correct adapter from a relative path', async () => {
+    const directory = os.tmpdir()
+    const adapterPath = `./adapter-${Date.now()}.js`
+    const fullAdapterPath = path.join(directory, adapterPath)
+    fs.writeFileSync(fullAdapterPath, `exports.executeTests = () => ({ exitCode: 123 })`)
+
+    const adapter = await loadAdapter(adapterPath, { cwd: () => directory })
+
+    expect(adapter.executeTests({ testNamesToRun: [] })).toEqual({ exitCode: 123 })
+    fs.unlinkSync(fullAdapterPath)
   })
+
+  it.each(['blah', './blah.js'])(
+    'throws an error when loading a non-existent adatper from %s',
+    async (adapterPath: string) => {
+      expect.assertions(1)
+      try {
+        await loadAdapter(adapterPath, process)
+      } catch (e: any) {
+        expect(e.code).toBe('MODULE_NOT_FOUND')
+      }
+    },
+  )
 })
