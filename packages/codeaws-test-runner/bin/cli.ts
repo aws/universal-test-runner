@@ -5,6 +5,7 @@ import { hideBin } from 'yargs/helpers'
 
 import run from '../src/run'
 import discover from '../src/protocol'
+import { loadAdapter } from '../src/adapter'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 <adapter> [args]')
@@ -16,8 +17,10 @@ const argv = yargs(hideBin(process.argv))
   .strict(true)
   .parseSync()
 
-const [adapter] = argv._
+const [adapterPath] = argv._
 
 const discoveryResult = discover(process.env)
 
-run(String(adapter), discoveryResult, process)
+loadAdapter(String(adapterPath)).then((adapter) => {
+  run(adapter, discoveryResult, process)
+})

@@ -1,4 +1,3 @@
-import path from 'path'
 import log from './log'
 
 export interface AdapterInput {
@@ -6,18 +5,20 @@ export interface AdapterInput {
 }
 
 export interface AdapterOutput {
-  exitCode: number
+  exitCode?: number | null
 }
 
 export interface Adapter {
   executeTests(options: AdapterInput): Promise<AdapterOutput> | AdapterOutput
 }
 
-export function loadAdapter(adapterModule: string): Promise<Adapter> {
-  return import(adapterModule)
-    .catch(() => import(path.resolve(process.cwd(), adapterModule)))
-    .then((adapter) => {
-      log.stderr('Loaded adapter from', adapterModule)
-      return adapter
-    })
+export async function loadAdapter(adapterModule: string): Promise<Adapter> {
+  try {
+    const adapter = await import(adapterModule)
+    log.stderr('Loaded adapter from', adapterModule)
+    return adapter
+  } catch (e) {
+    log.stderr('Failed to load adapter from', adapterModule)
+    throw e
+  }
 }

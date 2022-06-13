@@ -1,5 +1,5 @@
 import log from './log'
-import { loadAdapter, AdapterInput } from './adapter'
+import { Adapter, AdapterInput } from './adapter'
 import { DiscoveryResult } from './protocol'
 
 type Process = Pick<typeof process, 'exit'>
@@ -10,13 +10,8 @@ function mapDiscoveryResultToAdapterInput(discoveryResult: DiscoveryResult): Ada
   }
 }
 
-async function run(
-  adapterModule: string,
-  discoveryResult: DiscoveryResult,
-  processObject: Process,
-) {
+async function run(adapter: Adapter, discoveryResult: DiscoveryResult, processObject: Process) {
   try {
-    const adapter = await loadAdapter(adapterModule)
     const adapterInput = mapDiscoveryResultToAdapterInput(discoveryResult)
     log.stderr('Calling executeTests on adapter...')
     const { exitCode } = await adapter.executeTests(adapterInput)
