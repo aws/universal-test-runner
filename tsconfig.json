@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2018",
+    "esModuleInterop": true,
+    "module": "commonjs",
+    "outDir": "dist/lib",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noImplicitReturns": true,
+    "inlineSourceMap": true,
+    "inlineSources": true
+  },
+  "include": ["tests"],
+  "exclude": [".eslintrc.js", "babel.config.js"]
+}

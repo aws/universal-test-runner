@@ -1,5 +1,10 @@
 #!/usr/bin/env node
 
+// CODE.AWS Test Runner and Test Adapters
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
+/* eslint-disable header/header */
+
 import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 
