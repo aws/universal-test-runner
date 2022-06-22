@@ -1,0 +1,17 @@
+{
+  "name": "@sentinel-internal/codeaws-test-adapter-maven",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "main": "dist/lib/src/index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "compile": "tsc",
+    "prepack": "npm run clean && npm run compile"
+  },
+  "files": [
+    "dist/lib/src"
+  ],
+  "devDependencies": {
+    "@sentinel-internal/codeaws-test-runner": "*"
+  }
+}
