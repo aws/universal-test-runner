@@ -14,7 +14,8 @@
   },
   "files": [
     "dist/lib/src",
-    "dist/lib/bin"
+    "dist/lib/bin",
+    "NOTICE"
   ],
   "dependencies": {
     "yargs": "^17.5.1"
