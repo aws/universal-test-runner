@@ -9,7 +9,8 @@
     "prepack": "npm run clean && npm run compile"
   },
   "files": [
-    "dist/lib/src"
+    "dist/lib/src",
+    "NOTICE"
   ],
   "devDependencies": {
     "@sentinel-internal/codeaws-test-runner": "*"
