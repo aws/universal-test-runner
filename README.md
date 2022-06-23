@@ -1,6 +1,13 @@
 # codeaws-test-runner
 
-Experimental. Runs tests for any language with any test framework.
+A universal test runner for any language and test framework.
+
+**NB: The name "codeaws-test-runner" is temporary. A rename must be done
+_before_ the repo is made public. This tool is not specific to AWS or CODE.AWS
+in any way, and should be useful for testing in general, so we don't want to
+include any Amazon-related "branding" in the name. (What exactly the name
+should be is tough to say; we'll have to do some brainstorming to come up with
+a good name.)**
 
 Running tests involves two stages:
 * _Discovering_ what tests need to be run, and what configuration to run them with
