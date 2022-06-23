@@ -28,7 +28,7 @@ describe('License identifier', () => {
   )
 
   it('is included in the root package.json license field', async () => {
-    const packageJson = await import(path.join(__dirname, '..', 'package.json'))
+    const packageJson = await import('../package.json')
     expect(packageJson.license).toBe('Apache-2.0')
   })
 })
