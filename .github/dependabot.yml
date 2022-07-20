@@ -1,0 +1,14 @@
+# See the documentation for all configuration options:
+# https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
+
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "13:00"
+    allow:
+      - dependency-type: "direct"
+    open-pull-requests-limit: 1
+    versioning-strategy: "increase"
