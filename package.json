@@ -15,6 +15,7 @@
     "cli:jest": "npm run cli -- ./node_modules/@sentinel-internal/codeaws-test-adapter-jest",
     "cli:maven": "npm run cli -- ./node_modules/@sentinel-internal/codeaws-test-adapter-maven",
     "cli:pytest": "npm run cli -- ./node_modules/@sentinel-internal/codeaws-test-adapter-pytest",
+    "cli:gradle": "npm run cli -- ./node_modules/@sentinel-internal/codeaws-test-adapter-gradle",
     "generate-attributions": "tsc && node dist/lib/scripts/generate-attributions"
   },
   "license": "Apache-2.0",
