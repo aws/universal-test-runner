@@ -10,7 +10,8 @@
   },
   "files": [
     "dist/lib/src",
-    "NOTICE"
+    "NOTICE",
+    "THIRD_PARTY_LICENSES"
   ],
   "devDependencies": {
     "@sentinel-internal/codeaws-test-runner": "*"
