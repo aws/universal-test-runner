@@ -13,6 +13,6 @@ describe('Pytest adapter', () => {
     const { exitCode } = await executeTests({ testNamesToRun: ['bill', 'bob', 'mary'] })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('pytest', ['-k', "bill or bob or mary"])
+    expect(runCommand).toHaveBeenCalledWith('pytest', ['-k', 'bill or bob or mary'])
   })
 })
