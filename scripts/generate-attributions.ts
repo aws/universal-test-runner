@@ -3,48 +3,78 @@
 
 /* eslint-disable no-console */
 
-import fs from 'fs'
+import fs from 'fs/promises'
 import path from 'path'
 
-const packagePaths = fs.readdirSync(path.join(process.cwd(), 'packages'))
+export async function getFullAttributionsText(packageName: string): Promise<string> {
+  const attributions = await getAttributions(packageName)
+  return `${packageName} includes the following third-party software/licensing:\n\n${attributions}`
+}
 
-function existsSync(path: string): boolean {
+// TODO Check that licenses are permissible
+async function getAttributions(
+  packageName: string,
+  depth = 0,
+  seen: Set<string> = new Set(),
+): Promise<string> {
+  if (seen.has(packageName)) {
+    return ''
+  }
+  seen.add(packageName)
+
+  const packageRoot = await findPackageRoot(packageName)
+
+  const dependencyAttributions = await loadDependencies(packageRoot).then((dependencies) =>
+    Promise.all(dependencies.map((dependency) => getAttributions(dependency, depth + 1, seen))),
+  )
+
+  const licenseFile = (await fs.readdir(packageRoot)).find((name) =>
+    name?.toLowerCase().includes('license'),
+  )
+  if (!licenseFile) {
+    throw new Error(`No license found for ${packageName}`)
+  }
+
+  return [
+    await getSingleAttribution(packageName, path.join(packageRoot, licenseFile), depth),
+    ...dependencyAttributions,
+  ].join('')
+}
+
+async function findPackageRoot(packageName: string): Promise<string> {
+  let packageRoot = path.dirname(require.resolve(packageName))
+  while (!(await exists(path.join(packageRoot, 'package.json')))) {
+    packageRoot = path.dirname(packageRoot)
+  }
+  return packageRoot
+}
+
+async function loadDependencies(packageRoot: string): Promise<string[]> {
+  const packageJsonPath = path.join(packageRoot, 'package.json')
+  const packageJson = await import(packageJsonPath)
+  return Object.keys(packageJson.dependencies || {}).sort()
+}
+
+async function getSingleAttribution(packageName: string, licensePath: string, depth: number) {
+  if (depth === 0) {
+    return ''
+  }
+  const licenseText = await fs.readFile(licensePath, 'utf-8')
+  return `${packageName} -- https://npmjs.com/package/${packageName}\n\n${licenseText}\n----------\n\n`
+}
+
+async function exists(path: string): Promise<boolean> {
   try {
-    fs.accessSync(path)
+    await fs.access(path)
     return true
-  } catch (e) {
+  } catch {
     return false
   }
 }
 
-// TODO: circular dependencies
-// Check license
-// Exclude root package
-// Tests to verify contents
-async function getAttributions(packageName: string): Promise<string> {
-  let packageRoot = path.dirname(require.resolve(packageName))
-  while (!existsSync(path.join(packageRoot, 'package.json'))) {
-    packageRoot = path.dirname(packageRoot)
-  }
-  const packageJsonPath = path.join(packageRoot, 'package.json')
-  const { name, dependencies = {} } = await import(packageJsonPath)
-  const dependencyAttributions = await Promise.all(
-    Object.keys(dependencies).map((dependency) => {
-      return getAttributions(dependency)
-    }),
-  )
-  const licenseFile = fs
-    .readdirSync(packageRoot)
-    .find((name) => name?.toLowerCase().includes('license'))
-  if (!licenseFile) {
-    throw new Error(`No license found for ${packageName}`)
-  }
-  const license = fs.readFileSync(path.join(packageRoot, licenseFile))
-  return [`${name}\n\n${license}`, ...dependencyAttributions].join('\n-------------\n\n')
-}
-
 async function run() {
-  await Promise.all(
+  const packagePaths = await fs.readdir(path.join(process.cwd(), 'packages'))
+  return Promise.all(
     packagePaths.map(async (packagePath) => {
       const attributionsFilePath = path.join(
         process.cwd(),
@@ -56,13 +86,11 @@ async function run() {
       const packageJson = await import(
         path.join(process.cwd(), 'packages', packagePath, 'package.json')
       )
-      const attributionString = `${packageJson.name} includes the following third-party software/licensing:\n\n`
-      fs.writeFileSync(
-        attributionsFilePath,
-        attributionString + (await getAttributions(packageJson.name)),
-      )
+      await fs.writeFile(attributionsFilePath, await getFullAttributionsText(packageJson.name))
     }),
   )
 }
 
-run().then(() => console.log('Done'))
+if (require.main === module) {
+  run().then(() => console.log('Done'))
+}
