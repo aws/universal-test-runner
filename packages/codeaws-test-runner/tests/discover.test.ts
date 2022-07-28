@@ -1,0 +1,24 @@
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import discover from '../src/protocol'
+
+jest.mock('../src/log')
+
+describe('Discovery function', () => {
+  describe('when parsing CAWS_TEST_NAMES_TO_RUN', () => {
+    it('discovers a list of test names', () => {
+      const result = discover({ CAWS_TEST_NAMES_TO_RUN: 'test1|test4|test9' })
+      expect(result.testsToRun).toEqual([
+        { testName: 'test1' },
+        { testName: 'test4' },
+        { testName: 'test9' },
+      ])
+    })
+
+    it('discovers an empty list when value is not present', () => {
+      const result = discover({})
+      expect(result.testsToRun).toEqual([])
+    })
+  })
+})
