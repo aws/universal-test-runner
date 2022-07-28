@@ -4,8 +4,14 @@
 import log from './log'
 import path from 'path'
 
+export interface TestCase {
+  testName: string
+  suiteName?: string
+  filepath?: string
+}
+
 export interface AdapterInput {
-  testNamesToRun?: string[]
+  testsToRun?: TestCase[]
 }
 
 export interface AdapterOutput {

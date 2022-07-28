@@ -6,9 +6,10 @@ import log from './log'
 
 import { AdapterInput, AdapterOutput } from '@sentinel-internal/codeaws-test-runner'
 
-export async function executeTests({ testNamesToRun = [] }: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
   const executable = 'gradle'
   const args = ['test']
+  const testNamesToRun = testsToRun.map(({ testName }) => testName)
   if (testNamesToRun.length > 0) {
     args.push(...testNamesToRun.flatMap((testName) => ['--tests', `*${testName}`]))
   }

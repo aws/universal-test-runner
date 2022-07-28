@@ -14,7 +14,7 @@ describe('Loading an adapter', () => {
 
     const adapter = await loadAdapter(fullAdapterPath, process)
 
-    expect(adapter.executeTests({ testNamesToRun: [] })).toEqual({ exitCode: 123 })
+    expect(adapter.executeTests({ testsToRun: [] })).toEqual({ exitCode: 123 })
   })
 
   it('loads the correct adapter from a relative path', async () => {
@@ -27,7 +27,7 @@ describe('Loading an adapter', () => {
 
     const adapter = await loadAdapter(adapterPath, { cwd: () => directory })
 
-    expect(adapter.executeTests({ testNamesToRun: [] })).toEqual({ exitCode: 123 })
+    expect(adapter.executeTests({ testsToRun: [] })).toEqual({ exitCode: 123 })
   })
 
   it('loads the adapter from the default export when one is provided', async () => {
@@ -42,7 +42,7 @@ describe('Loading an adapter', () => {
 
     const adapter = await loadAdapter(fullAdapterPath, process)
 
-    expect(adapter.executeTests({ testNamesToRun: [] })).toEqual({ exitCode: 123 })
+    expect(adapter.executeTests({ testsToRun: [] })).toEqual({ exitCode: 123 })
   })
 
   it.each(['blah', './blah.js'])(
