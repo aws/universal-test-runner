@@ -6,9 +6,10 @@ import log from './log'
 
 import { AdapterInput, AdapterOutput } from '@sentinel-internal/codeaws-test-runner'
 
-export async function executeTests({ testNamesToRun = [] }: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
   const executable = 'mvn'
   const args = []
+  const testNamesToRun = testsToRun.map(({ testName }) => testName)
   if (testNamesToRun.length > 0) {
     args.push(`-Dtest=${testNamesToRun.map((name) => `#${name}`).join(',')}`)
   }

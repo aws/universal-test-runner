@@ -3,14 +3,20 @@
 
 import log from './log'
 
+interface TestCase {
+  testName: string
+  suiteName?: string
+  filepath?: string
+}
+
 export interface DiscoveryResult {
-  testNamesToRun: string[]
+  testsToRun: TestCase[]
 }
 
 type Environment = { [key: string]: string | undefined }
 
-function discoverTestNamesToRun(input: string | undefined): string[] {
-  return input?.split('|') ?? []
+function discoverTestNamesToRun(input: string | undefined): TestCase[] {
+  return input?.split('|').map((testName) => ({ testName })) ?? []
 }
 
 function mapEnvToResult<T>(
@@ -27,7 +33,7 @@ function mapEnvToResult<T>(
 
 function discover(env: Environment): DiscoveryResult {
   return {
-    testNamesToRun: mapEnvToResult(env, 'CAWS_TEST_NAMES_TO_RUN', discoverTestNamesToRun),
+    testsToRun: mapEnvToResult(env, 'CAWS_TEST_NAMES_TO_RUN', discoverTestNamesToRun),
   }
 }
 

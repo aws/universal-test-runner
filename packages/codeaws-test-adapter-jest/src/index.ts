@@ -7,8 +7,9 @@ import buildBaseTestCommand from './buildBaseTestCommand'
 
 import { AdapterInput, AdapterOutput } from '@sentinel-internal/codeaws-test-runner'
 
-export async function executeTests({ testNamesToRun = [] }: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
   const [executable, args] = await buildBaseTestCommand()
+  const testNamesToRun = testsToRun.map(({ testName }) => testName)
   if (testNamesToRun.length > 0) {
     args.push('--testNamePattern', testNamesToRun.join('|'))
   }

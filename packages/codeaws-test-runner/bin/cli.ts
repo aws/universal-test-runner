@@ -27,5 +27,5 @@ const [adapterPath] = argv._
 const discoveryResult = discover(process.env)
 
 loadAdapter(String(adapterPath), process).then((adapter) => {
-  run(adapter, discoveryResult, process)
+  return run(adapter, discoveryResult, process)
 })

@@ -12,7 +12,9 @@ describe('Jest adapter', () => {
 
     const { executeTests } = await import('../src/index')
 
-    const { exitCode } = await executeTests({ testNamesToRun: ['bill', 'bob', 'mary'] })
+    const { exitCode } = await executeTests({
+      testsToRun: [{ testName: 'bill' }, { testName: 'bob' }, { testName: 'mary' }],
+    })
 
     expect(exitCode).toBe(0)
     expect(runCommand).toHaveBeenCalledWith('./node_modules/.bin/jest', [
