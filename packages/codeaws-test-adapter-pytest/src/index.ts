@@ -4,7 +4,7 @@
 import runCommand from './runCommand'
 import log from './log'
 
-import { AdapterInput, AdapterOutput } from '@sentinel-internal/codeaws-test-runner'
+import { AdapterInput, AdapterOutput } from '@sentinel-internal/codeaws-test-runner-types'
 
 export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
   const executable = 'pytest'

@@ -14,6 +14,6 @@
     "THIRD_PARTY_LICENSES"
   ],
   "devDependencies": {
-    "@sentinel-internal/codeaws-test-runner": "*"
+    "@sentinel-internal/codeaws-test-runner-types": "*"
   }
 }

@@ -1,8 +1,9 @@
 {
-  "name": "@sentinel-internal/codeaws-test-adapter-pytest",
+  "name": "@sentinel-internal/codeaws-test-runner-types",
   "version": "0.1.0",
   "license": "Apache-2.0",
-  "main": "dist/lib/src/index.js",
+  "main": "dist/lib/index.js",
+  "types": "dist/types/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "tsc",
@@ -10,10 +11,8 @@
   },
   "files": [
     "dist/lib/src",
+    "dist/types/src",
     "NOTICE",
     "THIRD_PARTY_LICENSES"
-  ],
-  "devDependencies": {
-    "@sentinel-internal/codeaws-test-runner-types": "*"
-  }
+  ]
 }

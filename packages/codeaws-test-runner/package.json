@@ -22,6 +22,7 @@
     "yargs": "^17.5.1"
   },
   "devDependencies": {
+    "@sentinel-internal/codeaws-test-runner-types": "*",
     "@types/yargs": "^17.0.12"
   }
 }

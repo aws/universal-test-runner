@@ -4,23 +4,7 @@
 import log from './log'
 import path from 'path'
 
-export interface TestCase {
-  testName: string
-  suiteName?: string
-  filepath?: string
-}
-
-export interface AdapterInput {
-  testsToRun?: TestCase[]
-}
-
-export interface AdapterOutput {
-  exitCode?: number | null
-}
-
-export interface Adapter {
-  executeTests(options: AdapterInput): Promise<AdapterOutput> | AdapterOutput
-}
+import { Adapter } from '@sentinel-internal/codeaws-test-runner-types'
 
 type Process = Pick<typeof process, 'cwd'>
 
