@@ -1,6 +1,6 @@
-# Test Discovery Protocol
+# Test Execution Protocol
 
-The Test Discovery Protocol establishes a common interface for passing
+The Test Execution Protocol establishes a common interface for passing
 arguments to test runners, in order to make it easier for tools such as IDEs
 and CI/CD systems to interact with test frameworks.
 

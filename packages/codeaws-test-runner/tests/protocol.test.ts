@@ -1,14 +1,14 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import discover from '../src/protocol'
+import readProtocol from '../src/protocol'
 
 jest.mock('../src/log')
 
-describe('Discovery function', () => {
+describe('Protocol reading function', () => {
   describe('when parsing CAWS_TEST_NAMES_TO_RUN', () => {
-    it('discovers a list of test names', () => {
-      const result = discover({ CAWS_TEST_NAMES_TO_RUN: 'test1|test4|test9' })
+    it('reads a list of test names', () => {
+      const result = readProtocol({ CAWS_TEST_NAMES_TO_RUN: 'test1|test4|test9' })
       expect(result.testsToRun).toEqual([
         { testName: 'test1' },
         { testName: 'test4' },
@@ -16,8 +16,8 @@ describe('Discovery function', () => {
       ])
     })
 
-    it('discovers an empty list when value is not present', () => {
-      const result = discover({})
+    it('reads an empty list when value is not present', () => {
+      const result = readProtocol({})
       expect(result.testsToRun).toEqual([])
     })
   })

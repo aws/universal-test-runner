@@ -9,7 +9,7 @@ import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 
 import run from '../src/run'
-import discover from '../src/protocol'
+import readProtocol from '../src/protocol'
 import { loadAdapter } from '../src/adapter'
 
 const argv = yargs(hideBin(process.argv))
@@ -24,8 +24,8 @@ const argv = yargs(hideBin(process.argv))
 
 const [adapterPath] = argv._
 
-const discoveryResult = discover(process.env)
+const protocolResult = readProtocol(process.env)
 
 loadAdapter(String(adapterPath), process).then((adapter) => {
-  return run(adapter, discoveryResult, process)
+  return run(adapter, protocolResult, process)
 })

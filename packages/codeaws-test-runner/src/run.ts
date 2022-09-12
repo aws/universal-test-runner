@@ -3,19 +3,19 @@
 
 import log from './log'
 import { Adapter, AdapterInput } from './adapter'
-import { DiscoveryResult } from './protocol'
+import { ProtocolResult } from './protocol'
 
 type Process = Pick<typeof process, 'exit'>
 
-function mapDiscoveryResultToAdapterInput(discoveryResult: DiscoveryResult): AdapterInput {
+function mapProtocolResultToAdapterInput(protocolResult: ProtocolResult): AdapterInput {
   return {
-    testsToRun: discoveryResult.testsToRun,
+    testsToRun: protocolResult.testsToRun,
   }
 }
 
-async function run(adapter: Adapter, discoveryResult: DiscoveryResult, processObject: Process) {
+async function run(adapter: Adapter, protocolResult: ProtocolResult, processObject: Process) {
   try {
-    const adapterInput = mapDiscoveryResultToAdapterInput(discoveryResult)
+    const adapterInput = mapProtocolResultToAdapterInput(protocolResult)
     log.stderr('Calling executeTests on adapter...')
     const { exitCode } = await adapter.executeTests(adapterInput)
     log.stderr('Finished executing tests.')

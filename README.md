@@ -9,7 +9,7 @@ include any Amazon-related "branding" in the name. (What exactly the name
 should be is tough to say; we'll have to do some brainstorming to come up with
 a good name.)**
 
-codeaws-test-runner is a command-line tool that uses the [Test Discovery
+codeaws-test-runner is a command-line tool that uses the [Test Execution
 Protocol](./protocol/README.md) to run tests for any programming language and
 any test framework. For example, to run tests in a project using Jest:
 
@@ -35,8 +35,8 @@ codeaws-test-runner ./my-customer-adapter.js
 ```
 
 If codeaws-test-runner doesn't suit your needs exactly, you can use it as an
-example of how to write your own Test Discovery Protocol-aware runner. See
-the [Test Discovery Protocol](./protocol/README.md) docs for more info.
+example of how to write your own Test Execution Protocol-aware runner. See
+the [Test Execution Protocol](./protocol/README.md) docs for more info.
 
 ## Test Adapters
 
