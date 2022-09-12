@@ -14,8 +14,8 @@ Protocol](./protocol/README.md) to run tests for any programming language and
 any test framework. For example, to run tests in a project using Jest:
 
 ```
-npm install -g @sentinel-internal/codeaws-test-runner @sentinel-internal/codeaws-test-adapter-jest
-codeaws-test-runner @sentinel-internal/codeaws-test-adapter-jest
+npm install -g @sentinel-internal/codeaws-test-runner 
+run-tests jest
 ```
 
 First-party test adapter support is provided for the following frameworks/build tools:
@@ -31,7 +31,7 @@ providing support for custom testing setups, or frameworks that don't already
 have a first-party or third-party adapter:
 
 ```
-codeaws-test-runner ./my-customer-adapter.js
+run-tests ./my-customer-adapter.js
 ```
 
 If codeaws-test-runner doesn't suit your needs exactly, you can use it as an
@@ -74,7 +74,7 @@ export function executeTests({ testNamesToRun }) {
 The adapter is passed to the runner as follows:
 
 ```
-codeaws-test-runner ./adapter.js
+run-tests ./adapter.js
 ```
 
 ## Custom runners

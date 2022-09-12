@@ -5,7 +5,8 @@
   "main": "dist/lib/src/index.js",
   "types": "dist/types/src/index.d.ts",
   "bin": {
-    "codeaws-test-runner": "dist/lib/bin/cli.js"
+    "codeaws-test-runner": "dist/lib/bin/cli.js",
+    "run-tests": "dist/lib/bin/cli.js"
   },
   "scripts": {
     "clean": "rm -rf dist",
@@ -19,6 +20,10 @@
     "THIRD_PARTY_LICENSES"
   ],
   "dependencies": {
+    "@sentinel-internal/codeaws-test-adapter-gradle": "^0.1.0",
+    "@sentinel-internal/codeaws-test-adapter-jest": "^0.1.0",
+    "@sentinel-internal/codeaws-test-adapter-maven": "^0.1.0",
+    "@sentinel-internal/codeaws-test-adapter-pytest": "^0.1.0",
     "yargs": "^17.5.1"
   },
   "devDependencies": {
