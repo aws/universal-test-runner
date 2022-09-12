@@ -19,7 +19,7 @@ describe('Run function', () => {
       },
     }
     const processSpy = getProcessSpy()
-    await run(mockAdapter, { testsToRun: [] }, processSpy)
+    await run(mockAdapter, { testsToRun: [], version: '0.1.0' }, processSpy)
     expect(processSpy.exit).toHaveBeenCalledWith(123)
   })
 
@@ -30,7 +30,7 @@ describe('Run function', () => {
       },
     }
     const processSpy = getProcessSpy()
-    await run(mockAdapter, { testsToRun: [] }, processSpy)
+    await run(mockAdapter, { testsToRun: [], version: '0.1.0' }, processSpy)
     expect(processSpy.exit).toHaveBeenCalledWith(1)
   })
 
@@ -41,7 +41,7 @@ describe('Run function', () => {
       },
     }
     const processSpy = getProcessSpy()
-    await run(mockAdapter, { testsToRun: [] }, processSpy)
+    await run(mockAdapter, { testsToRun: [], version: '0.1.0' }, processSpy)
     expect(processSpy.exit).toHaveBeenCalledWith(1)
   })
 })

@@ -7,12 +7,18 @@ export type Environment = { [key: string]: string | undefined }
 
 function mapEnvToResult<T>(
   env: Environment,
-  key: string,
+  keys: string[],
   mapper: (input: string | undefined) => T,
 ): T {
-  const value = env[key]
+  let key, value
+  for (const currentKey of keys) {
+    ;[key, value] = [currentKey, env[currentKey]]
+    if (typeof value !== 'undefined') {
+      break
+    }
+  }
   if (typeof value !== 'undefined') {
-    log.stderr(`Found ${key} in environment, parsing value`)
+    log.stderr(`Found ${key} in environment, reading value`)
   }
   return mapper(value)
 }

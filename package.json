@@ -12,7 +12,7 @@
     "compile": "tsc && npm run --workspaces compile",
     "clean": "npm run --workspaces clean",
     "build": "npm run lint && npm run compile && npm run test:ci",
-    "cli": "node ./node_modules/.bin/run-tests",
+    "cli": "TEP_VERSION=0.1.0 node ./node_modules/.bin/run-tests",
     "cli:jest": "npm run cli -- jest",
     "cli:maven": "npm run cli -- maven",
     "cli:pytest": "npm run cli -- pytest",
