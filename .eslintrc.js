@@ -26,5 +26,12 @@ module.exports = {
       ],
       2,
     ],
+    'no-restricted-syntax': [
+      'error',
+      {
+        selector: 'TSEnumDeclaration',
+        message: "Don't declare enums; use an object instead, and mark it with `as const`",
+      },
+    ],
   },
 }

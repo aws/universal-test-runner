@@ -13,16 +13,32 @@ function mapProtocolResultToAdapterInput(protocolResult: ProtocolResult): Adapte
   }
 }
 
+export const ErrorCodes = {
+  /*
+   * Adapter threw an unrecoverable error when executing tests. NOT to be used
+   * for normal test failures, but rather errors that prevented the adapter
+   * from executing normally.
+   */
+  ADAPTER_ERROR: 1101,
+
+  /*
+   * Adapter was invoked, but did not return an exit code. This can happen if
+   * the child process was terminated due to a signal:
+   * https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
+   */
+  ADAPTER_RETURNED_NO_EXIT_CODE: 1102,
+} as const
+
 async function run(adapter: Adapter, protocolResult: ProtocolResult, processObject: Process) {
+  const adapterInput = mapProtocolResultToAdapterInput(protocolResult)
   try {
-    const adapterInput = mapProtocolResultToAdapterInput(protocolResult)
     log.info('Calling executeTests on adapter...')
     const { exitCode } = await adapter.executeTests(adapterInput)
     log.info('Finished executing tests.')
-    processObject.exit(exitCode ?? 1)
+    processObject.exit(exitCode ?? ErrorCodes.ADAPTER_RETURNED_NO_EXIT_CODE)
   } catch (e) {
     log.info('Failed to run tests.', e)
-    processObject.exit(1)
+    processObject.exit(ErrorCodes.ADAPTER_ERROR)
   }
 }
 

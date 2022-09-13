@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import run from '../src/run'
+import run, { ErrorCodes } from '../src/run'
 
 jest.mock('../src/log')
 
@@ -31,7 +31,7 @@ describe('Run function', () => {
     }
     const processSpy = getProcessSpy()
     await run(mockAdapter, { testsToRun: [], version: '0.1.0' }, processSpy)
-    expect(processSpy.exit).toHaveBeenCalledWith(1)
+    expect(processSpy.exit).toHaveBeenCalledWith(ErrorCodes.ADAPTER_ERROR)
   })
 
   it('exits with a non-zero status code if the adapter does not return an status code', async () => {
@@ -42,6 +42,6 @@ describe('Run function', () => {
     }
     const processSpy = getProcessSpy()
     await run(mockAdapter, { testsToRun: [], version: '0.1.0' }, processSpy)
-    expect(processSpy.exit).toHaveBeenCalledWith(1)
+    expect(processSpy.exit).toHaveBeenCalledWith(ErrorCodes.ADAPTER_RETURNED_NO_EXIT_CODE)
   })
 })

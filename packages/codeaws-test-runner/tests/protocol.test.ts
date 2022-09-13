@@ -1,14 +1,16 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import _readProtocol from '../src/protocol'
+import _readProtocol, { EnvVars } from '../src/protocol'
 import { Environment } from '../src/mapEnvToResult'
 
 jest.mock('../src/log')
 
+const { VERSION, TESTS_TO_RUN } = EnvVars
+
 function readProtocol(env: Environment) {
   return _readProtocol({
-    TEP_VERSION: '0.1.0',
+    [VERSION]: '0.1.0',
     ...env,
   })
 }
@@ -17,7 +19,7 @@ describe('Protocol reading function', () => {
   describe('when parsing TEP_TESTS_TO_RUN', () => {
     it('reads a list of test names', () => {
       const result = readProtocol({
-        TEP_TESTS_TO_RUN: 'test1|test4|test9',
+        [TESTS_TO_RUN]: 'test1|test4|test9',
       })
       expect(result.testsToRun).toEqual([
         { testName: 'test1' },
@@ -28,7 +30,7 @@ describe('Protocol reading function', () => {
 
     it('reads the test suite for a single test', () => {
       const result = readProtocol({
-        TEP_TESTS_TO_RUN: 'test1|test4|suitename#test9',
+        [TESTS_TO_RUN]: 'test1|test4|suitename#test9',
       })
       expect(result.testsToRun).toEqual([
         { testName: 'test1' },
@@ -39,7 +41,7 @@ describe('Protocol reading function', () => {
 
     it('reads the test suite for a many tests', () => {
       const result = readProtocol({
-        TEP_TESTS_TO_RUN: 'suite1#test1|suite2#test4|suitename#test9',
+        [TESTS_TO_RUN]: 'suite1#test1|suite2#test4|suitename#test9',
       })
       expect(result.testsToRun).toEqual([
         { testName: 'test1', suiteName: 'suite1' },
@@ -50,7 +52,7 @@ describe('Protocol reading function', () => {
 
     it('reads the filepath only for many tests', () => {
       const result = readProtocol({
-        TEP_TESTS_TO_RUN: 'file1.js##test1|file2.js##test4|file3.js##test9',
+        [TESTS_TO_RUN]: 'file1.js##test1|file2.js##test4|file3.js##test9',
       })
       expect(result.testsToRun).toEqual([
         { testName: 'test1', filepath: 'file1.js' },
@@ -61,7 +63,7 @@ describe('Protocol reading function', () => {
 
     it('reads the filepath only for one test', () => {
       const result = readProtocol({
-        TEP_TESTS_TO_RUN: 'test1|test4|file3.js##test9',
+        [TESTS_TO_RUN]: 'test1|test4|file3.js##test9',
       })
       expect(result.testsToRun).toEqual([
         { testName: 'test1' },
@@ -72,7 +74,7 @@ describe('Protocol reading function', () => {
 
     it('reads the filepath and suite name for one test', () => {
       const result = readProtocol({
-        TEP_TESTS_TO_RUN: 'test1|test4|file3.js#suite1#test9',
+        [TESTS_TO_RUN]: 'test1|test4|file3.js#suite1#test9',
       })
       expect(result.testsToRun).toEqual([
         { testName: 'test1' },
