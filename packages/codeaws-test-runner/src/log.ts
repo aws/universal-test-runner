@@ -6,7 +6,7 @@
 type LogHandler = (...args: any[]) => void
 
 interface Logger {
-  stderr: LogHandler
+  info: LogHandler
 }
 
 function prefix(fn: LogHandler, prefixString: string): LogHandler {
@@ -17,7 +17,7 @@ function prefix(fn: LogHandler, prefixString: string): LogHandler {
 
 export function makeLogger(methods: Logger, prefixString: string): Logger {
   return {
-    stderr: prefix(methods.stderr, prefixString),
+    info: prefix(methods.info, prefixString),
   }
 }
 
@@ -25,7 +25,7 @@ const LOG_PREFIX = '[codeaws-test-runner]:'
 
 export default makeLogger(
   {
-    stderr: console.error,
+    info: console.error,
   },
   LOG_PREFIX,
 )

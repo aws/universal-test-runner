@@ -18,7 +18,7 @@ function mapEnvToResult<T>(
     }
   }
   if (typeof value !== 'undefined') {
-    log.stderr(`Found ${key} in environment, reading value`)
+    log.info(`Found ${key} in environment, reading value`)
   }
   return mapper(value)
 }

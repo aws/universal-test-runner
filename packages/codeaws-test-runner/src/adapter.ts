@@ -25,10 +25,10 @@ export async function loadAdapter(
       ? path.join(processObject.cwd(), adapterModule)
       : adapterModule
     const adapter = await import(adapterImportPath)
-    log.stderr('Loaded adapter from', adapterModule)
+    log.info('Loaded adapter from', adapterModule)
     return adapter
   } catch (e) {
-    log.stderr('Failed to load adapter from', adapterModule)
+    log.info('Failed to load adapter from', adapterModule)
     throw e
   }
 }

@@ -22,7 +22,7 @@ function readVersion(input: string | undefined): string {
   if (input !== '0.1.0') {
     throw new Error(`Protocol version ${input} is not supported by this runner`)
   }
-  log.stderr(`Using Test Execution Protocol version ${input}`)
+  log.info(`Using Test Execution Protocol version ${input}`)
   return input
 }
 

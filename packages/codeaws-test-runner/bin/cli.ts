@@ -3,6 +3,8 @@
 // CODE.AWS Test Runner and Test Adapters
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 
+// The license header can't be top of the file since we need the shebang there,
+// so the eslint rule is a false positive in this file. Disable it for now.
 /* eslint-disable header/header */
 
 import yargs from 'yargs/yargs'

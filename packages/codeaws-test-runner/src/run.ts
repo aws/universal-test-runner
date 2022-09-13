@@ -16,12 +16,12 @@ function mapProtocolResultToAdapterInput(protocolResult: ProtocolResult): Adapte
 async function run(adapter: Adapter, protocolResult: ProtocolResult, processObject: Process) {
   try {
     const adapterInput = mapProtocolResultToAdapterInput(protocolResult)
-    log.stderr('Calling executeTests on adapter...')
+    log.info('Calling executeTests on adapter...')
     const { exitCode } = await adapter.executeTests(adapterInput)
-    log.stderr('Finished executing tests.')
+    log.info('Finished executing tests.')
     processObject.exit(exitCode ?? 1)
   } catch (e) {
-    log.stderr('Failed to run tests.', e)
+    log.info('Failed to run tests.', e)
     processObject.exit(1)
   }
 }
