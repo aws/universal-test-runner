@@ -27,7 +27,16 @@ function readVersion(input: string | undefined): string {
 }
 
 function readTestsToRun(input: string | undefined): TestCase[] {
-  return input?.split('|').map((testName) => ({ testName })) ?? []
+  return (
+    input?.split('|').map((testCase) => {
+      const [testName, suiteName, filepath] = testCase.split('#').reverse()
+      return {
+        testName,
+        suiteName: suiteName || undefined,
+        filepath: filepath || undefined,
+      }
+    }) ?? []
+  )
 }
 
 function readProtocol(env: Environment): ProtocolResult {
