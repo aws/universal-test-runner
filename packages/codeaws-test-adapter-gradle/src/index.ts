@@ -13,7 +13,7 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
   if (testNamesToRun.length > 0) {
     args.push(...testNamesToRun.flatMap((testName) => ['--tests', `*${testName}`]))
   }
-  log.stderr(`Running tests with gradle using command: ${[executable, ...args].join(' ')}`)
+  log.info(`Running tests with gradle using command: ${[executable, ...args].join(' ')}`)
   const { status } = await runCommand(executable, args)
   return { exitCode: status ?? 1 }
 }

@@ -13,6 +13,9 @@
     "NOTICE",
     "THIRD_PARTY_LICENSES"
   ],
+  "dependencies": {
+    "@sentinel-internal/codeaws-test-runner-logger": "*"
+  },
   "devDependencies": {
     "@sentinel-internal/codeaws-test-runner-types": "*"
   }

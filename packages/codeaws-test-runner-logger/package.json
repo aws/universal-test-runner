@@ -1,8 +1,9 @@
 {
-  "name": "@sentinel-internal/codeaws-test-adapter-jest",
+  "name": "@sentinel-internal/codeaws-test-runner-logger",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "main": "dist/lib/src/index.js",
+  "types": "dist/types/src/index.d.ts",
   "scripts": {
     "clean": "rm -rf dist",
     "compile": "tsc",
@@ -10,13 +11,8 @@
   },
   "files": [
     "dist/lib/src",
+    "dist/types/src",
     "NOTICE",
     "THIRD_PARTY_LICENSES"
-  ],
-  "dependencies": {
-    "@sentinel-internal/codeaws-test-runner-logger": "*"
-  },
-  "devDependencies": {
-    "@sentinel-internal/codeaws-test-runner-types": "*"
-  }
+  ]
 }

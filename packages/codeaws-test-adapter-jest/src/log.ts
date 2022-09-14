@@ -1,16 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-/* eslint-disable no-console */
+import makeLogger from '@sentinel-internal/codeaws-test-runner-logger'
 
-interface Logger {
-  stderr(...args: any[]): void
-}
+const LOG_PREFIX = '[codeaws-test-adapter-jest]:'
 
-class CodeAwsTestAdapterJestLogger implements Logger {
-  stderr(...args: any[]): void {
-    console.error('[codeaws-test-adapter-jest]:', ...args)
-  }
-}
-
-export default new CodeAwsTestAdapterJestLogger()
+export default makeLogger(LOG_PREFIX)

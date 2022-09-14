@@ -14,7 +14,7 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
     args.push(`-Dtest=${testNamesToRun.map((name) => `#${name}`).join(',')}`)
   }
   args.push('test')
-  log.stderr(`Running tests with maven using command: ${[executable, ...args].join(' ')}`)
+  log.info(`Running tests with maven using command: ${[executable, ...args].join(' ')}`)
   const { status } = await runCommand(executable, args)
   return { exitCode: status ?? 1 }
 }

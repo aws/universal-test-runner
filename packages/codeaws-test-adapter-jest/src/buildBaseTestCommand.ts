@@ -26,7 +26,7 @@ export default async function buildBaseTestCommand(): Promise<[string, string[]]
     const testScriptName = pickTestScript(packageJson)
     return await buildPackageManagerTestCommand(testScriptName)
   } catch (e: any) {
-    log.stderr(e.message)
+    log.info(e.message)
     const jestExecutablePath = path.join('.', 'node_modules', '.bin', 'jest')
     const executable = (await exists(jestExecutablePath)) ? jestExecutablePath : 'jest'
     return [executable, []]
@@ -60,24 +60,24 @@ function pickTestScript(packageJson: PackageJson): string {
     return tokens.has('jest') || tokens.has(path.join('node_modules', '.bin', 'jest'))
   })
   const scriptNames = testScripts.map(([scriptName]) => scriptName).join(', ')
-  log.stderr(`Found ${testScripts.length} possible test script(s) in package.json: ${scriptNames}`)
+  log.info(`Found ${testScripts.length} possible test script(s) in package.json: ${scriptNames}`)
   const testScript =
     testScripts.find(([scriptName]: [string, any]) => scriptName === 'test') || testScripts[0]
   if (!testScript) {
     throw new Error('Unable to identify any test scripts in package.json')
   }
   const [scriptName] = testScript
-  log.stderr(`Picking script "${scriptName}" from package.json`)
+  log.info(`Picking script "${scriptName}" from package.json`)
   return scriptName
 }
 
 async function buildPackageManagerTestCommand(testScriptName: string): Promise<[string, string[]]> {
   // TODO: check if executables actually exist
   if (await exists(path.resolve('yarn.lock'))) {
-    log.stderr(`Found yarn.lock file, invoking script "${testScriptName}" using yarn...`)
+    log.info(`Found yarn.lock file, invoking script "${testScriptName}" using yarn...`)
     return ['yarn', [testScriptName]]
   }
-  log.stderr(`Invoking script "${testScriptName}" using npm...`)
+  log.info(`Invoking script "${testScriptName}" using npm...`)
   return ['npm', ['run', testScriptName, '--']]
 }
 

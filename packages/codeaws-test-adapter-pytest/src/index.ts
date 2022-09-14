@@ -17,7 +17,7 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
   // spawnSync will automatically quote any args with spaces in them, so we don't need to
   // manually include the quotes when running the command. Here we do it for display purposes.
   const quotedArgs = args.map((arg) => (arg.includes(' ') ? `'${arg}'` : arg))
-  log.stderr(`Running tests with pytest using command: ${[executable, ...quotedArgs].join(' ')}`)
+  log.info(`Running tests with pytest using command: ${[executable, ...quotedArgs].join(' ')}`)
 
   const { status } = await runCommand(executable, args)
   return { exitCode: status ?? 1 }

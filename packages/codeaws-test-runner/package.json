@@ -24,6 +24,7 @@
     "@sentinel-internal/codeaws-test-adapter-jest": "*",
     "@sentinel-internal/codeaws-test-adapter-maven": "*",
     "@sentinel-internal/codeaws-test-adapter-pytest": "*",
+    "@sentinel-internal/codeaws-test-runner-logger": "*",
     "yargs": "^17.5.1"
   },
   "devDependencies": {

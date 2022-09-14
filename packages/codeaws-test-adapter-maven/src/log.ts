@@ -1,16 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-/* eslint-disable no-console */
+import makeLogger from '@sentinel-internal/codeaws-test-runner-logger'
 
-interface Logger {
-  stderr(...args: any[]): void
-}
+const LOG_PREFIX = '[codeaws-test-adapter-maven]:'
 
-class CodeAwsTestAdapterMavenLogger implements Logger {
-  stderr(...args: any[]): void {
-    console.error('[codeaws-test-adapter-maven]:', ...args)
-  }
-}
-
-export default new CodeAwsTestAdapterMavenLogger()
+export default makeLogger(LOG_PREFIX)

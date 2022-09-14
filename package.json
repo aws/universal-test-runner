@@ -2,6 +2,7 @@
   "private": true,
   "workspaces": [
     "packages/codeaws-test-runner-types",
+    "packages/codeaws-test-runner-logger",
     "packages/codeaws-test-runner",
     "packages/*"
   ],
