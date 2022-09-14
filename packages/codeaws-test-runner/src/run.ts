@@ -37,7 +37,7 @@ async function run(adapter: Adapter, protocolResult: ProtocolResult, processObje
     log.info('Finished executing tests.')
     processObject.exit(exitCode ?? ErrorCodes.ADAPTER_RETURNED_NO_EXIT_CODE)
   } catch (e) {
-    log.info('Failed to run tests.', e)
+    log.error('Failed to run tests.', e)
     processObject.exit(ErrorCodes.ADAPTER_ERROR)
   }
 }

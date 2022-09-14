@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-/* eslint-disable no-console */
+import chalk from 'chalk'
 
 type LogHandler = (...args: any[]) => void
 
@@ -13,17 +13,19 @@ export interface Logger {
 }
 
 function prefix(fn: LogHandler, prefixString: string): LogHandler {
-  return (...args: any[]): void => {
+  return (...args): void => {
     fn(prefixString, ...args)
   }
 }
 
+/* eslint-disable no-console */
 const defaultMethods: Logger = {
-  info: console.error,
-  error: console.error,
-  warn: console.error,
-  debug: console.error,
+  info: (...args) => console.error(chalk.blueBright('[INFO]'), ...args),
+  error: (...args) => console.error(chalk.redBright('[ERROR]'), ...args),
+  warn: (...args) => console.error(chalk.yellowBright('[WARN]'), ...args),
+  debug: (...args) => console.error('[DEBUG]', ...args),
 }
+/* eslint-enable no-console */
 
 export default function makeLogger(
   prefixString: string,

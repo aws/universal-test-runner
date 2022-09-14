@@ -14,5 +14,8 @@
     "dist/types/src",
     "NOTICE",
     "THIRD_PARTY_LICENSES"
-  ]
+  ],
+  "dependencies": {
+    "chalk": "^4.1.2"
+  }
 }
