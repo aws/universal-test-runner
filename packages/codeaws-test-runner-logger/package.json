@@ -16,6 +16,6 @@
     "THIRD_PARTY_LICENSES"
   ],
   "dependencies": {
-    "chalk": "^4.1.2"
+    "chalk": "^5.0.1"
   }
 }
