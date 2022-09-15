@@ -100,3 +100,5 @@ Run tests
 ```
 npm test
 ```
+
+To run the pre-commit hook, you'll have to install [TruffleHog](https://github.com/trufflesecurity/trufflehog).
