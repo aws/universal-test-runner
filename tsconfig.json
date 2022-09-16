@@ -15,5 +15,5 @@
     "resolveJsonModule": true
   },
   "include": ["tests", "scripts"],
-  "exclude": [".eslintrc.js", "babel.config.js"]
+  "exclude": [".eslintrc.js", "babel.config.js", "commitlint.config.js"]
 }
