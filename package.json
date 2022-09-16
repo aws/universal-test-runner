@@ -10,7 +10,7 @@
     "test": "jest",
     "test:ci": "npm test -- --coverage --reporters default --reporters jest-junit",
     "lint": "eslint --ext .js,.ts .",
-    "lint": "npm run lint -- --fix",
+    "lint:fix": "npm run lint -- --fix",
     "lint:last-commit": "commitlint --edit ${1}",
     "compile": "tsc && npm run --workspaces compile",
     "clean": "npm run --workspaces clean",
