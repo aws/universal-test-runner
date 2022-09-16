@@ -11,18 +11,18 @@
     "test:ci": "npm test -- --coverage --reporters default --reporters jest-junit",
     "lint": "eslint --ext .js,.ts .",
     "lint": "npm run lint -- --fix",
+    "lint:last-commit": "commitlint --edit ${1}",
+    "lint:branch-commits": "commitlint --from main --to HEAD",
     "compile": "tsc && npm run --workspaces compile",
     "clean": "npm run --workspaces clean",
-    "build": "npm run lint && npm run compile && npm run test:ci",
+    "build": "npm run lint:branch-commits && npm run lint && npm run compile && npm run test:ci",
     "cli": "TEP_VERSION=0.1.0 node ./node_modules/.bin/run-tests",
     "cli:jest": "npm run cli -- jest",
     "cli:maven": "npm run cli -- maven",
     "cli:pytest": "npm run cli -- pytest",
     "cli:gradle": "npm run cli -- gradle",
     "generate-attributions": "tsc && node dist/lib/scripts/generate-attributions",
-    "prepare": "husky install",
-    "lint:last-commit": "commitlint --edit ${1}",
-    "lint:branch-commits": "commitlint --from main --to HEAD"
+    "prepare": "husky install"
   },
   "license": "Apache-2.0",
   "devDependencies": {
