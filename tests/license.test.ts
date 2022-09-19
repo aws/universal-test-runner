@@ -4,25 +4,21 @@
 import fs from 'fs'
 import path from 'path'
 
+import { packages } from './packages'
+
 const LICENSE_CONTENTS = fs.readFileSync(path.join(__dirname, '..', 'LICENSE'), 'utf-8')
-const PACKAGES_DIR = path.join(__dirname, '..', 'packages')
-const PACKAGE_DIRS = fs.readdirSync(PACKAGES_DIR)
 
 describe('License file', () => {
-  it.each(PACKAGE_DIRS)('is included in the root of %s', (packageRoot) => {
-    const packageLicenseContents = fs.readFileSync(
-      path.join(PACKAGES_DIR, packageRoot, 'LICENSE'),
-      'utf-8',
-    )
+  it.each(packages)('is included in the root of $packageName', ({ packageRoot }) => {
+    const packageLicenseContents = fs.readFileSync(path.join(packageRoot, 'LICENSE'), 'utf-8')
     expect(packageLicenseContents).toBe(LICENSE_CONTENTS)
   })
 })
 
 describe('License identifier', () => {
-  it.each(PACKAGE_DIRS)(
-    'is included in the package.json license field for %s',
-    async (packageRoot) => {
-      const packageJson = await import(path.join(PACKAGES_DIR, packageRoot, 'package.json'))
+  it.each(packages)(
+    'is included in the package.json license field for $packageName',
+    async ({ packageJson }) => {
       expect(packageJson.license).toBe('Apache-2.0')
     },
   )
