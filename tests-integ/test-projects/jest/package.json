@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "version": "1.0.0",
+  "devDependencies": {
+    "jest": "^29.0.3",
+    "jest-junit": "^14.0.1"
+  }
+}

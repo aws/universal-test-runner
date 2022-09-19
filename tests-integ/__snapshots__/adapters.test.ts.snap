@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`jest adapter runs a subset of tests 1`] = `
+{
+  "?xml": {
+    "attr_encoding": "UTF-8",
+    "attr_version": 1,
+  },
+  "testsuites": {
+    "attr_errors": 0,
+    "attr_failures": 0,
+    "attr_name": "jest tests",
+    "attr_tests": 3,
+    "attr_time": "MOCK_VALUE",
+    "testsuite": {
+      "attr_errors": 0,
+      "attr_failures": 0,
+      "attr_name": "Suite1",
+      "attr_skipped": 1,
+      "attr_tests": 3,
+      "attr_time": "MOCK_VALUE",
+      "attr_timestamp": "MOCK_VALUE",
+      "testcase": [
+        {
+          "attr_classname": "Suite1 test1",
+          "attr_name": "Suite1 test1",
+          "attr_time": "MOCK_VALUE",
+        },
+        {
+          "attr_classname": "Suite1 test2",
+          "attr_name": "Suite1 test2",
+          "attr_time": "MOCK_VALUE",
+        },
+        {
+          "attr_classname": "Suite1 test3",
+          "attr_name": "Suite1 test3",
+          "attr_time": "MOCK_VALUE",
+          "skipped": "",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`jest adapter runs all tests 1`] = `
+{
+  "?xml": {
+    "attr_encoding": "UTF-8",
+    "attr_version": 1,
+  },
+  "testsuites": {
+    "attr_errors": 0,
+    "attr_failures": 0,
+    "attr_name": "jest tests",
+    "attr_tests": 3,
+    "attr_time": "MOCK_VALUE",
+    "testsuite": {
+      "attr_errors": 0,
+      "attr_failures": 0,
+      "attr_name": "Suite1",
+      "attr_skipped": 0,
+      "attr_tests": 3,
+      "attr_time": "MOCK_VALUE",
+      "attr_timestamp": "MOCK_VALUE",
+      "testcase": [
+        {
+          "attr_classname": "Suite1 test1",
+          "attr_name": "Suite1 test1",
+          "attr_time": "MOCK_VALUE",
+        },
+        {
+          "attr_classname": "Suite1 test2",
+          "attr_name": "Suite1 test2",
+          "attr_time": "MOCK_VALUE",
+        },
+        {
+          "attr_classname": "Suite1 test3",
+          "attr_name": "Suite1 test3",
+          "attr_time": "MOCK_VALUE",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`pytest adapter runs a subset of tests 1`] = `
+{
+  "?xml": {
+    "attr_encoding": "utf-8",
+    "attr_version": 1,
+  },
+  "testsuites": {
+    "testsuite": {
+      "attr_errors": 0,
+      "attr_failures": 0,
+      "attr_hostname": "MOCK_VALUE",
+      "attr_name": "pytest",
+      "attr_skipped": 0,
+      "attr_tests": 2,
+      "attr_time": "MOCK_VALUE",
+      "attr_timestamp": "MOCK_VALUE",
+      "testcase": [
+        {
+          "attr_classname": "test_example",
+          "attr_name": "test1",
+          "attr_time": "MOCK_VALUE",
+        },
+        {
+          "attr_classname": "test_example",
+          "attr_name": "test2",
+          "attr_time": "MOCK_VALUE",
+        },
+      ],
+    },
+  },
+}
+`;
+
+exports[`pytest adapter runs all tests 1`] = `
+{
+  "?xml": {
+    "attr_encoding": "utf-8",
+    "attr_version": 1,
+  },
+  "testsuites": {
+    "testsuite": {
+      "attr_errors": 0,
+      "attr_failures": 0,
+      "attr_hostname": "MOCK_VALUE",
+      "attr_name": "pytest",
+      "attr_skipped": 0,
+      "attr_tests": 3,
+      "attr_time": "MOCK_VALUE",
+      "attr_timestamp": "MOCK_VALUE",
+      "testcase": [
+        {
+          "attr_classname": "test_example",
+          "attr_name": "test1",
+          "attr_time": "MOCK_VALUE",
+        },
+        {
+          "attr_classname": "test_example",
+          "attr_name": "test2",
+          "attr_time": "MOCK_VALUE",
+        },
+        {
+          "attr_classname": "test_example",
+          "attr_name": "test3",
+          "attr_time": "MOCK_VALUE",
+        },
+      ],
+    },
+  },
+}
+`;

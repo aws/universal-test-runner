@@ -12,7 +12,7 @@ describe('Loading an adapter', () => {
     jest.doMock(fullAdapterPath, () => mockAdapter, { virtual: true })
     const { loadAdapter } = await import('../src/adapter')
 
-    const adapter = await loadAdapter(fullAdapterPath, process)
+    const adapter = await loadAdapter(fullAdapterPath, process.cwd())
 
     expect(adapter.executeTests({ testsToRun: [] })).toEqual({ exitCode: 123 })
   })
@@ -25,7 +25,7 @@ describe('Loading an adapter', () => {
     jest.doMock(fullAdapterPath, () => mockAdapter, { virtual: true })
     const { loadAdapter } = await import('../src/adapter')
 
-    const adapter = await loadAdapter(adapterPath, { cwd: () => directory })
+    const adapter = await loadAdapter(adapterPath, directory)
 
     expect(adapter.executeTests({ testsToRun: [] })).toEqual({ exitCode: 123 })
   })
@@ -40,7 +40,7 @@ describe('Loading an adapter', () => {
     jest.doMock(fullAdapterPath, () => mockAdapter, { virtual: true })
     const { loadAdapter } = await import('../src/adapter')
 
-    const adapter = await loadAdapter(fullAdapterPath, process)
+    const adapter = await loadAdapter(fullAdapterPath, process.cwd())
 
     expect(adapter.executeTests({ testsToRun: [] })).toEqual({ exitCode: 123 })
   })
@@ -51,7 +51,7 @@ describe('Loading an adapter', () => {
       const { loadAdapter } = await import('../src/adapter')
       expect.assertions(1)
       try {
-        await loadAdapter(adapterPath, process)
+        await loadAdapter(adapterPath, process.cwd())
       } catch (e: any) {
         expect(e.code).toBe('MODULE_NOT_FOUND')
       }
