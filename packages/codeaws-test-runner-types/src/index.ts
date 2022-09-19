@@ -9,6 +9,9 @@ export interface TestCase {
 
 export interface AdapterInput {
   testsToRun?: TestCase[]
+  testReportFormat?: string
+  testReportOutputDir?: string
+  testReportFileName?: string
 }
 
 export interface AdapterOutput {

@@ -10,6 +10,9 @@ type Process = Pick<typeof process, 'exit'>
 function mapProtocolResultToAdapterInput(protocolResult: ProtocolResult): AdapterInput {
   return {
     testsToRun: protocolResult.testsToRun,
+    testReportFormat: protocolResult.testReportFormat,
+    testReportOutputDir: protocolResult.testReportOutputDir,
+    testReportFileName: protocolResult.testReportFileName,
   }
 }
 

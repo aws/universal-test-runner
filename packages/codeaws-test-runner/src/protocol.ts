@@ -25,11 +25,20 @@ export const EnvVars = {
    * 'file1.js#suite1#test1|file2.js#suite2#test4|file3.js#suite#test9'
    */
   TESTS_TO_RUN: 'TEP_TESTS_TO_RUN',
+
+  TEST_REPORT_FORMAT: 'TEP_TEST_REPORT_FORMAT',
+
+  TEST_REPORT_OUTPUT_DIR: 'TEP_TEST_REPORT_OUTPUT_DIR',
+
+  TEST_REPORT_FILE_NAME: 'TEP_TEST_REPORT_FILE_NAME',
 } as const
 
 export interface ProtocolResult {
   version: string
   testsToRun: TestCase[]
+  testReportFormat?: string
+  testReportOutputDir?: string
+  testReportFileName?: string
 }
 
 function readVersion(input: string | undefined): string {
@@ -59,6 +68,24 @@ function readTestsToRun(input: string | undefined): TestCase[] {
   )
 }
 
+function readTestReportFormat(testReportFormat: string | undefined): string | undefined {
+  const VALID_REPORT_FORMATS = ['junitxml']
+
+  if (testReportFormat && !VALID_REPORT_FORMATS.includes(testReportFormat.toLowerCase())) {
+    throw new Error(`Report format ${testReportFormat} not supported!`)
+  }
+
+  return testReportFormat?.toLowerCase()
+}
+
+function readTestReportOutputDir(testReportOutputDir?: string | undefined): string | undefined {
+  return testReportOutputDir
+}
+
+function readTestReportFileName(testReportFileName?: string | undefined): string | undefined {
+  return testReportFileName
+}
+
 function readProtocol(env: Environment): ProtocolResult {
   return {
     version: mapEnvToResult(env, [EnvVars.VERSION], readVersion),
@@ -70,6 +97,17 @@ function readProtocol(env: Environment): ProtocolResult {
         'CAWS_TEST_NAMES_TO_RUN',
       ],
       readTestsToRun,
+    ),
+    testReportFormat: mapEnvToResult(env, [EnvVars.TEST_REPORT_FORMAT], readTestReportFormat),
+    testReportOutputDir: mapEnvToResult(
+      env,
+      [EnvVars.TEST_REPORT_OUTPUT_DIR],
+      readTestReportOutputDir,
+    ),
+    testReportFileName: mapEnvToResult(
+      env,
+      [EnvVars.TEST_REPORT_FILE_NAME],
+      readTestReportFileName,
     ),
   }
 }

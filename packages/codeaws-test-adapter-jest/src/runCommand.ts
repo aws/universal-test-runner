@@ -8,8 +8,15 @@ interface CommandResult {
 }
 
 // Return an promise since we're likely to change from spawnSync to spawn (or something else async) at some point
-export default function runCommand(executable: string, args: string[]): Promise<CommandResult> {
-  const { status } = spawnSync(executable, args, { stdio: 'inherit' })
+export default function runCommand(
+  executable: string,
+  args: string[],
+  extraEnvVars = {},
+): Promise<CommandResult> {
+  const { status } = spawnSync(executable, args, {
+    stdio: 'inherit',
+    env: { ...process.env, ...extraEnvVars },
+  })
 
   return Promise.resolve({ status })
 }
