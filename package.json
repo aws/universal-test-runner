@@ -38,6 +38,7 @@
     "eslint": "^8.23.1",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-header": "^3.1.1",
+    "eslint-plugin-jest": "^27.0.4",
     "eslint-plugin-prettier": "^4.2.1",
     "fast-xml-parser": "^4.0.10",
     "husky": "^8.0.1",
@@ -50,7 +51,7 @@
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/dist/",
-      "/tests-integ\/test-projects/"
+      "/tests-integ\\/test-projects/"
     ]
   }
 }

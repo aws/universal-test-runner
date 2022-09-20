@@ -49,12 +49,11 @@ describe('Loading an adapter', () => {
     'throws an error when loading a non-existent adatper from %s',
     async (adapterPath: string) => {
       const { loadAdapter } = await import('../src/adapter')
-      expect.assertions(1)
-      try {
-        await loadAdapter(adapterPath, process.cwd())
-      } catch (e: any) {
-        expect(e.code).toBe('MODULE_NOT_FOUND')
-      }
+      await expect(loadAdapter(adapterPath, process.cwd())).rejects.toEqual(
+        expect.objectContaining({
+          code: 'MODULE_NOT_FOUND',
+        }),
+      )
     },
   )
 })
