@@ -7,29 +7,31 @@ assignees: ''
 
 ---
 
-## Security issue notifications
+## Verify this issue is not related to security
+
 If you discover a potential security issue in this project we ask that you notify AWS/Amazon Security via our [vulnerability reporting page](http://aws.amazon.com/security/vulnerability-reporting/). Please do **not** create a public github issue.
 
 _After verifying that this issue is not security related, remove this and the above text before opening your issue._
 
-**Describe the bug**
+## Describe the bug
+
 A clear and concise description of what the bug is.
 
-**To Reproduce**
+## Steps to reproduce
+
 Steps to reproduce the behavior:
 1. Set up project using ...
 2. Execute commands ...
 
-**Expected behavior**
+## Expected behavior
+
 A clear and concise description of what you expected to happen.
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
-
-**Desktop (please complete the following information):**
+## Version information
  - OS: [e.g. iOS]
  - Node.js version: [e.g. 16.14.2]
  - CLI version (`npm ls @sentinel-internal/codeaws-test-runner): [e.g. 1.0.0]
 
-**Additional context**
+## Additional context
+
 Add any other context about the problem here.
