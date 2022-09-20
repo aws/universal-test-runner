@@ -13,6 +13,7 @@ import { hideBin } from 'yargs/helpers'
 import run from '../src/run'
 import readProtocol from '../src/protocol'
 import { loadAdapter } from '../src/adapter'
+import log from '../src/log'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 <adapter> [args]')
@@ -26,8 +27,13 @@ const argv = yargs(hideBin(process.argv))
 
 const [adapterPath] = argv._
 
-const protocolResult = readProtocol(process.env)
-
-loadAdapter(String(adapterPath), process).then((adapter) => {
-  return run(adapter, protocolResult, process)
-})
+;(async () => {
+  try {
+    const protocolResult = readProtocol(process.env)
+    const adapter = await loadAdapter(String(adapterPath), process.cwd())
+    await run(adapter, protocolResult, process)
+  } catch (e) {
+    log.error(e)
+    process.exit(1)
+  }
+})()

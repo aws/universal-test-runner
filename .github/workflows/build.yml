@@ -31,15 +31,35 @@ jobs:
 
       - name: Build project
         run: npm run build
-        
+
+  integ-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.3.0
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Compile typescript
+        run: npm run compile
+
+      - name: Run integ tests
+        run: npm run test:integ
+
   secret-scan:
     runs-on: ubuntu-latest
-    
+
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      
+
       - name: TruffleHog OSS
         uses: trufflesecurity/trufflehog@v3.10.3
         with:

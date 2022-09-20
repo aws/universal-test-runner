@@ -6,12 +6,7 @@ import path from 'path'
 
 import { Adapter } from '@sentinel-internal/codeaws-test-runner-types'
 
-type Process = Pick<typeof process, 'cwd'>
-
-export async function loadAdapter(
-  rawAdapterModule: string,
-  processObject: Process,
-): Promise<Adapter> {
+export async function loadAdapter(rawAdapterModule: string, cwd: string): Promise<Adapter> {
   const adapterModule =
     {
       jest: '@sentinel-internal/codeaws-test-adapter-jest',
@@ -22,7 +17,7 @@ export async function loadAdapter(
 
   try {
     const adapterImportPath = adapterModule.startsWith('.')
-      ? path.join(processObject.cwd(), adapterModule)
+      ? path.join(cwd, adapterModule)
       : adapterModule
     const adapter = await import(adapterImportPath)
     log.info('Loaded adapter from', adapterModule)
