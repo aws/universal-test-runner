@@ -1,12 +1,13 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import _readProtocol, { EnvVars } from '../src/protocol'
+import _readProtocol from '../src/readProtocol'
+import { ProtocolEnvVars } from '../src/ProtocolEnvVars'
 import { Environment } from '../src/mapEnvToResult'
 
 jest.mock('../src/log')
 
-const { VERSION, TESTS_TO_RUN } = EnvVars
+const { VERSION, TESTS_TO_RUN } = ProtocolEnvVars
 
 function readProtocol(env: Environment) {
   return _readProtocol({

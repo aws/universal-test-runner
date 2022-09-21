@@ -11,9 +11,10 @@ import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 
 import run from '../src/run'
-import readProtocol from '../src/protocol'
-import { loadAdapter } from '../src/adapter'
+import readProtocol from '../src/readProtocol'
+import { loadAdapter } from '../src/loadAdapter'
 import log from '../src/log'
+import { ErrorCodes } from '../src/ErrorCodes'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 <adapter> [args]')
@@ -28,12 +29,20 @@ const argv = yargs(hideBin(process.argv))
 const [adapterPath] = argv._
 
 ;(async () => {
+  let protocolResult
+
   try {
-    const protocolResult = readProtocol(process.env)
+    protocolResult = readProtocol(process.env)
+  } catch (e) {
+    log.error(e)
+    process.exit(ErrorCodes.PROTOCOL_ERROR)
+  }
+
+  try {
     const adapter = await loadAdapter(String(adapterPath), process.cwd())
     await run(adapter, protocolResult, process)
   } catch (e) {
     log.error(e)
-    process.exit(1)
+    process.exit(ErrorCodes.RUNNER_ERROR)
   }
 })()

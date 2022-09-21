@@ -1,7 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import run, { ErrorCodes } from '../src/run'
+import run from '../src/run'
+import { ErrorCodes } from '../src/ErrorCodes'
 
 jest.mock('../src/log')
 

@@ -23,7 +23,7 @@ export async function loadAdapter(rawAdapterModule: string, cwd: string): Promis
     log.info('Loaded adapter from', adapterModule)
     return adapter
   } catch (e) {
-    log.info('Failed to load adapter from', adapterModule)
+    log.error('Failed to load adapter from', adapterModule)
     throw e
   }
 }

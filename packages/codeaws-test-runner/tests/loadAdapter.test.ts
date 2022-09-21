@@ -5,12 +5,18 @@ import path from 'path'
 
 jest.mock('../src/log')
 
+function importLoadAdapter() {
+  // loadAdapter must be imported dynamically in order to successfully
+  // mock adapter paths with jest virtual mocks
+  return import('../src/loadAdapter')
+}
+
 describe('Loading an adapter', () => {
   it('loads the correct adapter from an absolute path', async () => {
     const fullAdapterPath = path.join('my', 'full', 'path', 'adapter.js')
     const mockAdapter = { executeTests: () => ({ exitCode: 123 }) }
     jest.doMock(fullAdapterPath, () => mockAdapter, { virtual: true })
-    const { loadAdapter } = await import('../src/adapter')
+    const { loadAdapter } = await importLoadAdapter()
 
     const adapter = await loadAdapter(fullAdapterPath, process.cwd())
 
@@ -23,7 +29,7 @@ describe('Loading an adapter', () => {
     const fullAdapterPath = path.join(directory, adapterPath)
     const mockAdapter = { executeTests: () => ({ exitCode: 123 }) }
     jest.doMock(fullAdapterPath, () => mockAdapter, { virtual: true })
-    const { loadAdapter } = await import('../src/adapter')
+    const { loadAdapter } = await importLoadAdapter()
 
     const adapter = await loadAdapter(adapterPath, directory)
 
@@ -38,7 +44,7 @@ describe('Loading an adapter', () => {
       executeTests: () => ({ exitCode: 456 }),
     }
     jest.doMock(fullAdapterPath, () => mockAdapter, { virtual: true })
-    const { loadAdapter } = await import('../src/adapter')
+    const { loadAdapter } = await importLoadAdapter()
 
     const adapter = await loadAdapter(fullAdapterPath, process.cwd())
 
@@ -48,7 +54,7 @@ describe('Loading an adapter', () => {
   it.each(['blah', './blah.js'])(
     'throws an error when loading a non-existent adatper from %s',
     async (adapterPath: string) => {
-      const { loadAdapter } = await import('../src/adapter')
+      const { loadAdapter } = await importLoadAdapter()
       await expect(loadAdapter(adapterPath, process.cwd())).rejects.toEqual(
         expect.objectContaining({
           code: 'MODULE_NOT_FOUND',
