@@ -2,11 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import log from './log'
-import { Adapter, AdapterInput } from '@sentinel-internal/codeaws-test-runner-types'
+import { Adapter, AdapterInput, AdapterOutput } from '@sentinel-internal/codeaws-test-runner-types'
 import { ProtocolResult } from './readProtocol'
-import { ErrorCodes } from './ErrorCodes'
-
-type Process = Pick<typeof process, 'exit'>
+import { ErrorCodes } from '../bin/ErrorCodes'
 
 function mapProtocolResultToAdapterInput(protocolResult: ProtocolResult): AdapterInput {
   return {
@@ -17,16 +15,16 @@ function mapProtocolResultToAdapterInput(protocolResult: ProtocolResult): Adapte
   }
 }
 
-async function run(adapter: Adapter, protocolResult: ProtocolResult, processObject: Process) {
+async function run(adapter: Adapter, protocolResult: ProtocolResult): Promise<AdapterOutput> {
   const adapterInput = mapProtocolResultToAdapterInput(protocolResult)
   try {
     log.info('Calling executeTests on adapter...')
-    const { exitCode } = await adapter.executeTests(adapterInput)
+    const adapterOutput = await adapter.executeTests(adapterInput)
     log.info('Finished executing tests.')
-    processObject.exit(exitCode ?? ErrorCodes.ADAPTER_RETURNED_NO_EXIT_CODE)
+    return adapterOutput
   } catch (e) {
     log.error('Failed to run tests.', e)
-    processObject.exit(ErrorCodes.ADAPTER_ERROR)
+    return { exitCode: ErrorCodes.ADAPTER_ERROR }
   }
 }
 

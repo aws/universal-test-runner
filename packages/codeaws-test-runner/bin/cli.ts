@@ -14,7 +14,7 @@ import run from '../src/run'
 import readProtocol from '../src/readProtocol'
 import { loadAdapter } from '../src/loadAdapter'
 import log from '../src/log'
-import { ErrorCodes } from '../src/ErrorCodes'
+import { ErrorCodes } from './ErrorCodes'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 <adapter> [args]')
@@ -38,9 +38,17 @@ const [adapterPath] = argv._
     process.exit(ErrorCodes.PROTOCOL_ERROR)
   }
 
+  let adapter
   try {
-    const adapter = await loadAdapter(String(adapterPath), process.cwd())
-    await run(adapter, protocolResult, process)
+    adapter = await loadAdapter(String(adapterPath), process.cwd())
+  } catch (e) {
+    log.error(e)
+    process.exit(ErrorCodes.ADAPTER_LOADING_ERROR)
+  }
+
+  try {
+    const { exitCode } = await run(adapter, protocolResult)
+    process.exit(exitCode ?? ErrorCodes.ADAPTER_EXIT_CODE_ERROR)
   } catch (e) {
     log.error(e)
     process.exit(ErrorCodes.RUNNER_ERROR)

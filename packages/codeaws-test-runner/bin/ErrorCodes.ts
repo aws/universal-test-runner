@@ -14,7 +14,7 @@ export const ErrorCodes = {
    * the child process was terminated due to a signal:
    * https://nodejs.org/api/child_process.html#child_processspawnsynccommand-args-options
    */
-  ADAPTER_RETURNED_NO_EXIT_CODE: 1102,
+  ADAPTER_EXIT_CODE_ERROR: 1102,
 
   /*
    * Runner threw an unhandled exception when reading the protocol
@@ -22,8 +22,13 @@ export const ErrorCodes = {
   PROTOCOL_ERROR: 1103,
 
   /*
-   * Runner threw and unhandled exception when attempting to load and execute
-   * the adapter
+   * Unhandled error thrown when trying to load the specified adapter
    */
-  RUNNER_ERROR: 1104,
+  ADAPTER_LOADING_ERROR: 1104,
+
+  /*
+   * Unhandled error thrown when trying to invoke tests using protocol input
+   * and loaded adapter
+   */
+  RUNNER_ERROR: 1105,
 } as const
