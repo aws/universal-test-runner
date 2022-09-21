@@ -8,17 +8,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
     @Test
-    void Test1() {
+    void test1() {
         assertTrue(1 + 1 == 2);
     }
 
     @Test
-    void Test2() {
+    void test2() {
         assertTrue(2 + 2 == 4);
     }
 
     @Test
-    void Test3() {
+    void test3() {
         assertTrue(3 + 3 == 6);
     }
 }

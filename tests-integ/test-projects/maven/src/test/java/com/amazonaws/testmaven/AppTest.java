@@ -7,19 +7,19 @@ import org.junit.Test;
 public class AppTest
 {
     @Test
-    public void Test1()
+    public void test1()
     {
         assertTrue( 1 + 1 == 2 );
     }
 
     @Test
-    public void Test2()
+    public void test2()
     {
         assertTrue( 2 + 2 == 4 );
     }
 
     @Test
-    public void Test3()
+    public void test3()
     {
         assertTrue( 3 + 3 == 6 );
     }

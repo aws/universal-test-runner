@@ -9,7 +9,7 @@ import fs from 'fs'
 import { XMLParser } from 'fast-xml-parser'
 
 export function runSetupScript(adapter: string) {
-  runScript(adapter, 'setup.sh')
+  return runScript(adapter, 'setup.sh')
 }
 
 export function runCli(adapter: string, env: { [key: string]: string }) {
@@ -26,7 +26,7 @@ export function runCli(adapter: string, env: { [key: string]: string }) {
     'cli.js',
   )
 
-  runScript(adapter, 'run.sh', {
+  return runScript(adapter, 'run.sh', {
     ...env,
     RUN_TESTS: ['node', EXECUTABLE].join(' '),
   })
@@ -83,4 +83,6 @@ function runScript(adapter: string, scriptName: string, env: { [key: string]: st
       `Script ${scriptName} failed to execute for adapter ${adapter}, exit code is ${status}`,
     )
   }
+
+  return { status }
 }
