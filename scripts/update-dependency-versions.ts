@@ -8,11 +8,12 @@ import path from 'path'
 import { packages } from './packages'
 
 /*
- * Make sure every package  always depends on the latest version of other
+ * Make sure every package always depends on the latest version of other
  * packages within this monorepo.
  */
 packages.forEach((packageToUpdate) => {
-  console.log(`Updating dependencies for ${packageToUpdate}...`)
+  console.log(`Updating dependencies for ${packageToUpdate.packageName}...`)
+
   packages.forEach((maybeDependency) => {
     if (packageToUpdate.packageJson.dependencies?.[maybeDependency.packageName]) {
       packageToUpdate.packageJson.dependencies[
@@ -23,10 +24,12 @@ packages.forEach((packageToUpdate) => {
 })
 
 /*
- * Write a new package.json file for each package inside this monorepo.
+ * Write a new package.json file for each package inside this monorepo, with
+ * the updated dependency versions.
  */
 packages.forEach((packageToUpdate) => {
-  console.log(`Writing new package.json for ${packageToUpdate}...`)
+  console.log(`Writing new package.json for ${packageToUpdate.packageName}...`)
+
   fs.writeFileSync(
     path.join(packageToUpdate.packageRoot, 'package.json'),
     `${JSON.stringify(packageToUpdate.packageJson, null, 2)}\n`,

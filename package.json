@@ -25,7 +25,7 @@
     "cli:gradle": "npm run cli -- gradle",
     "generate-attributions": "ts-node ./scripts/generate-attributions",
     "prepare": "husky install",
-    "bump:prerelease": "npm version $npm_package_version-$(echo $COMMIT_ID | cut -c 1-7).0 --workspaces --no-git-tag-version --include-workspace-root && ts-node ./scripts/update-dependency-versions"
+    "bump:prerelease": "npm version \"$npm_package_version-$(echo $COMMIT_ID | cut -c 1-7).0\" --workspaces --no-workspaces-update --no-git-tag-version && ts-node ./scripts/update-dependency-versions"
   },
   "license": "Apache-2.0",
   "devDependencies": {

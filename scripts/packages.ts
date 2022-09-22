@@ -8,11 +8,7 @@ import path from 'path'
 
 const PACKAGES_DIR = path.join(__dirname, '..', 'packages')
 
-const dirContents = fs.readdirSync(PACKAGES_DIR)
-
-console.log('Read the following from packages dir:', dirContents)
-
-export const packages = dirContents.map((packagePath) => {
+export const packages = fs.readdirSync(PACKAGES_DIR).map((packagePath) => {
   const packageRoot = path.join(PACKAGES_DIR, packagePath)
   const packageJson = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf-8'))
   return {
