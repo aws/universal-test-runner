@@ -6,13 +6,12 @@ import path from 'path'
 
 const PACKAGES_DIR = path.join(__dirname, '..', 'packages')
 
-export const packages = fs.readdirSync(PACKAGES_DIR).map((packageRoot) => {
-  const packageJson = JSON.parse(
-    fs.readFileSync(path.join(PACKAGES_DIR, packageRoot, 'package.json'), 'utf-8'),
-  )
+export const packages = fs.readdirSync(PACKAGES_DIR).map((packagePath) => {
+  const packageRoot = path.join(PACKAGES_DIR, packagePath)
+  const packageJson = JSON.parse(fs.readFileSync(path.join(packageRoot, 'package.json'), 'utf-8'))
   return {
     packageJson,
-    packageRoot: path.join(PACKAGES_DIR, packageRoot),
+    packageRoot,
     packageName: packageJson.name,
   }
 })

@@ -4,7 +4,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { packages } from './packages'
+import { packages } from '../scripts/packages'
 
 const NOTICE_CONTENTS = fs.readFileSync(path.join(__dirname, '..', 'NOTICE'), 'utf-8')
 

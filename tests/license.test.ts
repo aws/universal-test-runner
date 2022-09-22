@@ -4,7 +4,7 @@
 import fs from 'fs'
 import path from 'path'
 
-import { packages } from './packages'
+import { packages } from '../scripts/packages'
 
 const LICENSE_CONTENTS = fs.readFileSync(path.join(__dirname, '..', 'LICENSE'), 'utf-8')
 

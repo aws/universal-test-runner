@@ -1,4 +1,5 @@
 {
+  "version": "0.1.0",
   "private": true,
   "workspaces": [
     "packages/codeaws-test-runner-types",
@@ -22,8 +23,9 @@
     "cli:maven": "npm run cli -- maven",
     "cli:pytest": "npm run cli -- pytest",
     "cli:gradle": "npm run cli -- gradle",
-    "generate-attributions": "tsc && node dist/lib/scripts/generate-attributions",
-    "prepare": "husky install"
+    "generate-attributions": "ts-node ./scripts/generate-attributions",
+    "prepare": "husky install",
+    "bump:prerelease": "npm version $npm_package_version-$(echo $COMMIT_ID | cut -c 1-7).0 --workspaces --no-git-tag-version --include-workspace-root && ts-node ./scripts/update-dependency-versions"
   },
   "license": "Apache-2.0",
   "devDependencies": {
@@ -45,6 +47,7 @@
     "jest": "^29.0.3",
     "jest-junit": "^14.0.1",
     "prettier": "^2.7.1",
+    "ts-node": "^10.9.1",
     "typescript": "^4.8.3"
   },
   "jest": {

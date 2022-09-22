@@ -6,7 +6,7 @@ import path from 'path'
 
 import { getFullAttributionsText } from '../scripts/generate-attributions'
 
-import { packages } from './packages'
+import { packages } from '../scripts/packages'
 
 describe('Attribution file', () => {
   it.each(packages)(
