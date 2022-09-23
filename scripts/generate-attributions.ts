@@ -6,6 +6,8 @@
 import fs from 'fs/promises'
 import path from 'path'
 
+import { packages } from './packages'
+
 // This list is not comprehensive, but simply covers the approved licenses
 // we're using so far.
 const PERMISSIBLE_LICENSES = ['Apache-2.0', 'MIT', 'ISC']
@@ -130,21 +132,12 @@ async function exists(path: string): Promise<boolean> {
   }
 }
 
-async function run() {
-  const packagePaths = await fs.readdir(path.join(process.cwd(), 'packages'))
+function run() {
   return Promise.all(
-    packagePaths.map(async (packagePath) => {
-      const attributionsFilePath = path.join(
-        process.cwd(),
-        'packages',
-        packagePath,
-        'THIRD_PARTY_LICENSES',
-      )
+    packages.map(async ({ packageRoot, packageName }) => {
+      const attributionsFilePath = path.join(packageRoot, 'THIRD_PARTY_LICENSES')
       console.log(`Writing attribution file to ${attributionsFilePath}`)
-      const packageJson = await import(
-        path.join(process.cwd(), 'packages', packagePath, 'package.json')
-      )
-      await fs.writeFile(attributionsFilePath, await getFullAttributionsText(packageJson.name))
+      await fs.writeFile(attributionsFilePath, await getFullAttributionsText(packageName))
     }),
   )
 }
