@@ -7,10 +7,11 @@ import fs from 'fs/promises'
 import path from 'path'
 
 import { packages } from './packages'
+import findPackageRoot from './findPackageRoot'
 
 // This list is not comprehensive, but simply covers the approved licenses
 // we're using so far.
-const PERMISSIBLE_LICENSES = ['Apache-2.0', 'MIT', 'ISC']
+const PERMISSIBLE_DISTRIBUTION_LICENSES = ['Apache-2.0', 'MIT', 'ISC']
 
 export async function getFullAttributionsText(packageName: string): Promise<string> {
   const attributions = await getAttributions(packageName)
@@ -31,9 +32,9 @@ async function getAttributions(
 
   const { dependencies, version, licenseId } = await loadPackageJsonInfo(packageRoot)
 
-  if (!PERMISSIBLE_LICENSES.includes(licenseId)) {
+  if (!PERMISSIBLE_DISTRIBUTION_LICENSES.includes(licenseId)) {
     throw new Error(
-      `License ${licenseId} for package ${packageName} is not a permissible third-party license.`,
+      `License ${licenseId} for package ${packageName} is not a permissible third-party license for distribution.`,
     )
   }
 
@@ -63,22 +64,11 @@ async function getAttributions(
   ].join('')
 }
 
-async function findPackageRoot(packageName: string): Promise<string> {
-  let packageRoot = path.dirname(require.resolve(packageName))
-  while (!(await exists(path.join(packageRoot, 'package.json')))) {
-    packageRoot = path.dirname(packageRoot)
-  }
-  return packageRoot
-}
-
 async function loadPackageJsonInfo(
   packageRoot: string,
 ): Promise<{ dependencies: string[]; version: string; licenseId: string }> {
   const packageJsonPath = path.join(packageRoot, 'package.json')
   const packageJson = await import(packageJsonPath)
-  if (!PERMISSIBLE_LICENSES.includes(packageJson.license)) {
-    throw new Error(`License ${packageJson.license} is not an approved third-party license`)
-  }
   return {
     dependencies: Object.keys(packageJson.dependencies || {}).sort(),
     version: packageJson.version,
@@ -123,15 +113,6 @@ function indent(text: string, width = 4) {
   return `${indentString}${text.split('\n').join(`\n${indentString}`)}`
 }
 
-async function exists(path: string): Promise<boolean> {
-  try {
-    await fs.access(path)
-    return true
-  } catch {
-    return false
-  }
-}
-
 function run() {
   return Promise.all(
     packages.map(async ({ packageRoot, packageName }) => {
@@ -143,5 +124,8 @@ function run() {
 }
 
 if (require.main === module) {
-  run().then(() => console.log('Done'))
+  ;(async () => {
+    await run()
+    console.log('Done.')
+  })()
 }
