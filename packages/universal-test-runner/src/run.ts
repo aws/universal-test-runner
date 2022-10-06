@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import log from './log'
-import { Adapter, AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-runner-types'
+import {
+  Adapter,
+  AdapterInput,
+  AdapterOutput,
+} from '@sentinel-internal/universal-test-runner-types'
 import { ProtocolResult } from './readProtocol'
 import { ErrorCodes } from '../bin/ErrorCodes'
 
