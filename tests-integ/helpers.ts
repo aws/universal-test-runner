@@ -19,7 +19,7 @@ export function runCli(adapter: string, env: { [key: string]: string }) {
     __dirname,
     '..',
     'packages',
-    'codeaws-test-runner',
+    'universal-test-runner',
     'dist',
     'lib',
     'bin',

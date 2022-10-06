@@ -2,9 +2,10 @@
 
 set -e
 
-# Used to install the right Node.js (and NPM) version when running in CODE.AWS
-# When installing Node.js in your local dev env, use the instructions in the
-# NVM README: https://github.com/nvm-sh/nvm#installing-and-updating
+# Used to install the right Node.js (and NPM) version when running in some CI
+# environments When installing Node.js in your local dev env, use the
+# instructions in the NVM README:
+# https://github.com/nvm-sh/nvm#installing-and-updating
 
 echo "Installing nvm..."
 

@@ -1,0 +1,22 @@
+{
+  "name": "@sentinel-internal/universal-test-adapter-pytest",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "main": "dist/lib/src/index.js",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "compile": "tsc",
+    "prepack": "npm run clean && npm run compile"
+  },
+  "files": [
+    "dist/lib/src",
+    "NOTICE",
+    "THIRD_PARTY_LICENSES"
+  ],
+  "dependencies": {
+    "@sentinel-internal/universal-test-runner-logger": "^0.1.0"
+  },
+  "devDependencies": {
+    "@sentinel-internal/universal-test-runner-types": "*"
+  }
+}

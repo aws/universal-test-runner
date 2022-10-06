@@ -1,0 +1,19 @@
+{
+  "name": "@sentinel-internal/universal-test-runner-types",
+  "version": "0.1.0",
+  "license": "Apache-2.0",
+  "main": "dist/lib/index.js",
+  "types": "dist/types/index.d.ts",
+  "scripts": {
+    "clean": "rm -rf dist",
+    "compile": "tsc",
+    "watch": "tsc -w",
+    "prepack": "npm run clean && npm run compile"
+  },
+  "files": [
+    "dist/lib/src",
+    "dist/types/src",
+    "NOTICE",
+    "THIRD_PARTY_LICENSES"
+  ]
+}

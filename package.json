@@ -1,10 +1,11 @@
 {
   "version": "0.1.0",
+  "name": "universal-test-runner",
   "private": true,
   "workspaces": [
-    "packages/codeaws-test-runner-types",
-    "packages/codeaws-test-runner-logger",
-    "packages/codeaws-test-runner",
+    "packages/universal-test-runner-types",
+    "packages/universal-test-runner-logger",
+    "packages/universal-test-runner",
     "packages/*"
   ],
   "scripts": {

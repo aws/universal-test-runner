@@ -1,20 +1,13 @@
-# codeaws-test-runner
+# universal-test-runner
 
 A universal test runner for any language and test framework.
 
-**NB: The name "codeaws-test-runner" is temporary. A rename must be done
-_before_ the repo is made public. This tool is not specific to AWS or CODE.AWS
-in any way, and should be useful for testing in general, so we don't want to
-include any Amazon-related "branding" in the name. (What exactly the name
-should be is tough to say; we'll have to do some brainstorming to come up with
-a good name.)**
-
-codeaws-test-runner is a command-line tool that uses the [Test Execution
+universal-test-runner is a command-line tool that uses the [Test Execution
 Protocol](./protocol/README.md) to run tests for any programming language and
 any test framework. For example, to run tests in a project using Jest:
 
 ```
-npm install -g @sentinel-internal/codeaws-test-runner 
+npm install -g @sentinel-internal/universal-test-runner 
 run-tests jest
 ```
 
@@ -34,7 +27,7 @@ have a first-party or third-party adapter:
 run-tests ./my-customer-adapter.js
 ```
 
-If codeaws-test-runner doesn't suit your needs exactly, you can use it as an
+If universal-test-runner doesn't suit your needs exactly, you can use it as an
 example of how to write your own Test Execution Protocol-aware runner. See
 the [Test Execution Protocol](./protocol/README.md) docs for more info.
 
