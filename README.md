@@ -15,11 +15,11 @@ export TEP_TESTS_TO_RUN="my test"
 run-tests jest
 ```
 
-Want to do the same, but for a project using [pytest](https://pytest.org)? Easy
-(because it's the same!):
+How about running a test named "my_test", but for a project using
+[pytest](https://pytest.org)? Easy -- we can use the same command!
 
 ```
-export TEP_TESTS_TO_RUN="my test" 
+export TEP_TESTS_TO_RUN="my_test" 
 run-tests pytest
 ```
 
@@ -52,7 +52,7 @@ to support for v1.0.0.
 
 It's possible to write custom adapters and pass them to universal-test-runner,
 providing support for new frameworks or custom testing setups. See the docs on
-[writing custom adapters](#writing-adapters) for how to implement one.
+[writing custom adapters](#-writing-adapters) for how to implement one.
 
 If you write a custom adapter, please host it in its own GitHub repo and
 publish it to npm; then [open a pull request](https://github.com/aws/codeaws-test-runner/compare) to add it to our 
@@ -75,13 +75,13 @@ run-tests ./my-local-adapter.js
 
 If universal-test-runner doesn't suit your needs exactly, you can use it as an
 example of how to write your own Test Execution Protocol-aware runner. See the
-[writing custom runners](#custom-runners) and the 
+[writing custom runners](#-custom-runners) and the 
 [Test Execution Protocol](./protocol/README.md) docs for more info.
 
 ## 👩‍💻 Writing adapters
 
 Test adapters are responsible for executing tests as specified by the Test
-Execution Protocol, and reporting the status of the test execution back to the
+Execution Protocol, and reporting the status of the test execution back to
 universal-test-runner. The runner will do all the work of parsing the protocol
 environment variables, and then invoke the `executeTests` function exposed by
 the adapter.
