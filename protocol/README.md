@@ -4,7 +4,7 @@ The Test Execution Protocol establishes a common interface for passing
 arguments to test runners, in order to make it easier for tools such as IDEs
 and CI/CD systems to interact with test frameworks.
 
-See [RFC 0001](./rfcs/0001/0001.md) for an explanation the protocol and the
+See [RFC 0001](./rfcs/0001/README.md) for an explanation the protocol and the
 motivation behind why it exists.
 
 Changes to the protocol are made using the RFC process. All changes must have a

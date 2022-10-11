@@ -2,45 +2,97 @@
 
 A universal test runner for any language and test framework.
 
+## 🌎 What is universal-test-runner?
+
 universal-test-runner is a command-line tool that uses the [Test Execution
 Protocol](./protocol/README.md) to run tests for any programming language and
-any test framework. For example, to run tests in a project using Jest:
+any test framework. For example, to run a single test named "my test" in a
+project using [Jest](https://jestjs.io/), you can run the following:
 
 ```
 npm install -g @sentinel-internal/universal-test-runner 
+export TEP_TESTS_TO_RUN="my test" 
 run-tests jest
 ```
 
-First-party test adapter support is provided for the following frameworks/build tools:
-
-* Jest
-* Pytest
-* Maven
-* Gradle
-* ... and more to come!
-
-It's also possible to write custom adapters and pass them to the runner,
-providing support for custom testing setups, or frameworks that don't already
-have a first-party or third-party adapter:
+Want to do the same, but for a project using [pytest](https://pytest.org)? Easy
+(because it's the same!):
 
 ```
-run-tests ./my-customer-adapter.js
+export TEP_TESTS_TO_RUN="my test" 
+run-tests pytest
+```
+
+Check out [RFC 0001](./protocol/rfcs/0001/README.md) for the motivation behind
+universal-test-runner and the Test Execution Protocol, and why it's useful to
+have a common interface for passing arguments to test runners.
+
+## 🤔 When should I use universal-test-runner?
+
+You should install universal-test-runner in the following cases:
+
+* Your IDE or CI/CD system tells you to, in order for it to support running tests according to the [Test Execution Protocol](./protocol/README.md)
+* You're developing an adapter for universal-test-runner, and you want to test it out
+* You're writing a custom adapter for use with your project setup, and you want to test it out
+
+## 📈 Frameworks and build tool support
+
+First-party test adapter support is provided for the following frameworks/build tools:
+
+* Jest: https://jestjs.io/
+* Pytest: https://pytest.org
+* Maven: https://maven.apache.org/
+* Gradle: https://gradle.org/
+
+See the [1.0.0 milestone](https://github.com/aws/codeaws-test-runner/milestone/1)
+for all features planned for v1.0.0, and all frameworks and build tools we plan
+to support for v1.0.0.
+
+## 🔋 Custom adapters
+
+It's possible to write custom adapters and pass them to universal-test-runner,
+providing support for new frameworks or custom testing setups. See the docs on
+[writing custom adapters](#writing-adapters) for how to implement one.
+
+If you write a custom adapter, please host it in its own GitHub repo and
+publish it to npm; then [open a pull request](https://github.com/aws/codeaws-test-runner/compare) to add it to our 
+[list of known third-party adapters](TODO), so everyone can benefit. (Note that we 
+won't be adding the source code of third-party adapters directly to this repo.)
+
+Example of using a third-party adapter from npm:
+
+```
+npm install -g my-awesome-adapter
+run-tests my-awesome-adapter
+```
+
+If you have a specific project setup that you don't think merits a generic
+third-party adapter, you can pass an adapter from a local file:
+
+```
+run-tests ./my-local-adapter.js
 ```
 
 If universal-test-runner doesn't suit your needs exactly, you can use it as an
-example of how to write your own Test Execution Protocol-aware runner. See
-the [Test Execution Protocol](./protocol/README.md) docs for more info.
+example of how to write your own Test Execution Protocol-aware runner. See the
+[writing custom runners](#custom-runners) and the 
+[Test Execution Protocol](./protocol/README.md) docs for more info.
 
-## Test Adapters
+## 👩‍💻 Writing adapters
 
-Test adapters are responsible for executing the tests and reporting the status
-of the test execution back to the runner. Adapters must expose a function
-`executeTests` that accepts an object as its argument, and returns a result
-object. If there's an error that prevents tests from being executed, the
-adapter should throw an error. The adapter can also return a promise. A promise
-resolved with the result object indicates that the tests were executed, while a
-rejected promise indicates that there was an error that prevented the tests
-from being executed.
+Test adapters are responsible for executing tests as specified by the Test
+Execution Protocol, and reporting the status of the test execution back to the
+universal-test-runner. The runner will do all the work of parsing the protocol
+environment variables, and then invoke the `executeTests` function exposed by
+the adapter.
+
+* The `executeTests` function must accept an input object of type [`AdapterInput`](./packages/universal-test-runner-types/src/index.ts)
+* The `executeTests` function must return an ouput object of type [`AdapterOutput`](./packages/universal-test-runner-types/src/index.ts) or `Promise<AdapterOutput>`.
+  * If the adapter executes the tests successfully, and the test run passes, `executeTests` should return an exitCode of `0` (or a promise resolved with an exitCode of `0`).
+  * If the adapter executes the tests successfully, and the test run fails, `executesTests` should return a non-zero exitCode (or a promise resolved with a non-zero exitCode).
+  * If the adapter cannot execute the tests due to an unrecoverable error, `executeTests` should throw an error (or return a rejected promise).
+
+Two simple adapters are shown below, with the details of test execution omitted:
 
 ```javascript
 // adapter.js
@@ -70,11 +122,32 @@ The adapter is passed to the runner as follows:
 run-tests ./adapter.js
 ```
 
-## Custom runners
+### Publishing adapters to npm
+
+Structure your adapter as described above, and make sure the `main` field in your package.json points to a file that exports an `executeTests` function.
+
+## 🏃‍♀️ Custom runners
 
 TODO
 
-## Local development setup
+## 🔀 Contributing
+
+Please see the [contributing guide](./CONTRIBUTING.md) for all the logistical
+details. Read the existing issues and pull requests before starting to make any
+code changes; large changes that haven't been discussed will be rejected
+outright in favour of small, incremental changes, so please open an issue early
+to discuss anything that may be non-trivial before development starts.
+
+All changes to the Test Execution Protocol must follow the [RFC process](./protocol/README.md).
+
+### Local development setup
+
+[Fork](https://github.com/aws/codeaws-test-runner/fork) the repository, and then clone your fork:
+
+```
+git clone https://github.com/<USERNAME>/<PATH_TO_YOUR_FORK>
+cd <PATH_TO_YOUR_FORK>
+```
 
 Make sure you're using the correct Node.js version (install nvm [here](https://github.com/nvm-sh/nvm) if needed):
 
@@ -94,4 +167,10 @@ Run tests
 npm test
 ```
 
-To run the pre-commit hook, you'll have to install [TruffleHog](https://github.com/trufflesecurity/trufflehog).
+Run integration tests (you may have to install some of the frameworks and build tools manually to get these to pass locally):
+
+```
+npm run test:integ
+```
+
+Make your changes and commit them. To run the pre-commit hook, you'll have to install [TruffleHog](https://github.com/trufflesecurity/trufflehog). Push the changes to your fork, and open a pull request.
