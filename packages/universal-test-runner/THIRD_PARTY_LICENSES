@@ -954,7 +954,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
 ----------------
 
-** yargs@17.5.1 - https://npmjs.com/package/yargs
+** yargs@17.6.0 - https://npmjs.com/package/yargs
 MIT License
 
 Copyright 2010 James Halliday (mail@substack.net); Modified work Copyright 2014 Contributors (ben@npmjs.com)
@@ -979,7 +979,7 @@ THE SOFTWARE.
 
 ----------------
 
-** cliui@7.0.4 - https://npmjs.com/package/cliui
+** cliui@8.0.1 - https://npmjs.com/package/cliui
 Copyright (c) 2015, Contributors
 
 Permission to use, copy, modify, and/or distribute this software
