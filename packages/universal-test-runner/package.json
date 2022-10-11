@@ -25,7 +25,7 @@
     "@sentinel-internal/universal-test-adapter-maven": "^0.1.0",
     "@sentinel-internal/universal-test-adapter-pytest": "^0.1.0",
     "@sentinel-internal/universal-test-runner-logger": "^0.1.0",
-    "yargs": "^17.5.1"
+    "yargs": "^17.6.0"
   },
   "devDependencies": {
     "@sentinel-internal/universal-test-runner-types": "*",
