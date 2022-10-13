@@ -19,7 +19,7 @@ function readProtocol(env: Environment) {
 describe('Protocol reading function', () => {
   describe('when parsing TEP_TESTS_TO_RUN', () => {
     it('reads a list of test names', () => {
-      const result = readProtocol({
+      const [result] = readProtocol({
         [TESTS_TO_RUN]: 'test1|test4|test9',
       })
       expect(result.testsToRun).toEqual([
@@ -30,7 +30,7 @@ describe('Protocol reading function', () => {
     })
 
     it('reads the test suite for a single test', () => {
-      const result = readProtocol({
+      const [result] = readProtocol({
         [TESTS_TO_RUN]: 'test1|test4|suitename#test9',
       })
       expect(result.testsToRun).toEqual([
@@ -41,7 +41,7 @@ describe('Protocol reading function', () => {
     })
 
     it('reads the test suite for a many tests', () => {
-      const result = readProtocol({
+      const [result] = readProtocol({
         [TESTS_TO_RUN]: 'suite1#test1|suite2#test4|suitename#test9',
       })
       expect(result.testsToRun).toEqual([
@@ -52,7 +52,7 @@ describe('Protocol reading function', () => {
     })
 
     it('reads the filepath only for many tests', () => {
-      const result = readProtocol({
+      const [result] = readProtocol({
         [TESTS_TO_RUN]: 'file1.js##test1|file2.js##test4|file3.js##test9',
       })
       expect(result.testsToRun).toEqual([
@@ -63,7 +63,7 @@ describe('Protocol reading function', () => {
     })
 
     it('reads the filepath only for one test', () => {
-      const result = readProtocol({
+      const [result] = readProtocol({
         [TESTS_TO_RUN]: 'test1|test4|file3.js##test9',
       })
       expect(result.testsToRun).toEqual([
@@ -74,7 +74,7 @@ describe('Protocol reading function', () => {
     })
 
     it('reads the filepath and suite name for one test', () => {
-      const result = readProtocol({
+      const [result] = readProtocol({
         [TESTS_TO_RUN]: 'test1|test4|file3.js#suite1#test9',
       })
       expect(result.testsToRun).toEqual([
@@ -85,7 +85,7 @@ describe('Protocol reading function', () => {
     })
 
     it('reads an empty list when value is not present', () => {
-      const result = readProtocol({})
+      const [result] = readProtocol({})
       expect(result.testsToRun).toEqual([])
     })
   })

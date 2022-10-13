@@ -11,10 +11,12 @@ import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 
 import run from '../src/run'
-import readProtocol from '../src/readProtocol'
-import { loadAdapter } from '../src/loadAdapter'
+import _readProtocol, { ProtocolResult } from '../src/readProtocol'
+import { loadAdapter as _loadAdapter } from '../src/loadAdapter'
 import log from '../src/log'
+import ProtocolLogger from '../src/ProtocolLogger'
 import { ErrorCodes } from './ErrorCodes'
+import { Adapter } from '@sentinel-internal/universal-test-runner-types'
 
 const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 <adapter> [args]')
@@ -28,29 +30,75 @@ const argv = yargs(hideBin(process.argv))
 
 const [adapterPath] = argv._
 
-;(async () => {
-  let protocolResult
+const protocolLogger = new ProtocolLogger()
 
+;(async () => {
+  const protocolResult = await readProtocol()
+  await validateProtocolVersion(protocolResult.version)
+  const adapter = await loadAdapter(String(adapterPath))
+  await runTests(adapter, protocolResult)
+})()
+
+async function readProtocol(): Promise<ProtocolResult> {
   try {
-    protocolResult = readProtocol(process.env)
+    protocolLogger.logProtocolReadStart()
+    const [protocolResult, rawValues] = _readProtocol(process.env)
+    protocolLogger.setLogFileName(protocolResult.logFileName)
+    protocolLogger.logProtocolReadEnd()
+    protocolLogger.logDiscoveredProtocolEnvVars(rawValues)
+    protocolLogger.logProtocolVersion(protocolResult.version)
+    return protocolResult
   } catch (e) {
-    log.error(e)
+    await cleanUp(e)
     process.exit(ErrorCodes.PROTOCOL_ERROR)
   }
+}
 
-  let adapter
+async function validateProtocolVersion(version: string): Promise<void> {
+  const SUPPORTED_VERSIONS = ['0.1.0']
+
+  if (!SUPPORTED_VERSIONS.includes(version)) {
+    await cleanUp(new Error(`Protocol version ${version} is not supported by this runner`))
+    process.exit(ErrorCodes.PROTOCOL_VERSION_NOT_SUPPORTED)
+  }
+
+  log.info('Use Test Execution Protocol version', version)
+}
+
+async function loadAdapter(adapterPath: string): Promise<Adapter> {
   try {
-    adapter = await loadAdapter(String(adapterPath), process.cwd())
+    protocolLogger.logAdapterPath(adapterPath)
+    protocolLogger.logAdapterLoadStart()
+    const adapter = await _loadAdapter(adapterPath, process.cwd())
+    protocolLogger.logAdapterLoadEnd()
+    return adapter
   } catch (e) {
-    log.error(e)
+    await cleanUp(e)
     process.exit(ErrorCodes.ADAPTER_LOADING_ERROR)
   }
+}
 
+async function runTests(adapter: Adapter, protocolResult: ProtocolResult): Promise<void> {
   try {
+    protocolLogger.logTestRunStart()
     const { exitCode } = await run(adapter, protocolResult)
+    protocolLogger.logTestRunEnd()
+    await cleanUp()
     process.exit(exitCode ?? ErrorCodes.ADAPTER_EXIT_CODE_ERROR)
   } catch (e) {
-    log.error(e)
+    await cleanUp(e)
     process.exit(ErrorCodes.RUNNER_ERROR)
   }
-})()
+}
+
+async function cleanUp(error?: any) {
+  if (error) {
+    log.error(error)
+    protocolLogger.logError(String(error))
+  }
+  try {
+    await protocolLogger.write()
+  } catch (e) {
+    log.warn('Unable to write logs to', protocolLogger.getLogFileName(), e)
+  }
+}

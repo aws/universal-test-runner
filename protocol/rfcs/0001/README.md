@@ -60,7 +60,7 @@ We define the first version of the protocol with the following environment varia
 
 * `TEP_VERSION` (string; required): The version of the protocol being used, adhering to [semantic-versioning](https://semver.org/).
   * Example: `export TEP_VERSION="0.1.0"`
-  * If this value is absent, runners must ignore all other environment variables, and should print a warning indicating that TEP_VERSION was not identified.
+  * If this value is absent, runners must use the latest version of the protocol supported supported by the runner, and should print a warning indicating that TEP_VERSION was not identified.
   * If a runner does not support the version indicated, it must fail with an error.
 * `TEP_TESTS_TO_RUN` (string; optional): Pipe-separated list of test names to be executed by the runner.
   * Example: `export TEP_TESTS_TO_RUN="test1|test4|test9"`
@@ -76,3 +76,25 @@ We define the first version of the protocol with the following environment varia
   * Example: `export TEP_REPORT_OUTPUT_DIR=path/to/reports/`
 * `TEP_TEST_REPORT_FILE_NAME` (string; optional): File name of a generated test report; defaults to unspecified (determined by the runner)
   * Example: `export TEP_TEST_REPORT_FILE_NAME="report.xml"`
+* `TEP_LOG_FILE_NAME` (string; optional): Path where the runner should write logging information after it has finished running tests.
+  * If not present, the runner should write no log files
+  * If present, the log file written should be in the following JSON format:
+      ```typescript
+      interface LogFile {
+        logs: {
+          timestamp: number // unix millisecond timestamp
+          type: 'MESSAGE' | 'CUSTOM' | 'PROTOCOL_READ_START' | 'PROTOCOL_READ_END' | 'DISCOVERED_PROTOCOL_ENV_VARS' | 'TEST_RUN_START' | 'TEST_RUN_END' | 'PROTOCOL_VERSION'
+          level: 'INFO' | 'ERROR' | 'DEBUG' | 'WARN'
+          data: any
+        }[]
+      }
+      ```
+  * The runner should log the following `data` for the given log `type` at the specified `level`
+    * [INFO] `PROTOCOL_READ_START`: `void`; this timestamp for this entry indicates the time at which the runner starts to read protocol variables from the environment
+    * [INFO] `PROTOCOL_READ_END`: `void`; the timestamp for this entry indicates the time at which the runner finishes reading protocol variables from the environment
+    * [DEBUG] `DISCOVERED_TEP_ENV_VARS`: `{ [key: string]: string }`; object map of env vars discovered by the runner
+    * [DEBUG] `PROTOCOL_VERSION`: `string`; string indicating the version of the protocol being used
+    * [INFO] `TEST_RUN_START`: `void`; the timestamp for this entry indicates the time at which the runner starts running tests
+    * [INFO] `TEST_RUN_END`: `void`; the timestamp for this entry indicates the time at which the runner finishes running tests
+  * The runner may log any number of string `MESSAGE` logs at the appropriate log level 
+  * The runner may log any number of `CUSTOM` logs at level `DEBUG`, where `data` takes the type `{ type: string; data: any }`
