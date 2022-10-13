@@ -17,11 +17,13 @@ export interface ProtocolResult {
   testReportFormat?: string
   testReportOutputDir?: string
   testReportFileName?: string
+  logFileName?: string
 }
 
-function readProtocol(env: Environment): ProtocolResult {
-  return {
-    version: mapEnvToResult(env, [ProtocolEnvVars.VERSION], readVersion),
+function readProtocol(env: Environment): [ProtocolResult, { [key: string]: string }] {
+  const rawValues = {}
+  const result = {
+    version: mapEnvToResult(env, [ProtocolEnvVars.VERSION], readVersion, rawValues),
     testsToRun: mapEnvToResult(
       env,
       [
@@ -30,34 +32,39 @@ function readProtocol(env: Environment): ProtocolResult {
         'CAWS_TEST_NAMES_TO_RUN',
       ],
       readTestsToRun,
+      rawValues,
     ),
     testReportFormat: mapEnvToResult(
       env,
       [ProtocolEnvVars.TEST_REPORT_FORMAT],
       readTestReportFormat,
+      rawValues,
     ),
     testReportOutputDir: mapEnvToResult(
       env,
       [ProtocolEnvVars.TEST_REPORT_OUTPUT_DIR],
       readTestReportOutputDir,
+      rawValues,
     ),
     testReportFileName: mapEnvToResult(
       env,
       [ProtocolEnvVars.TEST_REPORT_FILE_NAME],
       readTestReportFileName,
+      rawValues,
     ),
+    logFileName: mapEnvToResult(env, [ProtocolEnvVars.LOG_FILE_NAME], readLogFileName, rawValues),
   }
+  return [result, rawValues]
 }
 
 function readVersion(input: string | undefined): string {
+  const DEFAULT_VERSION = '0.1.0'
+
   if (!input) {
-    throw new Error('Protocol version is not defined!')
+    log.warn('Protocol version not specified! Defaulting to', DEFAULT_VERSION)
   }
-  if (input !== '0.1.0') {
-    throw new Error(`Protocol version ${input} is not supported by this runner`)
-  }
-  log.info(`Using Test Execution Protocol version ${input}`)
-  return input
+
+  return input ?? DEFAULT_VERSION
 }
 
 function readTestsToRun(input: string | undefined): TestCase[] {
@@ -86,12 +93,16 @@ function readTestReportFormat(testReportFormat: string | undefined): string | un
   return testReportFormat?.toLowerCase()
 }
 
-function readTestReportOutputDir(testReportOutputDir?: string | undefined): string | undefined {
+function readTestReportOutputDir(testReportOutputDir: string | undefined): string | undefined {
   return testReportOutputDir
 }
 
-function readTestReportFileName(testReportFileName?: string | undefined): string | undefined {
+function readTestReportFileName(testReportFileName: string | undefined): string | undefined {
   return testReportFileName
+}
+
+function readLogFileName(logFileName: string | undefined): string | undefined {
+  return logFileName
 }
 
 export default readProtocol

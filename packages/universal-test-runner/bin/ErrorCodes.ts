@@ -31,4 +31,9 @@ export const ErrorCodes = {
    * and loaded adapter
    */
   RUNNER_ERROR: 1105,
+
+  /*
+   * Protocol version specified by user is not supported by the runner
+   */
+  PROTOCOL_VERSION_NOT_SUPPORTED: 1106,
 } as const
