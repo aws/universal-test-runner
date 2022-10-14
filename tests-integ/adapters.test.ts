@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { runSetupScript, runCli, parseJunitReport, remove } from './helpers'
+import { runSetupScript, runCli, parseJunitReport, remove, parseLogFile } from './helpers'
 
 const ADAPTERS = ['jest', 'pytest']
 
@@ -16,6 +16,7 @@ describe.each(ADAPTERS)('%s adapter', (adapter) => {
 
   afterEach(() => {
     remove(adapter, 'reports')
+    remove(adapter, 'logs')
   })
 
   it('runs all tests', () => {
@@ -24,9 +25,14 @@ describe.each(ADAPTERS)('%s adapter', (adapter) => {
       TEP_TEST_REPORT_FORMAT: 'junitxml',
       TEP_TEST_REPORT_OUTPUT_DIR: 'reports',
       TEP_TEST_REPORT_FILE_NAME: 'report.xml',
+      TEP_LOG_FILE_NAME: 'logs/logs.json',
     })
+
     const report = parseJunitReport(adapter, 'reports/report.xml')
     expect(report).toMatchSnapshot()
+
+    const logs = parseLogFile(adapter, 'logs/logs.json')
+    expect(logs).toMatchSnapshot()
   })
 
   it('runs a subset of tests', () => {
@@ -36,9 +42,14 @@ describe.each(ADAPTERS)('%s adapter', (adapter) => {
       TEP_TEST_REPORT_FORMAT: 'junitxml',
       TEP_TEST_REPORT_OUTPUT_DIR: 'reports',
       TEP_TEST_REPORT_FILE_NAME: 'report.xml',
+      TEP_LOG_FILE_NAME: 'logs/logs.json',
     })
+
     const report = parseJunitReport(adapter, 'reports/report.xml')
     expect(report).toMatchSnapshot()
+
+    const logs = parseLogFile(adapter, 'logs/logs.json')
+    expect(logs).toMatchSnapshot()
   })
 })
 
@@ -47,18 +58,30 @@ describe.each(ADAPTERS_WITH_PENDING_REPORT_SUPPORT)('%s adapter', (adapter) => {
     runSetupScript(adapter)
   })
 
+  afterEach(() => {
+    remove(adapter, 'logs')
+  })
+
   it('runs all tests', () => {
     const { status } = runCli(adapter, {
       TEP_VERSION: '0.1.0',
+      TEP_LOG_FILE_NAME: 'logs/logs.json',
     })
     expect(status).toBe(0)
+
+    const logs = parseLogFile(adapter, 'logs/logs.json')
+    expect(logs).toMatchSnapshot()
   })
 
   it('runs a subset of tests', () => {
     const { status } = runCli(adapter, {
       TEP_VERSION: '0.1.0',
       TEP_TESTS_TO_RUN: 'test1|test2',
+      TEP_LOG_FILE_NAME: 'logs/logs.json',
     })
     expect(status).toBe(0)
+
+    const logs = parseLogFile(adapter, 'logs/logs.json')
+    expect(logs).toMatchSnapshot()
   })
 })

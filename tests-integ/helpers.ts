@@ -50,6 +50,14 @@ export function parseJunitReport(adapter: string, reportPath: string) {
   return parser.parse(xml)
 }
 
+export function parseLogFile(adapter: string, logFileName: string) {
+  const logs = JSON.parse(fs.readFileSync(path.resolve(getCwd(adapter), logFileName), 'utf-8'))
+  logs.logs.forEach((log: any) => {
+    log.timestamp = 'MOCK_VALUE'
+  })
+  return logs
+}
+
 export function remove(adapter: string, filepath: string) {
   if (!filepath) {
     throw new Error('filepath must not be empty')
