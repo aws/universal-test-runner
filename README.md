@@ -27,15 +27,19 @@ Check out [RFC 0001](./protocol/rfcs/0001/README.md) for the motivation behind
 universal-test-runner and the Test Execution Protocol, and why it's useful to
 have a common interface for passing arguments to test runners.
 
+**❗️ NB: universal-test-runner is currently working towards a 1.0.0 release.
+See the [1.0.0 milestone](https://github.com/aws/codeaws-test-runner/milestone/1) 
+for all progress towards 1.0.0. ❗️**
+
 ## 🤔 When should I use universal-test-runner?
 
 You should install universal-test-runner in the following cases:
 
 * Your IDE or CI/CD system tells you to, in order for it to support running tests according to the [Test Execution Protocol](./protocol/README.md)
-* You're developing an adapter for universal-test-runner, and you want to test it out
-* You're writing a custom adapter for use with your project setup, and you want to test it out
+* You're developing an adapter for universal-test-runner, and you want to test your adapter
+* You're writing an IDE plugin or CI/CD integration that implements the Test Execution Protocol, and you need a protocol-aware runner to test your integration
 
-## 📈 Frameworks and build tool support
+## 📈 Framework and build tool support
 
 First-party test adapter support is provided for the following frameworks/build tools:
 
@@ -45,8 +49,7 @@ First-party test adapter support is provided for the following frameworks/build 
 * Gradle: https://gradle.org/
 
 See the [1.0.0 milestone](https://github.com/aws/codeaws-test-runner/milestone/1)
-for all features planned for v1.0.0, and all frameworks and build tools we plan
-to support for v1.0.0.
+for all frameworks and build tools we plan to support for v1.0.0.
 
 ## 🔋 Custom adapters
 
@@ -124,7 +127,8 @@ run-tests ./adapter.js
 
 ### Publishing adapters to npm
 
-Structure your adapter as described above, and make sure the `main` field in your package.json points to a file that exports an `executeTests` function.
+Structure your adapter as described above, and make sure the `main` field in
+your package.json points to a file that exports an `executeTests` function.
 
 ## 🏃‍♀️ Custom runners
 
@@ -145,8 +149,8 @@ All changes to the Test Execution Protocol must follow the [RFC process](./proto
 [Fork](https://github.com/aws/codeaws-test-runner/fork) the repository, and then clone your fork:
 
 ```
-git clone https://github.com/<USERNAME>/<PATH_TO_YOUR_FORK>
-cd <PATH_TO_YOUR_FORK>
+git clone https://github.com/<USERNAME>/universal-test-runner
+cd universal-test-runner
 ```
 
 Make sure you're using the correct Node.js version (install nvm [here](https://github.com/nvm-sh/nvm) if needed):
@@ -173,4 +177,10 @@ Run integration tests (you may have to install some of the frameworks and build 
 npm run test:integ
 ```
 
-Make your changes and commit them. To run the pre-commit hook, you'll have to install [TruffleHog](https://github.com/trufflesecurity/trufflehog). Push the changes to your fork, and open a pull request.
+Make your changes and commit them. This project follows the 
+[conventional commits](https://www.conventionalcommits.org/en/v1.0.0/#specification)
+specification in order to support automatic [semantic versioning](https://semver.org/) 
+and changelog generation, so a commit message hook will verify that you've
+formatted your commit message correctly. To run the pre-commit hook, you'll
+have to install [TruffleHog](https://github.com/trufflesecurity/trufflehog).
+Push the changes to your fork, and open a pull request.
