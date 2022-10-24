@@ -5,7 +5,7 @@ import fs from 'fs'
 import path from 'path'
 
 describe('package-lock.json', () => {
-  it('does not include any codeartifact URLs', async () => {
+  it('does not include any codeartifact URLs', () => {
     const packageLockJson = fs.readFileSync(path.join(__dirname, '..', 'package-lock.json'))
     expect(packageLockJson).not.toContain('codeartifact')
   })

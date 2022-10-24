@@ -37,3 +37,14 @@ export const ErrorCodes = {
    */
   PROTOCOL_VERSION_NOT_SUPPORTED: 1106,
 } as const
+
+type ErrorCodeType = typeof ErrorCodes[keyof typeof ErrorCodes]
+
+export class UniversalTestRunnerError extends Error {
+  code: ErrorCodeType
+
+  constructor(message: string, code: ErrorCodeType) {
+    super(message)
+    this.code = code
+  }
+}

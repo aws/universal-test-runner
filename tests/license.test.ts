@@ -18,7 +18,7 @@ describe('License file', () => {
 describe('License identifier', () => {
   it.each(packages)(
     'is included in the package.json license field for $packageName',
-    async ({ packageJson }) => {
+    ({ packageJson }) => {
       expect(packageJson.license).toBe('Apache-2.0')
     },
   )

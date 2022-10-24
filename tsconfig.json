@@ -14,6 +14,12 @@
     "inlineSources": true,
     "resolveJsonModule": true
   },
-  "include": ["tests", "scripts", "tests-integ"],
-  "exclude": [".eslintrc.js", "babel.config.js", "commitlint.config.js"]
+  "include": [
+    "tests",
+    "scripts",
+    "tests-integ",
+    ".eslintrc.js",
+    "babel.config.js",
+    "commitlint.config.js"
+  ]
 }

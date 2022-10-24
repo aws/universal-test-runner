@@ -9,12 +9,9 @@ import { getFullAttributionsText } from '../scripts/generate-attributions'
 import { packages } from '../scripts/packages'
 
 describe('Attribution file', () => {
-  it.each(packages)(
-    'is included in the published package for $packageName',
-    async ({ packageJson }) => {
-      expect(packageJson.files).toContain('THIRD_PARTY_LICENSES')
-    },
-  )
+  it.each(packages)('is included in the published package for $packageName', ({ packageJson }) => {
+    expect(packageJson.files).toContain('THIRD_PARTY_LICENSES')
+  })
 
   it.each(packages)(
     'contains the correct contents for $packageName',

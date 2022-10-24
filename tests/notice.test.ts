@@ -14,10 +14,7 @@ describe('Notice file', () => {
     expect(packageNoticeContents).toBe(NOTICE_CONTENTS)
   })
 
-  it.each(packages)(
-    'is included in the published package for $packageName',
-    async ({ packageJson }) => {
-      expect(packageJson.files).toContain('NOTICE')
-    },
-  )
+  it.each(packages)('is included in the published package for $packageName', ({ packageJson }) => {
+    expect(packageJson.files).toContain('NOTICE')
+  })
 })

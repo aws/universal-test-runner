@@ -3,6 +3,10 @@
 
 module.exports = {
   parser: '@typescript-eslint/parser',
+  parserOptions: {
+    tsconfigRootDir: __dirname,
+    project: ['./tsconfig.json', './packages/*/tsconfig.json'],
+  },
   plugins: ['@typescript-eslint', 'prettier', 'header', 'jest'],
   extends: [
     'eslint:recommended',
@@ -17,6 +21,7 @@ module.exports = {
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-function': 'off',
+    '@typescript-eslint/no-floating-promises': 'error',
     'no-console': 'error',
     'header/header': [
       'error',
@@ -34,5 +39,6 @@ module.exports = {
         message: "Don't declare enums; use an object instead, and mark it with `as const`",
       },
     ],
+    'require-await': 'error',
   },
 }

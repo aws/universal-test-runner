@@ -124,7 +124,7 @@ function run() {
 }
 
 if (require.main === module) {
-  ;(async () => {
+  void (async () => {
     await run()
     console.log('Done.')
   })()
