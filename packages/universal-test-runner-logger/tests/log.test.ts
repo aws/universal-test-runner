@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import makeLogger, { Logger } from '../src/index'
+import { makeLogger, Logger } from '../src/index'
 
 describe('Logger', () => {
   it.each(['error', 'info', 'debug', 'warn'] as (keyof Logger)[])(

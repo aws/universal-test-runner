@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import _readProtocol from '../src/readProtocol'
+import { readProtocol as _readProtocol } from '../src/readProtocol'
 import { ProtocolEnvVars } from '../src/ProtocolEnvVars'
 import { Environment } from '../src/mapEnvToResult'
 

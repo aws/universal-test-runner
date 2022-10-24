@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import path from 'path'
-import runCommand from './runCommand'
-import log from './log'
+import { runCommand } from './runCommand'
+import { log } from './log'
 
 import { AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-runner-types'
 

@@ -27,7 +27,7 @@ const defaultMethods: Logger = {
 }
 /* eslint-enable no-console */
 
-export default function makeLogger(
+export function makeLogger(
   prefixString: string,
   overrides: Partial<Logger> = defaultMethods,
 ): Logger {

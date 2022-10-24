@@ -6,7 +6,7 @@ jest.mock('../src/log')
 describe('Gradle adapter', () => {
   it('executes gradle when given tests to run', async () => {
     const runCommand = jest.fn(() => ({ status: 0 }))
-    jest.doMock('../src/runCommand', () => runCommand)
+    jest.doMock('../src/runCommand', () => ({ runCommand }))
 
     const { executeTests } = await import('../src/index')
 

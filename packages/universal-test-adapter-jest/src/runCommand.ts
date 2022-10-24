@@ -8,7 +8,7 @@ interface CommandResult {
 }
 
 // Return an promise since we're likely to change from spawnSync to spawn (or something else async) at some point
-export default function runCommand(
+export function runCommand(
   executable: string,
   args: string[],
   extraEnvVars = {},

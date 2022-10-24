@@ -10,11 +10,11 @@
 import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 
-import run from '../src/run'
-import _readProtocol, { ProtocolResult } from '../src/readProtocol'
+import { run } from '../src/run'
+import { readProtocol as _readProtocol, ProtocolResult } from '../src/readProtocol'
 import { loadAdapter as _loadAdapter } from '../src/loadAdapter'
-import log from '../src/log'
-import ProtocolLogger from '../src/ProtocolLogger'
+import { log } from '../src/log'
+import { ProtocolLogger } from '../src/ProtocolLogger'
 import { ErrorCodes, UniversalTestRunnerError } from './ErrorCodes'
 import { Adapter } from '@sentinel-internal/universal-test-runner-types'
 

@@ -3,7 +3,7 @@
 
 import path from 'path'
 import { access, readFile } from 'fs/promises'
-import log from './log'
+import { log } from './log'
 
 /**
  * Start by determining what executable to use, then what args to pass to the executable.
@@ -19,7 +19,7 @@ import log from './log'
  * - If we are invoking via package manager, use the script name as the first arg
  * - Add any jest-specific args required to run the tests according to what's passed by the runner
  */
-export default async function buildBaseTestCommand(): Promise<[string, string[]]> {
+export async function buildBaseTestCommand(): Promise<[string, string[]]> {
   try {
     const packageJsonContents = await loadPackageJson()
     const packageJson = parsePackageJson(packageJsonContents)

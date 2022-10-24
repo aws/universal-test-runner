@@ -5,10 +5,12 @@ jest.mock('../src/log')
 
 describe('Jest adapter', () => {
   it('executes jest when given tests to run', async () => {
-    jest.doMock('../src/buildBaseTestCommand', () => () => ['./node_modules/.bin/jest', []])
+    jest.doMock('../src/buildBaseTestCommand', () => ({
+      buildBaseTestCommand: () => ['./node_modules/.bin/jest', []],
+    }))
 
     const runCommand = jest.fn(() => ({ status: 0 }))
-    jest.doMock('../src/runCommand', () => runCommand)
+    jest.doMock('../src/runCommand', () => ({ runCommand }))
 
     const { executeTests } = await import('../src/index')
 

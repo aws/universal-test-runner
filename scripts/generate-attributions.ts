@@ -7,7 +7,7 @@ import fs from 'fs/promises'
 import path from 'path'
 
 import { packages } from './packages'
-import findPackageRoot from './findPackageRoot'
+import { findPackageRoot } from './findPackageRoot'
 
 // This list is not comprehensive, but simply covers the approved licenses
 // we're using so far.

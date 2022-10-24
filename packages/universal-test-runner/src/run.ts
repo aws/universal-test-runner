@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import log from './log'
+import { log } from './log'
 import {
   Adapter,
   AdapterInput,
@@ -19,7 +19,10 @@ function mapProtocolResultToAdapterInput(protocolResult: ProtocolResult): Adapte
   }
 }
 
-async function run(adapter: Adapter, protocolResult: ProtocolResult): Promise<AdapterOutput> {
+export async function run(
+  adapter: Adapter,
+  protocolResult: ProtocolResult,
+): Promise<AdapterOutput> {
   const adapterInput = mapProtocolResultToAdapterInput(protocolResult)
   try {
     log.info('Calling executeTests on adapter...')
@@ -31,5 +34,3 @@ async function run(adapter: Adapter, protocolResult: ProtocolResult): Promise<Ad
     return { exitCode: ErrorCodes.ADAPTER_ERROR }
   }
 }
-
-export default run

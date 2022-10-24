@@ -6,7 +6,7 @@
 import path from 'path'
 import fs from 'fs/promises'
 
-export default async function findPackageRoot(packageName: string): Promise<string> {
+export async function findPackageRoot(packageName: string): Promise<string> {
   let packageMain
   try {
     packageMain = require.resolve(packageName)

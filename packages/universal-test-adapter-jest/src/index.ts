@@ -1,9 +1,9 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import runCommand from './runCommand'
-import log from './log'
-import buildBaseTestCommand from './buildBaseTestCommand'
+import { runCommand } from './runCommand'
+import { log } from './log'
+import { buildBaseTestCommand } from './buildBaseTestCommand'
 
 import { AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-runner-types'
 

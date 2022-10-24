@@ -38,6 +38,10 @@ module.exports = {
         selector: 'TSEnumDeclaration',
         message: "Don't declare enums; use an object instead, and mark it with `as const`",
       },
+      {
+        selector: 'ExportDefaultDeclaration',
+        message: 'Use named exports instead of default exports',
+      },
     ],
     'require-await': 'error',
   },

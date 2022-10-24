@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import log from './log'
+import { log } from './log'
 import path from 'path'
 
 import { Adapter } from '@sentinel-internal/universal-test-runner-types'

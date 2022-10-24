@@ -1,8 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import mapEnvToResult, { Environment } from './mapEnvToResult'
-import log from './log'
+import { mapEnvToResult, Environment } from './mapEnvToResult'
+import { log } from './log'
 import { ProtocolEnvVars } from './ProtocolEnvVars'
 
 interface TestCase {
@@ -20,7 +20,7 @@ export interface ProtocolResult {
   logFileName?: string
 }
 
-function readProtocol(env: Environment): [ProtocolResult, { [key: string]: string }] {
+export function readProtocol(env: Environment): [ProtocolResult, { [key: string]: string }] {
   const rawValues = {}
   const result = {
     version: mapEnvToResult(env, [ProtocolEnvVars.VERSION], readVersion, rawValues),
@@ -104,5 +104,3 @@ function readTestReportFileName(testReportFileName: string | undefined): string 
 function readLogFileName(logFileName: string | undefined): string | undefined {
   return logFileName
 }
-
-export default readProtocol

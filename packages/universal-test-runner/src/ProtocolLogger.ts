@@ -3,7 +3,7 @@
 
 import fs from 'fs/promises'
 import path from 'path'
-import log from './log'
+import { log } from './log'
 
 type LogEntryType =
   | 'MESSAGE'
@@ -26,7 +26,7 @@ interface LogEntry {
   data: any
 }
 
-export default class ProtocolLogger {
+export class ProtocolLogger {
   private now: () => number
   private logs: LogEntry[]
   private logFileName?: string
