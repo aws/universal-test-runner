@@ -57,7 +57,6 @@ async function getAttributions(
       version,
       licenseId,
       path.join(packageRoot, licenseFile),
-      depth,
       noticeFile,
     ),
     ...dependencyAttributions,
@@ -81,10 +80,9 @@ async function getSingleAttribution(
   version: string,
   licenseId: string,
   licensePath: string,
-  depth: number,
   noticePath?: string,
 ) {
-  if (depth === 0) {
+  if (packages.map(({ packageName }) => packageName).includes(packageName)) {
     return ''
   }
   const licenseText = await fs.readFile(licensePath, 'utf-8')
