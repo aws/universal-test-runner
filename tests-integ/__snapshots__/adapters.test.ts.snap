@@ -137,49 +137,6 @@ exports[`gradle adapter runs all tests 1`] = `
 
 exports[`jest adapter runs a subset of tests 1`] = `
 {
-  "?xml": {
-    "attr_encoding": "UTF-8",
-    "attr_version": 1,
-  },
-  "testsuites": {
-    "attr_errors": 0,
-    "attr_failures": 0,
-    "attr_name": "jest tests",
-    "attr_tests": 3,
-    "attr_time": "MOCK_VALUE",
-    "testsuite": {
-      "attr_errors": 0,
-      "attr_failures": 0,
-      "attr_name": "Suite1",
-      "attr_skipped": 1,
-      "attr_tests": 3,
-      "attr_time": "MOCK_VALUE",
-      "attr_timestamp": "MOCK_VALUE",
-      "testcase": [
-        {
-          "attr_classname": "Suite1 test1",
-          "attr_name": "Suite1 test1",
-          "attr_time": "MOCK_VALUE",
-        },
-        {
-          "attr_classname": "Suite1 test2",
-          "attr_name": "Suite1 test2",
-          "attr_time": "MOCK_VALUE",
-        },
-        {
-          "attr_classname": "Suite1 test3",
-          "attr_name": "Suite1 test3",
-          "attr_time": "MOCK_VALUE",
-          "skipped": "",
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`jest adapter runs a subset of tests 2`] = `
-{
   "logs": [
     {
       "level": "INFO",
@@ -195,9 +152,6 @@ exports[`jest adapter runs a subset of tests 2`] = `
       "data": {
         "TEP_LOG_FILE_NAME": "logs/logs.json",
         "TEP_TESTS_TO_RUN": "test1|test2",
-        "TEP_TEST_REPORT_FILE_NAME": "report.xml",
-        "TEP_TEST_REPORT_FORMAT": "junitxml",
-        "TEP_TEST_REPORT_OUTPUT_DIR": "reports",
         "TEP_VERSION": "0.1.0",
       },
       "level": "DEBUG",
@@ -251,48 +205,6 @@ exports[`jest adapter runs a subset of tests 2`] = `
 
 exports[`jest adapter runs all tests 1`] = `
 {
-  "?xml": {
-    "attr_encoding": "UTF-8",
-    "attr_version": 1,
-  },
-  "testsuites": {
-    "attr_errors": 0,
-    "attr_failures": 0,
-    "attr_name": "jest tests",
-    "attr_tests": 3,
-    "attr_time": "MOCK_VALUE",
-    "testsuite": {
-      "attr_errors": 0,
-      "attr_failures": 0,
-      "attr_name": "Suite1",
-      "attr_skipped": 0,
-      "attr_tests": 3,
-      "attr_time": "MOCK_VALUE",
-      "attr_timestamp": "MOCK_VALUE",
-      "testcase": [
-        {
-          "attr_classname": "Suite1 test1",
-          "attr_name": "Suite1 test1",
-          "attr_time": "MOCK_VALUE",
-        },
-        {
-          "attr_classname": "Suite1 test2",
-          "attr_name": "Suite1 test2",
-          "attr_time": "MOCK_VALUE",
-        },
-        {
-          "attr_classname": "Suite1 test3",
-          "attr_name": "Suite1 test3",
-          "attr_time": "MOCK_VALUE",
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`jest adapter runs all tests 2`] = `
-{
   "logs": [
     {
       "level": "INFO",
@@ -307,9 +219,6 @@ exports[`jest adapter runs all tests 2`] = `
     {
       "data": {
         "TEP_LOG_FILE_NAME": "logs/logs.json",
-        "TEP_TEST_REPORT_FILE_NAME": "report.xml",
-        "TEP_TEST_REPORT_FORMAT": "junitxml",
-        "TEP_TEST_REPORT_OUTPUT_DIR": "reports",
         "TEP_VERSION": "0.1.0",
       },
       "level": "DEBUG",
@@ -498,39 +407,6 @@ exports[`maven adapter runs all tests 1`] = `
 
 exports[`pytest adapter runs a subset of tests 1`] = `
 {
-  "?xml": {
-    "attr_encoding": "utf-8",
-    "attr_version": 1,
-  },
-  "testsuites": {
-    "testsuite": {
-      "attr_errors": 0,
-      "attr_failures": 0,
-      "attr_hostname": "MOCK_VALUE",
-      "attr_name": "pytest",
-      "attr_skipped": 0,
-      "attr_tests": 2,
-      "attr_time": "MOCK_VALUE",
-      "attr_timestamp": "MOCK_VALUE",
-      "testcase": [
-        {
-          "attr_classname": "test_example",
-          "attr_name": "test1",
-          "attr_time": "MOCK_VALUE",
-        },
-        {
-          "attr_classname": "test_example",
-          "attr_name": "test2",
-          "attr_time": "MOCK_VALUE",
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`pytest adapter runs a subset of tests 2`] = `
-{
   "logs": [
     {
       "level": "INFO",
@@ -546,9 +422,6 @@ exports[`pytest adapter runs a subset of tests 2`] = `
       "data": {
         "TEP_LOG_FILE_NAME": "logs/logs.json",
         "TEP_TESTS_TO_RUN": "test1|test2",
-        "TEP_TEST_REPORT_FILE_NAME": "report.xml",
-        "TEP_TEST_REPORT_FORMAT": "junitxml",
-        "TEP_TEST_REPORT_OUTPUT_DIR": "reports",
         "TEP_VERSION": "0.1.0",
       },
       "level": "DEBUG",
@@ -602,44 +475,6 @@ exports[`pytest adapter runs a subset of tests 2`] = `
 
 exports[`pytest adapter runs all tests 1`] = `
 {
-  "?xml": {
-    "attr_encoding": "utf-8",
-    "attr_version": 1,
-  },
-  "testsuites": {
-    "testsuite": {
-      "attr_errors": 0,
-      "attr_failures": 0,
-      "attr_hostname": "MOCK_VALUE",
-      "attr_name": "pytest",
-      "attr_skipped": 0,
-      "attr_tests": 3,
-      "attr_time": "MOCK_VALUE",
-      "attr_timestamp": "MOCK_VALUE",
-      "testcase": [
-        {
-          "attr_classname": "test_example",
-          "attr_name": "test1",
-          "attr_time": "MOCK_VALUE",
-        },
-        {
-          "attr_classname": "test_example",
-          "attr_name": "test2",
-          "attr_time": "MOCK_VALUE",
-        },
-        {
-          "attr_classname": "test_example",
-          "attr_name": "test3",
-          "attr_time": "MOCK_VALUE",
-        },
-      ],
-    },
-  },
-}
-`;
-
-exports[`pytest adapter runs all tests 2`] = `
-{
   "logs": [
     {
       "level": "INFO",
@@ -654,9 +489,6 @@ exports[`pytest adapter runs all tests 2`] = `
     {
       "data": {
         "TEP_LOG_FILE_NAME": "logs/logs.json",
-        "TEP_TEST_REPORT_FILE_NAME": "report.xml",
-        "TEP_TEST_REPORT_FORMAT": "junitxml",
-        "TEP_TEST_REPORT_OUTPUT_DIR": "reports",
         "TEP_VERSION": "0.1.0",
       },
       "level": "DEBUG",

@@ -13,9 +13,6 @@ import { ErrorCodes } from '../bin/ErrorCodes'
 function mapProtocolResultToAdapterInput(protocolResult: ProtocolResult): AdapterInput {
   return {
     testsToRun: protocolResult.testsToRun,
-    testReportFormat: protocolResult.testReportFormat,
-    testReportOutputDir: protocolResult.testReportOutputDir,
-    testReportFileName: protocolResult.testReportFileName,
   }
 }
 

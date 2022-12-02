@@ -14,9 +14,6 @@ interface TestCase {
 export interface ProtocolResult {
   version: string
   testsToRun: TestCase[]
-  testReportFormat?: string
-  testReportOutputDir?: string
-  testReportFileName?: string
   logFileName?: string
 }
 
@@ -32,24 +29,6 @@ export function readProtocol(env: Environment): [ProtocolResult, { [key: string]
         'CAWS_TEST_NAMES_TO_RUN',
       ],
       readTestsToRun,
-      rawValues,
-    ),
-    testReportFormat: mapEnvToResult(
-      env,
-      [ProtocolEnvVars.TEST_REPORT_FORMAT],
-      readTestReportFormat,
-      rawValues,
-    ),
-    testReportOutputDir: mapEnvToResult(
-      env,
-      [ProtocolEnvVars.TEST_REPORT_OUTPUT_DIR],
-      readTestReportOutputDir,
-      rawValues,
-    ),
-    testReportFileName: mapEnvToResult(
-      env,
-      [ProtocolEnvVars.TEST_REPORT_FILE_NAME],
-      readTestReportFileName,
       rawValues,
     ),
     logFileName: mapEnvToResult(env, [ProtocolEnvVars.LOG_FILE_NAME], readLogFileName, rawValues),
@@ -81,24 +60,6 @@ function readTestsToRun(input: string | undefined): TestCase[] {
       }
     }) ?? []
   )
-}
-
-function readTestReportFormat(testReportFormat: string | undefined): string | undefined {
-  const VALID_REPORT_FORMATS = ['junitxml']
-
-  if (testReportFormat && !VALID_REPORT_FORMATS.includes(testReportFormat.toLowerCase())) {
-    throw new Error(`Report format ${testReportFormat} not supported!`)
-  }
-
-  return testReportFormat?.toLowerCase()
-}
-
-function readTestReportOutputDir(testReportOutputDir: string | undefined): string | undefined {
-  return testReportOutputDir
-}
-
-function readTestReportFileName(testReportFileName: string | undefined): string | undefined {
-  return testReportFileName
 }
 
 function readLogFileName(logFileName: string | undefined): string | undefined {
