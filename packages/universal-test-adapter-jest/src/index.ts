@@ -7,12 +7,7 @@ import { buildBaseTestCommand } from './buildBaseTestCommand'
 
 import { AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-runner-types'
 
-export async function executeTests({
-  testsToRun = [],
-  testReportFormat,
-  testReportOutputDir,
-  testReportFileName,
-}: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
   const [executable, args] = await buildBaseTestCommand()
 
   const testNamesToRun = testsToRun.map(({ testName }) => testName)
@@ -22,23 +17,6 @@ export async function executeTests({
   }
 
   const extraEnvVars: { [key: string]: string } = {}
-
-  if (testReportFormat) {
-    if (testReportFormat === 'junitxml') {
-      // Add default reporter so that we still display console output
-      args.push('--reporters', 'default')
-      // jest-junit must have been installed by the user
-      args.push('--reporters', 'jest-junit')
-      if (testReportOutputDir) {
-        extraEnvVars.JEST_JUNIT_OUTPUT_DIR = testReportOutputDir
-      }
-      if (testReportFileName) {
-        extraEnvVars.JEST_JUNIT_OUTPUT_NAME = testReportFileName
-      }
-    } else {
-      log.warn(`Report format ${testReportFormat} not supported`)
-    }
-  }
 
   const envVarStrings = Object.entries(extraEnvVars).map(([key, value]) => `${key}="${value}"`)
 

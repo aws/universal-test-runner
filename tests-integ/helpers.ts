@@ -6,7 +6,6 @@
 import { spawnSync } from 'child_process'
 import path from 'path'
 import fs from 'fs'
-import { XMLParser } from 'fast-xml-parser'
 
 export function runSetupScript(adapter: string) {
   return runScript(adapter, 'setup.sh')
@@ -30,24 +29,6 @@ export function runCli(adapter: string, env: { [key: string]: string }) {
     ...env,
     RUN_TESTS: ['node', EXECUTABLE].join(' '),
   })
-}
-
-export function parseJunitReport(adapter: string, reportPath: string) {
-  const parser = new XMLParser({
-    ignoreAttributes: false,
-    parseAttributeValue: true,
-    attributeNamePrefix: 'attr_',
-    attributeValueProcessor: (attr, val) => {
-      const toMock = ['timestamp', 'time', 'hostname']
-      if (toMock.includes(attr)) {
-        return 'MOCK_VALUE'
-      }
-      return val
-    },
-  })
-
-  const xml = fs.readFileSync(path.resolve(getCwd(adapter), reportPath), 'utf-8')
-  return parser.parse(xml)
 }
 
 export function parseLogFile(adapter: string, logFileName: string) {
