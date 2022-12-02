@@ -2,6 +2,10 @@
 
 A universal test runner for any language and test framework.
 
+**❗️ NB: universal-test-runner is currently working towards a 1.0.0 release.
+See the [1.0.0 milestone](https://github.com/aws/codeaws-test-runner/milestone/1) 
+for all progress towards 1.0.0. ❗️**
+
 ## 🌎 What is universal-test-runner?
 
 universal-test-runner is a command-line tool that uses the [Test Execution
@@ -26,10 +30,6 @@ run-tests pytest
 Check out [RFC 0001](./protocol/rfcs/0001/README.md) for the motivation behind
 universal-test-runner and the Test Execution Protocol, and why it's useful to
 have a common interface for passing arguments to test runners.
-
-**❗️ NB: universal-test-runner is currently working towards a 1.0.0 release.
-See the [1.0.0 milestone](https://github.com/aws/codeaws-test-runner/milestone/1) 
-for all progress towards 1.0.0. ❗️**
 
 ## 🤔 When should I use universal-test-runner?
 
