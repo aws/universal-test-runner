@@ -159,10 +159,16 @@ Make sure you're using the correct Node.js version (install nvm [here](https://g
 nvm use
 ```
 
-Install dependencies:
+(Note that npm@8 or greater is required since this project uses 
+[npm workspaces](https://docs.npmjs.com/cli/v9/using-npm/workspaces?v=true).
+Node.js 16 and up by default ship with versions of npm that support 
+workspaces.)
+
+Install dependencies and build code:
 
 ```
 npm install
+npm run compile
 ```
 
 Run tests
