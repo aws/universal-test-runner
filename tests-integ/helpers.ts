@@ -39,6 +39,18 @@ export function parseLogFile(adapter: string, logFileName: string) {
   return logs
 }
 
+export function parseConfigFile(adapter: string) {
+  try {
+    const config = JSON.parse(fs.readFileSync(path.resolve(getCwd(adapter), "config.json"), 'utf-8'))
+    if (config && config.testsToRun) {
+      return config.testsToRun;
+    }
+  }
+  catch (e) {
+  }
+  return undefined;
+}
+
 export function remove(adapter: string, filepath: string) {
   if (!filepath) {
     throw new Error('filepath must not be empty')
@@ -63,6 +75,8 @@ function runScript(adapter: string, scriptName: string, env: { [key: string]: st
       ...env,
     },
   })
+
+  console.debug(`cwd = ${getCwd(adapter)}, adapter = ${adapter}, scriptName = ${scriptName}, env = ${JSON.stringify(env)}`)
 
   if (status !== 0) {
     console.log(stdout?.toString())
