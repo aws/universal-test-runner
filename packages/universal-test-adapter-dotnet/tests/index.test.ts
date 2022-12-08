@@ -11,12 +11,20 @@ describe('Dotnet adapter', () => {
     const { executeTests } = await import('../src/index')
 
     const { exitCode } = await executeTests({
-      testsToRun: [{ testName: 'Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet' },
-       { testName: 'Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet2' },
-        { testName: 'Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet3' }],
+      testsToRun: [
+        { testName: 'Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet' },
+        { testName: 'Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet2' },
+        { testName: 'Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet3' },
+      ],
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('dotnet', ['test', '--filter "(FullyQualifiedName=Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet) | (FullyQualifiedName=Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet2) | (FullyQualifiedName=Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet3)"'])
+    expect(runCommand).toHaveBeenCalledWith('dotnet', [
+      'test',
+      '--filter',
+      '(FullyQualifiedName=Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet) | ' +
+        '(FullyQualifiedName=Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet2) | ' +
+        '(FullyQualifiedName=Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet3)',
+    ])
   })
 })

@@ -41,18 +41,17 @@ export function parseLogFile(adapter: string, logFileName: string) {
 
 export async function parseTestsToRun(adapter: string) {
   try {
-    const config = await import(path.resolve(getCwd(adapter), "config.json"))
+    const config = await import(path.resolve(getCwd(adapter), 'config.json'))
     if (config && config.testsToRun) {
-      return config.testsToRun;
+      return config.testsToRun
     }
-  }
-  catch (e: any) {
+  } catch (e: any) {
     // expect MODULE_NOT_FOUND if config file doesnt exist
-    if (e.code !== "MODULE_NOT_FOUND") {
-      throw e;
+    if (e.code !== 'MODULE_NOT_FOUND') {
+      throw e
     }
   }
-  return undefined;
+  return undefined
 }
 
 export function remove(adapter: string, filepath: string) {
@@ -80,7 +79,12 @@ function runScript(adapter: string, scriptName: string, env: { [key: string]: st
     },
   })
 
-  console.debug(`cwd = ${getCwd(adapter)}, adapter = ${adapter}, scriptName = ${scriptName}, env = ${JSON.stringify(env)}`)
+  console.debug(
+    `cwd = ${getCwd(adapter)}, 
+    adapter = ${adapter}, 
+    scriptName = ${scriptName}, 
+    env = ${JSON.stringify(env)}`,
+  )
 
   if (status !== 0) {
     console.log(stdout?.toString())

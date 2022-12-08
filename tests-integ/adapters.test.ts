@@ -28,7 +28,7 @@ describe.each(ADAPTERS)('%s adapter', (adapter) => {
   it('runs a subset of tests', async () => {
     const { status } = runCli(adapter, {
       TEP_VERSION: '0.1.0',
-      TEP_TESTS_TO_RUN: await parseTestsToRun(adapter) || 'test1|test2',
+      TEP_TESTS_TO_RUN: (await parseTestsToRun(adapter)) || 'test1|test2',
       TEP_LOG_FILE_NAME: 'logs/logs.json',
     })
     expect(status).toBe(0)
