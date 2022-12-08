@@ -39,14 +39,18 @@ export function parseLogFile(adapter: string, logFileName: string) {
   return logs
 }
 
-export function parseConfigFile(adapter: string) {
+export async function parseTestsToRun(adapter: string) {
   try {
-    const config = JSON.parse(fs.readFileSync(path.resolve(getCwd(adapter), "config.json"), 'utf-8'))
+    const config = await import(path.resolve(getCwd(adapter), "config.json"))
     if (config && config.testsToRun) {
       return config.testsToRun;
     }
   }
-  catch (e) {
+  catch (e: any) {
+    // expect MODULE_NOT_FOUND if config file doesnt exist
+    if (e.code !== "MODULE_NOT_FOUND") {
+      throw e;
+    }
   }
   return undefined;
 }
