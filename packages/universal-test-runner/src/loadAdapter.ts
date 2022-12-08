@@ -13,6 +13,7 @@ export async function loadAdapter(rawAdapterModule: string, cwd: string): Promis
       maven: '@sentinel-internal/universal-test-adapter-maven',
       gradle: '@sentinel-internal/universal-test-adapter-gradle',
       pytest: '@sentinel-internal/universal-test-adapter-pytest',
+      dotnet: '@sentinel-internal/universal-test-adapter-dotnet',
     }[rawAdapterModule] || rawAdapterModule
 
   try {
