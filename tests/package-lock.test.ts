@@ -6,7 +6,10 @@ import path from 'path'
 
 describe('package-lock.json', () => {
   it('does not include any codeartifact URLs', () => {
-    const packageLockJson = fs.readFileSync(path.join(__dirname, '..', 'package-lock.json'))
+    const packageLockJson = fs.readFileSync(
+      path.join(__dirname, '..', 'package-lock.json'),
+      'utf-8',
+    )
     expect(packageLockJson).not.toContain('codeartifact')
   })
 })
