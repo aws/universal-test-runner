@@ -1,0 +1,3 @@
+{
+    "testsToRunWithFileAndSuite": "test_example.py#TestSuite#test1"
+}

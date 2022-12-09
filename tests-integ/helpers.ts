@@ -54,6 +54,21 @@ export async function parseTestsToRun(adapter: string) {
   return undefined
 }
 
+export async function parseTestsToRunWithFileAndSuite(adapter: string) {
+  try {
+    const config = await import(path.resolve(getCwd(adapter), 'config.json'))
+    if (config && config.testsToRunWithFileAndSuite) {
+      return config.testsToRunWithFileAndSuite
+    }
+  } catch (e: any) {
+    // expect MODULE_NOT_FOUND if config file doesnt exist
+    if (e.code !== 'MODULE_NOT_FOUND') {
+      throw e
+    }
+  }
+  return undefined
+}
+
 export function remove(adapter: string, filepath: string) {
   if (!filepath) {
     throw new Error('filepath must not be empty')

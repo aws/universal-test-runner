@@ -9,9 +9,30 @@ import { AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-r
 export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
   const executable = 'pytest'
   const args = []
-  const testNamesToRun = testsToRun.map(({ testName }) => testName)
+  //TODO: verify if we can pass just suiteName::testName
+  let useKFlag = false
+  const testNamesToRun = testsToRun.map(({ testName, suiteName, filepath }) => {
+    if (testName && suiteName && filepath) {
+      return `${filepath}::${suiteName}::${testName}`
+    }
+    !useKFlag &&
+      log.info(
+        'Found test entry without both of filepath or suiteName, this will match a contains on the provided information',
+      )
+    useKFlag = true
+    return (
+      '(' +
+      (filepath ? filepath + ' and ' : '') +
+      (suiteName ? suiteName + ' and ' : '') +
+      testName +
+      ')'
+    )
+  })
+
   if (testNamesToRun.length > 0) {
-    args.push('-k', `${testNamesToRun.join(' or ')}`)
+    useKFlag
+      ? args.push('-k', `${testNamesToRun.join(' or ')}`)
+      : args.push('-v', `${testNamesToRun.join(' ')}`)
   }
 
   // spawnSync will automatically quote any args with spaces in them, so we don't need to
