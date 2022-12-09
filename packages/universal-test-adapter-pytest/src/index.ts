@@ -9,7 +9,6 @@ import { AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-r
 export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
   const executable = 'pytest'
   const args = []
-  //TODO: verify if we can pass just suiteName::testName
   let useKFlag = false
   const testNamesToRun = testsToRun.map(({ testName, suiteName, filepath }) => {
     if (testName && suiteName && filepath) {
