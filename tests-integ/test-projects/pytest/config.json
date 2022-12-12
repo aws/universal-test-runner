@@ -1,3 +1,3 @@
 {
-    "testsToRunWithFileAndSuite": "test_example.py#TestSuite#test1"
+    "testsToRun": ["test1|test2", "test_example.py#TestSuite#test1", "test_example.py##test1", "test_example.py#TestSuite#test1"]
 }
