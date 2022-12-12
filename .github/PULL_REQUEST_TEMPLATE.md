@@ -10,6 +10,7 @@ _Steps taken to verify the changes_
 
 I have:
 * [ ] Added new automated tests for any new functionality
+* [ ] Run `npm run build`
 
 ## Licensing statement (do not modify)
 

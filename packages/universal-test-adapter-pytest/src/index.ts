@@ -9,9 +9,31 @@ import { AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-r
 export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
   const executable = 'pytest'
   const args = []
-  const testNamesToRun = testsToRun.map(({ testName }) => testName)
+
+  const matchTestsDirectly = testsToRun.every(
+    ({ testName, suiteName, filepath }) => testName && suiteName && filepath,
+  )
+  !matchTestsDirectly &&
+    log.info(
+      'Found test entry without both of filepath or suiteName, all test entries will match a contains on the provided information',
+    )
+
+  const testNamesToRun = testsToRun.map(({ testName, suiteName, filepath }) => {
+    return matchTestsDirectly
+      ? `${filepath}::${suiteName}::${testName}`
+      : // Concats each filepath, suitName, testName by 'and' (ex. '(filepath and suiteName and testName)')
+        '(' +
+          (filepath ? filepath + ' and ' : '') +
+          (suiteName ? suiteName + ' and ' : '') +
+          testName +
+          ')'
+  })
+
   if (testNamesToRun.length > 0) {
-    args.push('-k', `${testNamesToRun.join(' or ')}`)
+    // https://docs.pytest.org/en/7.1.x/example/markers.html
+    matchTestsDirectly
+      ? args.push('-v', `${testNamesToRun.join(' ')}`)
+      : args.push('-k', `${testNamesToRun.join(' or ')}`)
   }
 
   // spawnSync will automatically quote any args with spaces in them, so we don't need to

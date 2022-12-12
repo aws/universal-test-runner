@@ -11,7 +11,7 @@ export function runSetupScript(adapter: string) {
   return runScript(adapter, 'setup.sh')
 }
 
-export function runCli(adapter: string, env: { [key: string]: string }) {
+export function runCli(adapter: string, env: { [key: string]: string | undefined }) {
   // For some reason the executables don't get put into node_modules/.bin
   // when running in GitHub actions, so we us the JS file directly
   const EXECUTABLE = path.resolve(
@@ -39,12 +39,14 @@ export function parseLogFile(adapter: string, logFileName: string) {
   return logs
 }
 
-export async function parseTestsToRun(adapter: string) {
+export type IntegTestConfig = {
+  testsToRun: string[]
+}
+
+export async function parseConfig(adapter: string): Promise<IntegTestConfig | undefined> {
   try {
     const config = await import(path.resolve(getCwd(adapter), 'config.json'))
-    if (config && config.testsToRun) {
-      return config.testsToRun
-    }
+    return config
   } catch (e: any) {
     // expect MODULE_NOT_FOUND if config file doesnt exist
     if (e.code !== 'MODULE_NOT_FOUND') {
