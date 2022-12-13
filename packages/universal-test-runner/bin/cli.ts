@@ -12,23 +12,42 @@ import { hideBin } from 'yargs/helpers'
 
 import { run } from '../src/run'
 import { readProtocol as _readProtocol, ProtocolResult } from '../src/readProtocol'
-import { loadAdapter as _loadAdapter } from '../src/loadAdapter'
+import { loadAdapter as _loadAdapter, builtInAdapters } from '../src/loadAdapter'
 import { log } from '../src/log'
 import { ProtocolLogger } from '../src/ProtocolLogger'
 import { ErrorCodes, UniversalTestRunnerError } from './ErrorCodes'
 import { Adapter } from '@sentinel-internal/universal-test-runner-types'
 
 const argv = yargs(hideBin(process.argv))
-  .usage('Usage: $0 <adapter> [args]')
+  .command(
+    '$0 <adapter|packageName|adapterPath>',
+    'Run tests according to the Test Execution Protocol',
+    (yargs) => {
+      yargs
+        .positional('adapter', {
+          describe: `The name of a built-in adapter (${Object.keys(builtInAdapters)})`,
+          type: 'string',
+        })
+        .example('$0 jest', 'Run tests with a built-in adapter')
+        .positional('packageName', {
+          describe: 'The package name of a third-party adapter',
+          type: 'string',
+        })
+        .example('$0 my-adapter-from-npm', 'Run tests with a third-party adapter')
+        .positional('adapterPath', {
+          describe: 'The file path to a custom adapter',
+          type: 'string',
+        })
+        .example('$0 ./my-adapter.js', 'Run tests with a custom adapter')
+    },
+  )
+  .demandCommand(1, 1)
   .version()
   .alias('version', 'v')
   .help()
   .alias('help', 'h')
-  .demandCommand(1, 1)
   .strict(true)
   .parseSync()
-
-const [adapterPath] = argv._
 
 const protocolLogger = new ProtocolLogger()
 
@@ -36,7 +55,7 @@ void (async () => {
   try {
     const protocolResult = readProtocol()
     validateProtocolVersion(protocolResult.version)
-    const adapter = await loadAdapter(String(adapterPath))
+    const adapter = await loadAdapter(String(argv.adapterPath))
     const exitCode = await runTests(adapter, protocolResult)
     await cleanUp()
     process.exit(exitCode)
