@@ -6,18 +6,18 @@ import { log } from './log'
 
 import { AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-runner-types'
 
+// Transforms filepath input from 'folderA/folderB/file.java)' to 'folderA.folderB'
 export const parsePackagePath = (filepath: String): String => {
-  return filepath.substring(0, filepath.lastIndexOf('/'));
+  return filepath.substring(0, filepath.lastIndexOf('/')).replace('/', '.');
 }
+
 
 export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
   const executable = 'gradle'
   const args = ['test']
   const testNamesToRun = testsToRun.map(({ testName, suiteName, filepath }) => {
-
-    return (filepath ? filepath : '*.') +
-    (suiteName ? suiteName : '*.') +
-    testName
+    // *packagePath.suiteName.testName
+    return `*${filepath ? parsePackagePath(filepath) : ''}.${suiteName || '*'}.${testName}`
   }
       
   )

@@ -35,7 +35,7 @@ describe('Gradle adapter', () => {
     const { exitCode } = await executeTests({
       testsToRun: [
         { testName: 'bill' },
-        { filepath: 'fileB.py', testName: 'bob' },
+        { filepath: 'package/fileB.ext', testName: 'bob' },
         { suiteName: 'suiteC', testName: 'mary' },
       ],
     })
@@ -46,9 +46,9 @@ describe('Gradle adapter', () => {
       '--tests',
       '*.*.bill',
       '--tests',
-      '*.*.bob',
+      '*package.*.bob',
       '--tests',
-      '*.*.mary',
+      '*.suiteC.mary',
     ])
   })
 
@@ -60,7 +60,7 @@ describe('Gradle adapter', () => {
     const { exitCode } = await executeTests({
       testsToRun: [
         { filepath: 'fileA.py', suiteName: 'suiteA', testName: 'bill' },
-        { filepath: 'packageB/fileB.py', suiteName: 'suiteB', testName: 'bob' },
+        { filepath: 'orgB/packageB/fileB.py', suiteName: 'suiteB', testName: 'bob' },
         { filepath: 'fileC.py', suiteName: 'suiteC', testName: 'mary' },
       ],
     })
@@ -71,7 +71,7 @@ describe('Gradle adapter', () => {
       '--tests',
       '*.suiteA.bill',
       '--tests',
-      'packageB.suiteB.bob',
+      '*orgB.packageB.suiteB.bob',
       '--tests',
       '*.suiteC.mary',
     ])

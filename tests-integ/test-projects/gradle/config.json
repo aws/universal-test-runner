@@ -1,0 +1,3 @@
+{
+    "testsToRun": ["test1|test2", "gradle/AppTest.java#AppTest#test1", "gradle#AppTest#test1", "AppText.java#AppTest#test1", "AppTest.java##test1", "AppTest#test1"]
+}
