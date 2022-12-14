@@ -6,15 +6,16 @@ import path from 'path'
 
 import { Adapter } from '@sentinel-internal/universal-test-runner-types'
 
+export const builtInAdapters: { [key: string]: string } = {
+  jest: '@sentinel-internal/universal-test-adapter-jest',
+  maven: '@sentinel-internal/universal-test-adapter-maven',
+  gradle: '@sentinel-internal/universal-test-adapter-gradle',
+  pytest: '@sentinel-internal/universal-test-adapter-pytest',
+  dotnet: '@sentinel-internal/universal-test-adapter-dotnet',
+} as const
+
 export async function loadAdapter(rawAdapterModule: string, cwd: string): Promise<Adapter> {
-  const adapterModule =
-    {
-      jest: '@sentinel-internal/universal-test-adapter-jest',
-      maven: '@sentinel-internal/universal-test-adapter-maven',
-      gradle: '@sentinel-internal/universal-test-adapter-gradle',
-      pytest: '@sentinel-internal/universal-test-adapter-pytest',
-      dotnet: '@sentinel-internal/universal-test-adapter-dotnet',
-    }[rawAdapterModule] || rawAdapterModule
+  const adapterModule = builtInAdapters[rawAdapterModule] || rawAdapterModule
 
   try {
     const adapterImportPath = adapterModule.startsWith('.')
