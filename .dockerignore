@@ -1,0 +1,12 @@
+**/dotnet/bin/
+**/dotnet/obj/
+
+**/gradle/.gradle
+**/gradle/build
+
+**/jest/node_modules
+
+**/maven/target
+
+**/pytest/venv
+**/pytest/__pycache__

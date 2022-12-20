@@ -31,5 +31,25 @@ Actions:
         - Run: npm ci
         - Run: npm run build
         - Run: COMMIT_ID=${WorkflowSource.CommitId} npm run bump:prerelease
-        - Run: aws codeartifact login --tool npm --repository codeaws-sentinel-internal --domain codeaws-sentinel-internal --domain-owner ${Secrets.CodeArtifactPublishAccountId-XGKTb5} --region us-west-2
+        - Run: aws codeartifact login --tool npm --repository ${Secrets.CodeArtifactRepository} --domain ${Secrets.CodeArtifactDomain} --domain-owner ${Secrets.CodeArtifactDomainOwner} --region us-west-2
         - Run: npm publish --workspaces --unsafe-perm
+
+  PushToDocker:
+    Identifier: aws/build@v1
+
+    DependsOn:
+      - BuildAndPublish
+
+    Inputs:
+      Sources:
+        - WorkflowSource
+
+    Environment:
+      Name: EcrDockerInternalPublish
+      Connections:
+        - Role: codecatalyst-UniversalTestRunnerDockerPush
+          Name: codeawsstart_developer-testing
+
+    Configuration:
+      Steps:
+        - Run: DOMAIN=${Secrets.CodeArtifactDomain} DOMAIN_OWNER=${Secrets.CodeArtifactDomainOwner} REPOSITORY=${Secrets.CodeArtifactRepository} ECR_REGISTRY=${Secrets.EcrRegistry} bash docker-build.sh
