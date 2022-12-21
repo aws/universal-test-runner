@@ -52,4 +52,5 @@ Actions:
 
     Configuration:
       Steps:
-        - Run: DOMAIN=${Secrets.CodeArtifactDomain} DOMAIN_OWNER=${Secrets.CodeArtifactDomainOwner} REPOSITORY=${Secrets.CodeArtifactRepository} ECR_REGISTRY=${Secrets.EcrRegistry} bash docker-build.sh
+        - Run: DOMAIN=${Secrets.CodeArtifactDomain} DOMAIN_OWNER=${Secrets.CodeArtifactDomainOwner} REPOSITORY=${Secrets.CodeArtifactRepository} bash docker-build.sh
+        - Run: ECR_REGISTRY=${Secrets.EcrRegistry} bash docker-push.sh
