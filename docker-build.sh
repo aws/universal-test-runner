@@ -8,7 +8,6 @@ TOKEN_FILE=$(mktemp)
 [[ -z "$DOMAIN" ]] && echo "No DOMAIN provided!" && exit 1
 [[ -z "$DOMAIN_OWNER" ]] && echo "No DOMAIN_OWNER provided!" && exit 1
 [[ -z "$REPOSITORY" ]] && echo "No REPOSITORY provided!" && exit 1
-[[ -z "$ECR_REGISTRY" ]] && echo "No ECR_REGISTRY provided!" && exit 1
 
 aws codeartifact get-repository-endpoint --region us-west-2 --domain $DOMAIN --domain-owner $DOMAIN_OWNER --repository $REPOSITORY --format npm --output text | sed 's/https:\/\///' > $ENDPOINT_FILE
 
@@ -20,8 +19,3 @@ DOCKER_BUILDKIT=1 docker build -t universal-test-runner . \
 
 rm $ENDPOINT_FILE
 rm $TOKEN_FILE
-
-aws ecr get-login-password --region us-west-2 | docker login --username AWS --password-stdin $ECR_REGISTRY
-
-docker tag universal-test-runner:latest $ECR_REGISTRY:latest
-docker push $ECR_REGISTRY:latest
