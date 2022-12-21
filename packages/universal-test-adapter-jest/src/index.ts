@@ -16,14 +16,13 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
     args.push('--testNamePattern', testNamesToRun.join('|'))
   }
 
-  const extraEnvVars: { [key: string]: string } = {}
+  log.info(`Running tests with jest using command: ${[executable, ...args].join(' ')}`)
 
-  const envVarStrings = Object.entries(extraEnvVars).map(([key, value]) => `${key}="${value}"`)
+  const { status, error } = await runCommand(executable, args)
 
-  log.info(
-    `Running tests with jest using command: ${[...envVarStrings, executable, ...args].join(' ')}`,
-  )
+  if (error) {
+    log.error(error)
+  }
 
-  const { status } = await runCommand(executable, args, extraEnvVars)
   return { exitCode: status ?? 1 }
 }
