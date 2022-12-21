@@ -19,10 +19,9 @@ describe('Jest adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith(
-      './node_modules/.bin/jest',
-      ['--testNamePattern', 'bill|bob|mary'],
-      {},
-    )
+    expect(runCommand).toHaveBeenCalledWith('./node_modules/.bin/jest', [
+      '--testNamePattern',
+      'bill|bob|mary',
+    ])
   })
 })

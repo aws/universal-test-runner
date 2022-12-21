@@ -24,6 +24,9 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
     )
   }
   log.info(`Running tests with gradle using command: ${[executable, ...args].join(' ')}`)
-  const { status } = await runCommand(executable, args)
+  const { status, error } = await runCommand(executable, args)
+  if (error) {
+    log.error(error)
+  }
   return { exitCode: status ?? 1 }
 }

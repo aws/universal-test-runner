@@ -25,9 +25,12 @@ export async function run(
     log.info('Calling executeTests on adapter...')
     const adapterOutput = await adapter.executeTests(adapterInput)
     log.info('Finished executing tests.')
+    if (adapterOutput.exitCode !== 0) {
+      log.error(`Test run failed with exit code ${adapterOutput.exitCode}`)
+    }
     return adapterOutput
   } catch (e) {
-    log.error('Failed to run tests.', e)
+    log.error('Failed to run tests due to an adapter error.', e)
     return { exitCode: ErrorCodes.ADAPTER_ERROR }
   }
 }
