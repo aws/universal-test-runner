@@ -7,6 +7,13 @@ import path from 'path'
 import fs from 'fs/promises'
 
 export async function findPackageRoot(packageName: string): Promise<string> {
+  // The package is most likely to be installed at the node_modules top-level,
+  // so check there first in case we can exit early
+  const topLevelNodeModulesRoot = path.resolve(__dirname, '..', 'node_modules', packageName)
+  if (await foundPackageJsonWithLicenseInfo(topLevelNodeModulesRoot)) {
+    return topLevelNodeModulesRoot
+  }
+
   let packageMain
   try {
     packageMain = require.resolve(packageName)
