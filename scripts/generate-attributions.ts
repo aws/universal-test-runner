@@ -115,8 +115,14 @@ function run() {
   return Promise.all(
     packages.map(async ({ packageRoot, packageName }) => {
       const attributionsFilePath = path.join(packageRoot, 'THIRD_PARTY_LICENSES')
-      console.log(`Writing attribution file to ${attributionsFilePath}`)
-      await fs.writeFile(attributionsFilePath, await getFullAttributionsText(packageName))
+      console.log(`Writing attribution file for ${packageName}...`)
+      try {
+        await fs.writeFile(attributionsFilePath, await getFullAttributionsText(packageName))
+      } catch (e) {
+        console.error(`Failed for ${packageName} (root: ${packageRoot})`)
+        throw e
+      }
+      console.log(`Wrote attribution file to ${attributionsFilePath}`)
     }),
   )
 }
