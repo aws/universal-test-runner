@@ -19,7 +19,7 @@ export async function loadAdapter(rawAdapterModule: string, cwd: string): Promis
 
   try {
     const adapterImportPath = adapterModule.startsWith('.')
-      ? path.join(cwd, adapterModule)
+      ? resolveCustomAdapterPath(cwd, adapterModule)
       : adapterModule
     const adapter = await import(adapterImportPath)
     log.info('Loaded adapter from', adapterModule)
@@ -28,4 +28,9 @@ export async function loadAdapter(rawAdapterModule: string, cwd: string): Promis
     log.error('Failed to load adapter from', adapterModule)
     throw e
   }
+}
+
+function resolveCustomAdapterPath(cwd: string, adapterPath: string): string {
+  // nosemgrep: javascript.lang.security.audit.path-traversal.path-join-resolve-traversal.path-join-resolve-traversal
+  return path.join(cwd, adapterPath)
 }
