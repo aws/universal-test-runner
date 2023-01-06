@@ -4,11 +4,16 @@
 jest.mock('../src/log')
 
 describe('Gradle adapter', () => {
-  const runCommand = jest.fn(() => ({ status: 0 }))
+  let spawn: any
+
+  beforeEach(() => {
+    spawn = jest.fn(() => ({ status: 0 }))
+
+    jest.resetModules()
+    jest.doMock('@sentinel-internal/universal-test-runner-spawn', () => ({ spawn }))
+  })
 
   it('executes gradle when given tests to run', async () => {
-    jest.doMock('../src/runCommand', () => ({ runCommand }))
-
     const { executeTests } = await import('../src/index')
 
     const { exitCode } = await executeTests({
@@ -16,7 +21,7 @@ describe('Gradle adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('gradle', [
+    expect(spawn).toHaveBeenCalledWith('gradle', [
       'test',
       '--tests',
       '*.*.bill',
@@ -28,8 +33,6 @@ describe('Gradle adapter', () => {
   })
 
   it('executes gradle when given tests to run with file or suite names', async () => {
-    jest.doMock('../src/runCommand', () => ({ runCommand }))
-
     const { executeTests } = await import('../src/index')
 
     const { exitCode } = await executeTests({
@@ -41,7 +44,7 @@ describe('Gradle adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('gradle', [
+    expect(spawn).toHaveBeenCalledWith('gradle', [
       'test',
       '--tests',
       '*.*.bill',
@@ -53,8 +56,6 @@ describe('Gradle adapter', () => {
   })
 
   it('executes gradle when given tests to run with file and suite names', async () => {
-    jest.doMock('../src/runCommand', () => ({ runCommand }))
-
     const { executeTests } = await import('../src/index')
 
     const { exitCode } = await executeTests({
@@ -66,7 +67,7 @@ describe('Gradle adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('gradle', [
+    expect(spawn).toHaveBeenCalledWith('gradle', [
       'test',
       '--tests',
       '*.suiteA.bill',

@@ -5,8 +5,8 @@ jest.mock('../src/log')
 
 describe('Maven adapter', () => {
   it('executes maven when given tests to run', async () => {
-    const runCommand = jest.fn(() => ({ status: 0 }))
-    jest.doMock('../src/runCommand', () => ({ runCommand }))
+    const spawn = jest.fn(() => ({ status: 0 }))
+    jest.doMock('@sentinel-internal/universal-test-runner-spawn', () => ({ spawn }))
 
     const { executeTests } = await import('../src/index')
 
@@ -15,6 +15,6 @@ describe('Maven adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('mvn', ['-Dtest=#bill,#bob,#mary', 'test'])
+    expect(spawn).toHaveBeenCalledWith('mvn', ['-Dtest=#bill,#bob,#mary', 'test'])
   })
 })

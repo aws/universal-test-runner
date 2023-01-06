@@ -5,6 +5,7 @@
   "workspaces": [
     "packages/universal-test-runner-types",
     "packages/universal-test-runner-logger",
+    "packages/universal-test-runner-spawn",
     "packages/universal-test-runner",
     "packages/*"
   ],

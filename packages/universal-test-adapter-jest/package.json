@@ -14,7 +14,8 @@
     "THIRD_PARTY_LICENSES"
   ],
   "dependencies": {
-    "@sentinel-internal/universal-test-runner-logger": "^0.1.0"
+    "@sentinel-internal/universal-test-runner-logger": "^0.1.0",
+    "@sentinel-internal/universal-test-runner-spawn": "^0.1.0"
   },
   "devDependencies": {
     "@sentinel-internal/universal-test-runner-types": "*"
