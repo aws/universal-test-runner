@@ -67,3 +67,17 @@ jobs:
           base: ${{ github.event.repository.default_branch }}
           head: HEAD
           extra_args: --debug
+          
+  semgrep:
+    runs-on: ubuntu-latest
+
+    container:
+      image: returntocorp/semgrep
+
+    if: (github.actor != 'dependabot[bot]')
+
+    steps:
+      - uses: actions/checkout@v3
+      - run: semgrep ci
+        env:
+           SEMGREP_RULES: p/default # more at semgrep.dev/explore
