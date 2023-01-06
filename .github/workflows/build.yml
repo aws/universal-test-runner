@@ -67,7 +67,7 @@ jobs:
           base: ${{ github.event.repository.default_branch }}
           head: HEAD
           extra_args: --debug
-          
+
   semgrep:
     runs-on: ubuntu-latest
 
@@ -78,7 +78,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: semgrep --config "p/default" packages
-      #- run: semgrep ci --include packages
-        #env:
-        #   SEMGREP_RULES: "p/default" # more at semgrep.dev/explore
+      - run: semgrep ci --include packages
+        env:
+           SEMGREP_RULES: "p/default"
