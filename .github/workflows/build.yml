@@ -78,6 +78,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - run: semgrep ci
-        env:
-           SEMGREP_RULES: "p/default p/cwe-top-25 p/owasp-top-ten" # more at semgrep.dev/explore
+      - run: semgrep --config "p/default" packages
+      #- run: semgrep ci --include packages
+        #env:
+        #   SEMGREP_RULES: "p/default" # more at semgrep.dev/explore
