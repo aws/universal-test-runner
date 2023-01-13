@@ -4,11 +4,16 @@
 jest.mock('../src/log')
 
 describe('Pytest adapter', () => {
-  const runCommand = jest.fn(() => ({ status: 0 }))
+  let spawn: any
+
+  beforeEach(() => {
+    spawn = jest.fn(() => ({ status: 0 }))
+
+    jest.resetModules()
+    jest.doMock('@sentinel-internal/universal-test-runner-spawn', () => ({ spawn }))
+  })
 
   it('executes pytest when given tests to run', async () => {
-    jest.doMock('../src/runCommand', () => ({ runCommand }))
-
     const { executeTests } = await import('../src/index')
 
     const { exitCode } = await executeTests({
@@ -16,12 +21,10 @@ describe('Pytest adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('pytest', ['-k', '(bill) or (bob) or (mary)'])
+    expect(spawn).toHaveBeenCalledWith('pytest', ['-k', '(bill) or (bob) or (mary)'])
   })
 
   it('executes pytest when given tests to run with file or suite names', async () => {
-    jest.doMock('../src/runCommand', () => ({ runCommand }))
-
     const { executeTests } = await import('../src/index')
 
     const { exitCode } = await executeTests({
@@ -33,15 +36,13 @@ describe('Pytest adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('pytest', [
+    expect(spawn).toHaveBeenCalledWith('pytest', [
       '-k',
       '(bill) or (fileB.py and bob) or (suiteC and mary)',
     ])
   })
 
   it('executes pytest when given tests to run with file and suite names', async () => {
-    jest.doMock('../src/runCommand', () => ({ runCommand }))
-
     const { executeTests } = await import('../src/index')
 
     const { exitCode } = await executeTests({
@@ -53,7 +54,7 @@ describe('Pytest adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('pytest', [
+    expect(spawn).toHaveBeenCalledWith('pytest', [
       '-v',
       'fileA.py::suiteA::bill fileB.py::suiteB::bob fileC.py::suiteC::mary',
     ])

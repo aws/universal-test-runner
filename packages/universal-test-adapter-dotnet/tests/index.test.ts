@@ -5,8 +5,8 @@ jest.mock('../src/log')
 
 describe('Dotnet adapter', () => {
   it('executes dotnet test when given tests to run', async () => {
-    const runCommand = jest.fn(() => ({ status: 0 }))
-    jest.doMock('../src/runCommand', () => ({ runCommand }))
+    const spawn = jest.fn(() => ({ status: 0 }))
+    jest.doMock('@sentinel-internal/universal-test-runner-spawn', () => ({ spawn }))
 
     const { executeTests } = await import('../src/index')
 
@@ -19,7 +19,7 @@ describe('Dotnet adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('dotnet', [
+    expect(spawn).toHaveBeenCalledWith('dotnet', [
       'test',
       '--filter',
       '(FullyQualifiedName=Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet) | ' +

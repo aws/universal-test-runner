@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { runCommand } from './runCommand'
+import { spawn } from '@sentinel-internal/universal-test-runner-spawn'
 import { log } from './log'
 
 import { AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-runner-types'
@@ -41,7 +41,7 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
   const quotedArgs = args.map((arg) => (arg.includes(' ') ? `'${arg}'` : arg))
   log.info(`Running tests with pytest using command: ${[executable, ...quotedArgs].join(' ')}`)
 
-  const { status, error } = await runCommand(executable, args)
+  const { status, error } = await spawn(executable, args)
 
   if (error) {
     log.error(error)

@@ -9,8 +9,8 @@ describe('Jest adapter', () => {
       buildBaseTestCommand: () => ['./node_modules/.bin/jest', []],
     }))
 
-    const runCommand = jest.fn(() => ({ status: 0 }))
-    jest.doMock('../src/runCommand', () => ({ runCommand }))
+    const spawn = jest.fn(() => ({ status: 0 }))
+    jest.doMock('@sentinel-internal/universal-test-runner-spawn', () => ({ spawn }))
 
     const { executeTests } = await import('../src/index')
 
@@ -19,7 +19,7 @@ describe('Jest adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(runCommand).toHaveBeenCalledWith('./node_modules/.bin/jest', [
+    expect(spawn).toHaveBeenCalledWith('./node_modules/.bin/jest', [
       '--testNamePattern',
       'bill|bob|mary',
     ])

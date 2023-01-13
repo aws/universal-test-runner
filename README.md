@@ -3,7 +3,7 @@
 A universal test runner for any language and test framework.
 
 **❗️ NB: universal-test-runner is currently working towards a 1.0.0 release.
-See the [1.0.0 milestone](https://github.com/aws/codeaws-test-runner/milestone/1) 
+See the [1.0.0 milestone](https://github.com/aws/universal-test-runner/milestone/1) 
 for all progress towards 1.0.0. ❗️**
 
 ## 🌎 What is universal-test-runner?
@@ -48,7 +48,7 @@ First-party test adapter support is provided for the following frameworks/build 
 * Maven: https://maven.apache.org/
 * Gradle: https://gradle.org/
 
-See the [1.0.0 milestone](https://github.com/aws/codeaws-test-runner/milestone/1)
+See the [1.0.0 milestone](https://github.com/aws/universal-test-runner/milestone/1)
 for all frameworks and build tools we plan to support for v1.0.0.
 
 ## 🔋 Custom adapters
@@ -58,7 +58,7 @@ providing support for new frameworks or custom testing setups. See the docs on
 [writing custom adapters](#-writing-adapters) for how to implement one.
 
 If you write a custom adapter, please host it in its own GitHub repo and
-publish it to npm; then [open a pull request](https://github.com/aws/codeaws-test-runner/compare) to add it to our 
+publish it to npm; then [open a pull request](https://github.com/aws/universal-test-runner/compare) to add it to our 
 [list of known third-party adapters](TODO), so everyone can benefit. (Note that we 
 won't be adding the source code of third-party adapters directly to this repo.)
 
@@ -146,7 +146,7 @@ All changes to the Test Execution Protocol must follow the [RFC process](./proto
 
 ### Local development setup
 
-[Fork](https://github.com/aws/codeaws-test-runner/fork) the repository, and then clone your fork:
+[Fork](https://github.com/aws/universal-test-runner/fork) the repository, and then clone your fork:
 
 ```
 git clone https://github.com/<USERNAME>/universal-test-runner
