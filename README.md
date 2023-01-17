@@ -1,5 +1,9 @@
 # universal-test-runner
 
+[![npm version](https://img.shields.io/npm/v/@aws/universal-test-runner)](https://www.npmjs.com/package/@aws/universal-test-runner)
+[![npm downloads](https://img.shields.io/npm/dm/@aws/universal-test-runner)](https://npm-stat.com/charts.html?package=%40aws%2Funiversal-test-runner)
+[![build status](https://github.com/aws/universal-test-runner/actions/workflows/build.yml/badge.svg)](https://github.com/aws/universal-test-runner/actions/workflows/build.yml)
+
 A universal test runner for any language and test framework.
 
 **❗️ NB: universal-test-runner is currently working towards a 1.0.0 release.
@@ -47,9 +51,20 @@ First-party test adapter support is provided for the following frameworks/build 
 * Pytest: https://pytest.org
 * Maven: https://maven.apache.org/
 * Gradle: https://gradle.org/
+* Dotnet: https://learn.microsoft.com/en-us/dotnet/core/tools/
 
 See the [1.0.0 milestone](https://github.com/aws/universal-test-runner/milestone/1)
 for all frameworks and build tools we plan to support for v1.0.0.
+
+## 📦 Packages in this monorepo
+
+The only package you should install and depend on is
+[`@sentinel-internal/universal-test-runner`](./packages/universal-test-runner),
+which follows [semantic versioning](https://semver.org/).
+
+The other packages are either internal utilities or adapters that have unstable
+APIs and won't necessarily follow semver. You should avoid depending on them
+directly.
 
 ## 🔋 Custom adapters
 
@@ -58,9 +73,10 @@ providing support for new frameworks or custom testing setups. See the docs on
 [writing custom adapters](#-writing-adapters) for how to implement one.
 
 If you write a custom adapter, please host it in its own GitHub repo and
-publish it to npm; then [open a pull request](https://github.com/aws/universal-test-runner/compare) to add it to our 
-[list of known third-party adapters](TODO), so everyone can benefit. (Note that we 
-won't be adding the source code of third-party adapters directly to this repo.)
+publish it to npm; then [open a pull request](https://github.com/aws/universal-test-runner/compare)
+to add it to our [list of known third-party adapters](./docs/third-party-adapters.md),
+so everyone can benefit. (Note that we won't be adding the source code of
+third-party adapters directly to this repo.)
 
 Example of using a third-party adapter from npm:
 

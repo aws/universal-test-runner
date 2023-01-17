@@ -9,6 +9,14 @@
     "packages/universal-test-runner",
     "packages/*"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aws/universal-test-runner"
+  },
+  "bugs": {
+    "url": "https://github.com/aws/universal-test-runner/issues"
+  },
+  "homepage": "https://github.com/aws/universal-test-runner#readme",
   "scripts": {
     "test": "jest tests/ packages/",
     "test:integ": "jest tests-integ/",
