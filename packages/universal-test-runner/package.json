@@ -30,6 +30,6 @@
   },
   "devDependencies": {
     "@sentinel-internal/universal-test-runner-types": "*",
-    "@types/yargs": "^17.0.18"
+    "@types/yargs": "^17.0.19"
   }
 }
