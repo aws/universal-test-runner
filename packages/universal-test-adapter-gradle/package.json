@@ -19,5 +19,13 @@
   },
   "devDependencies": {
     "@sentinel-internal/universal-test-runner-types": "*"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aws/universal-test-runner"
+  },
+  "bugs": {
+    "url": "https://github.com/aws/universal-test-runner/issues"
+  },
+  "homepage": "https://github.com/aws/universal-test-runner#readme"
 }

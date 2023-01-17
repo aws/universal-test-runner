@@ -17,5 +17,13 @@
   ],
   "dependencies": {
     "chalk": "^4.1.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aws/universal-test-runner"
+  },
+  "bugs": {
+    "url": "https://github.com/aws/universal-test-runner/issues"
+  },
+  "homepage": "https://github.com/aws/universal-test-runner#readme"
 }
