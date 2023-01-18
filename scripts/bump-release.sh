@@ -6,7 +6,7 @@ set -e
 
 [[ -z "$WHAT_BUMP" ]] && echo "WHAT_BUMP must be specified! (e.g. major, minor, patch)" && exit 1
 
-echo "Bumping all pacakges with increment $WHAT_BUMP..."
+echo "Bumping all packages with increment $WHAT_BUMP..."
 
 npm version $WHAT_BUMP --workspaces --no-workspaces-update --include-workspace-root --no-git-tag-version
 
