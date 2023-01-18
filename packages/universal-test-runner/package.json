@@ -1,5 +1,5 @@
 {
-  "name": "@sentinel-internal/universal-test-runner",
+  "name": "@aws/universal-test-runner",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "main": "dist/lib/src/index.js",
@@ -20,16 +20,16 @@
     "THIRD_PARTY_LICENSES"
   ],
   "dependencies": {
-    "@sentinel-internal/universal-test-adapter-gradle": "^0.1.0",
-    "@sentinel-internal/universal-test-adapter-jest": "^0.1.0",
-    "@sentinel-internal/universal-test-adapter-maven": "^0.1.0",
-    "@sentinel-internal/universal-test-adapter-pytest": "^0.1.0",
-    "@sentinel-internal/universal-test-adapter-dotnet": "^0.1.0",
-    "@sentinel-internal/universal-test-runner-logger": "^0.1.0",
+    "@aws/universal-test-adapter-gradle": "^0.1.0",
+    "@aws/universal-test-adapter-jest": "^0.1.0",
+    "@aws/universal-test-adapter-maven": "^0.1.0",
+    "@aws/universal-test-adapter-pytest": "^0.1.0",
+    "@aws/universal-test-adapter-dotnet": "^0.1.0",
+    "@aws/universal-test-runner-logger": "^0.1.0",
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "@sentinel-internal/universal-test-runner-types": "*",
+    "@aws/universal-test-runner-types": "*",
     "@types/yargs": "^17.0.19"
   },
   "repository": {

@@ -1,5 +1,5 @@
 {
-  "name": "@sentinel-internal/universal-test-runner-spawn",
+  "name": "@aws/universal-test-runner-spawn",
   "version": "0.1.0",
   "license": "Apache-2.0",
   "main": "dist/lib/index.js",

@@ -6,7 +6,7 @@ import {
   Adapter,
   AdapterInput,
   AdapterOutput,
-} from '@sentinel-internal/universal-test-runner-types'
+} from '@aws/universal-test-runner-types'
 import { ProtocolResult } from './readProtocol'
 import { ErrorCodes } from '../bin/ErrorCodes'
 
