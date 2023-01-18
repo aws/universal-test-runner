@@ -18,7 +18,7 @@ npm install --userconfig=/dev/null
 NEW_VERSION=$(node -e "console.log(require('./package.json').version)")
 
 echo "Committing all version updates.."
-git commit -am "$NEW_VERSION"
+git commit -a --no-verify -m "$NEW_VERSION"
 
 echo "Creating git tag for version $NEW_VERSION..."
 git tag -a -m "$NEW_VERSION" $NEW_VERSION
