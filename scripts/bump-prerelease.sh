@@ -10,11 +10,12 @@ npm version $PRERELEASE_VERSION --workspaces --no-workspaces-update --include-wo
 
 npx ts-node ./scripts/update-dependency-versions
 
-echo "Replacing all usage of @aws scope with @sentinel-internal..."
+FILES_WITH_AWS_SCOPE=$(grep -l -R @aws --exclude="*node_modules*" --exclude="*dist*" ./packages)
+
+echo "Found the following files with @aws scope: $FILES_WITH_AWS_SCOPE"
 
 # Replace all usage of aws scope with sentinel-internal in order to publish
 # prereleases to internal CodeArtifact registry for testing purposes.
-# Note that a space is required after -i on some systems, e.g. `sed -i '' -e ...`
-sed -i'' -e 's/@aws/@sentinel-internal/g' $(grep -l -R @sentinel-internal --exclude="*node_modules*" --exclude="*dist*" .)
+npx ts-node ./scripts/replace-aws-scope.ts $FILES_WITH_AWS_SCOPE
 
 echo "Done."
