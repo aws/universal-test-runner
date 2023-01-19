@@ -1,10 +1,10 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { spawn } from '@sentinel-internal/universal-test-runner-spawn'
+import { spawn } from '@aws/universal-test-runner-spawn'
 import { log } from './log'
 
-import { AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-runner-types'
+import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
 
 export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
   const executable = 'pytest'

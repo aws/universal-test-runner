@@ -29,8 +29,8 @@ Actions:
       Steps:
         - Run: . ./setup-node.sh
         - Run: npm ci
-        - Run: npm run build
         - Run: COMMIT_ID=${WorkflowSource.CommitId} npm run bump:prerelease
+        - Run: npm run build
         - Run: aws codeartifact login --tool npm --repository ${Secrets.CodeArtifactRepository} --domain ${Secrets.CodeArtifactDomain} --domain-owner ${Secrets.CodeArtifactDomainOwner} --region us-west-2
         - Run: npm publish --workspaces --unsafe-perm
 

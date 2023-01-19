@@ -1,4 +1,4 @@
-@sentinel-internal/universal-test-runner-logger includes the following third-party software/licensing:
+@aws/universal-test-runner-logger includes the following third-party software/licensing:
 
 ** chalk@4.1.2 - https://npmjs.com/package/chalk
 MIT License

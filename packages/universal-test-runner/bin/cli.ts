@@ -16,7 +16,7 @@ import { loadAdapter as _loadAdapter, builtInAdapters } from '../src/loadAdapter
 import { log } from '../src/log'
 import { ProtocolLogger } from '../src/ProtocolLogger'
 import { ErrorCodes, UniversalTestRunnerError } from './ErrorCodes'
-import { Adapter } from '@sentinel-internal/universal-test-runner-types'
+import { Adapter } from '@aws/universal-test-runner-types'
 
 const argv = yargs(hideBin(process.argv))
   .command(

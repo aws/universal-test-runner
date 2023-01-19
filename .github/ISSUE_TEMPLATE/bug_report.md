@@ -30,7 +30,7 @@ A clear and concise description of what you expected to happen.
 ## Version information
  - OS: [e.g. iOS]
  - Node.js version: [e.g. 16.14.2]
- - CLI version (`npm ls @sentinel-internal/universal-test-runner`): [e.g. 1.0.0]
+ - CLI version (`npm ls @aws/universal-test-runner`): [e.g. 1.0.0]
 
 ## Additional context
 

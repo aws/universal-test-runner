@@ -10,7 +10,7 @@ describe('Pytest adapter', () => {
     spawn = jest.fn(() => ({ status: 0 }))
 
     jest.resetModules()
-    jest.doMock('@sentinel-internal/universal-test-runner-spawn', () => ({ spawn }))
+    jest.doMock('@aws/universal-test-runner-spawn', () => ({ spawn }))
   })
 
   it('executes pytest when given tests to run', async () => {

@@ -1,10 +1,10 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { spawn } from '@sentinel-internal/universal-test-runner-spawn'
+import { spawn } from '@aws/universal-test-runner-spawn'
 import { log } from './log'
 
-import { AdapterInput, AdapterOutput } from '@sentinel-internal/universal-test-runner-types'
+import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
 
 // Transforms filepath input from 'folderA/folderB/file.java' to 'folderA.folderB'
 export const parsePackagePath = (filepath: string): string => {

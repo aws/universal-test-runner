@@ -6,7 +6,7 @@ jest.mock('../src/log')
 describe('Dotnet adapter', () => {
   it('executes dotnet test when given tests to run', async () => {
     const spawn = jest.fn(() => ({ status: 0 }))
-    jest.doMock('@sentinel-internal/universal-test-runner-spawn', () => ({ spawn }))
+    jest.doMock('@aws/universal-test-runner-spawn', () => ({ spawn }))
 
     const { executeTests } = await import('../src/index')
 

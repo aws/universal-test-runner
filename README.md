@@ -18,7 +18,7 @@ any test framework. For example, to run a single test named "my test" in a
 project using [Jest](https://jestjs.io/), you can run the following:
 
 ```
-npm install -g @sentinel-internal/universal-test-runner 
+npm install -g @aws/universal-test-runner 
 export TEP_TESTS_TO_RUN="my test" 
 run-tests jest
 ```
