@@ -31,6 +31,7 @@ Actions:
         - Run: npm ci
         - Run: npm run build
         - Run: COMMIT_ID=${WorkflowSource.CommitId} npm run bump:prerelease
+        - Run: npm install # update workspace symlinks after preparing the prerelease
         - Run: npm test # re-run tests after we prepare the prerelease to make sure we did everything correctly
         - Run: aws codeartifact login --tool npm --repository ${Secrets.CodeArtifactRepository} --domain ${Secrets.CodeArtifactDomain} --domain-owner ${Secrets.CodeArtifactDomainOwner} --region us-west-2
         - Run: npm publish --workspaces --unsafe-perm
