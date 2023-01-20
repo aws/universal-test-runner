@@ -30,7 +30,7 @@ describe('Jest adapter', () => {
     expect(exitCode).toBe(0)
     expect(spawn).toHaveBeenCalledWith('./node_modules/.bin/jest', [
       '--testNamePattern',
-      '\'(bill)|(bob)|(mary)\'',
+      '(bill)|(bob)|(mary)',
     ])
   })
 
@@ -48,7 +48,7 @@ describe('Jest adapter', () => {
     expect(exitCode).toBe(0)
     expect(spawn).toHaveBeenCalledWith('./node_modules/.bin/jest', [
       '--testNamePattern',
-      '\'(bill)|(bob)|(suiteC mary)\'',
+      '(bill)|(bob)|(suiteC mary)',
     ])
   })
 
@@ -57,24 +57,20 @@ describe('Jest adapter', () => {
 
     const { exitCode } = await executeTests({
       testsToRun: [
-        { filepath: 'package/dirA',  testName: 'bob' },
+        { filepath: 'package/dirA', testName: 'bob' },
         { filepath: 'package/fileB.ext', testName: 'bob' },
-        { filepath: '.*/package/.*/dirB/.*',  testName: 'bob', suiteName: 'w' },
-        { filepath: '/package/.*/dirB',  testName: 'bob' },
-        { filepath: '\\package\\dirA',  testName: 'bob' },
-
+        { filepath: '.*/package/.*/dirB/.*', testName: 'bob', suiteName: 'w' },
+        { filepath: '/package/.*/dirB', testName: 'bob' },
+        { filepath: '\\package\\dirA', testName: 'bob' },
       ],
     })
 
     expect(exitCode).toBe(0)
     expect(spawn).toHaveBeenCalledWith('./node_modules/.bin/jest', [
       '--testMatch',
-      '\'**/package/dirA/** **/package/fileB.ext **/package/**/dirB/** **/package/**/dirB/** **/package/dirA/**\'',
+      '(**/package/dirA/**)|(**/package/fileB.ext)|(**/package/**/dirB/**)|(**/package/**/dirB/**)|(**/package/dirA/**)',
       '--testNamePattern',
-      '\'(bob)|(bob)|(w bob)|(bob)|(bob)\'',
+      '(bob)|(bob)|(w bob)|(bob)|(bob)',
     ])
   })
-
-
-
 })
