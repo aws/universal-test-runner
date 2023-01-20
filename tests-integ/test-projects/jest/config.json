@@ -1,0 +1,3 @@
+{
+    "testsToRun": ["test1|test2", "#Suite1#test1|#Suite2#test2", "index.test.js#Suite1#test1", "index.test2.js#Suite2#test2|index.test.js#Suite1#test1"]
+}
