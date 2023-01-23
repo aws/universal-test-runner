@@ -1,0 +1,3 @@
+{
+    "testsToRun": ["test1|test2", "#AppTest#test1|#AppTest2#test1", "AppTest#AppTest#test1", "com/amazonaws/testmaven/AppTest.java#AppTest#test1|testmaven2/#AppTest2#test1"]
+}
