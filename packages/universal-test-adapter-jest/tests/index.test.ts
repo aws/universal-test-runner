@@ -28,10 +28,7 @@ describe('Jest adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(spawn).toHaveBeenCalledWith('./node_modules/.bin/jest', [
-      '--testNamePattern',
-      '(bill)|(bob)|(mary)',
-    ])
+    expect(spawn).toHaveBeenCalledWith('jest', ['--testNamePattern', '(bill)|(bob)|(mary)'])
   })
 
   it('excludes filepaths when not included in every entry', async () => {
@@ -46,10 +43,7 @@ describe('Jest adapter', () => {
     })
 
     expect(exitCode).toBe(0)
-    expect(spawn).toHaveBeenCalledWith('./node_modules/.bin/jest', [
-      '--testNamePattern',
-      '(bill)|(bob)|(suiteC mary)',
-    ])
+    expect(spawn).toHaveBeenCalledWith('jest', ['--testNamePattern', '(bill)|(bob)|(suiteC mary)'])
   })
 
   it('converts filepaths to globs correctly', async () => {
@@ -57,20 +51,18 @@ describe('Jest adapter', () => {
 
     const { exitCode } = await executeTests({
       testsToRun: [
-        { filepath: 'package/dirA', testName: 'bob' },
         { filepath: 'package/fileB.ext', testName: 'bob' },
-        { filepath: '.*/package/.*/dirB/.*', testName: 'bob', suiteName: 'w' },
-        { filepath: '/package/.*/dirB', testName: 'bob' },
-        { filepath: '\\package\\dirA', testName: 'bob' },
+        { filepath: '.*/package/.*/dirC/fileC.ext', testName: 'bob', suiteName: 'w' },
+        { filepath: '\\package\\dirA\\fileD.ext', testName: 'bob' },
       ],
     })
 
     expect(exitCode).toBe(0)
-    expect(spawn).toHaveBeenCalledWith('./node_modules/.bin/jest', [
-      '--testMatch',
-      '(**/package/dirA/**)|(**/package/fileB.ext)|(**/package/**/dirB/**)|(**/package/**/dirB/**)|(**/package/dirA/**)',
+    expect(spawn).toHaveBeenCalledWith('jest', [
+      '--testPathPattern',
+      '(package/fileB.ext)|(.*/package/.*/dirC/fileC.ext)|(/package/dirA/fileD.ext)',
       '--testNamePattern',
-      '(bob)|(bob)|(w bob)|(bob)|(bob)',
+      '(bob)|(w bob)|(bob)',
     ])
   })
 })

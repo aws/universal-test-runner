@@ -3,44 +3,18 @@
 
 import { spawn } from '@aws/universal-test-runner-spawn'
 import { log } from './log'
-import { buildBaseTestCommand } from './buildBaseTestCommand'
 
 import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
 
-// could also use https://www.npmjs.com/package/path-to-glob-pattern?activeTab=explore
-// Examples:
-// src/dirA/dirB/file.js -> **/src/dirA/dirB/file.js
-// src\dirA\.*\dirB -> **/src/dirA/**/dirB/**
-const pathToGlob = (filepath: string): string => {
-  //should do this different to avoid 2 linear searches
-  filepath = filepath.replace(/\\/g, '/').replace(/\.\*/g, '**')
-
-  filepath = !filepath.startsWith('**')
-    ? filepath.startsWith('/')
-      ? '**' + filepath
-      : '**/' + filepath
-    : filepath
-
-  // no file specified, only dirs
-  if (!filepath.includes('.')) {
-    if (!filepath.endsWith('**')) {
-      // src/dirA/dirB
-      if (!filepath.endsWith('/')) {
-        filepath = filepath + '/**'
-      }
-      // src/dirA/dirB/
-      else {
-        filepath = filepath + '**'
-      }
-    }
-  }
-  return filepath
+const toUnixPath = (filepath: string): string => {
+  // https://quickref.me/convert-a-windows-file-path-to-unix-path
+  return filepath.replace(/[\\/]+/g, '/').replace(/^([a-zA-Z]+:|\.\/)/, '')
 }
 
 export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
-  const [executable, args] = await buildBaseTestCommand()
-  // const executable = 'jest'
-  // const args = []
+  //const [executable, args] = await buildBaseTestCommand()
+  const executable = 'jest'
+  const args = []
 
   const filepaths: string[] = []
   const describeIts: string[] = []
@@ -51,7 +25,7 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
     if (filepath && (testName || suiteName)) {
       filepathWithTestOrSuiteCount++
     }
-    filepath && filepaths.push(`(${pathToGlob(filepath)})`)
+    filepath && filepaths.push(`(${toUnixPath(filepath)})`)
     if (suiteName && testName) {
       describeIts.push(`(${suiteName} ${testName})`)
     } else {
@@ -62,7 +36,7 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
   // since we can't map test names/suites to a filepath for jest, we cannot include filepaths in this call
   if (filepaths.length > 0) {
     if (describeIts.length == 0 || filepathWithTestOrSuiteCount == describeIts.length) {
-      args.push('--testMatch', `${filepaths.join('|')}`)
+      args.push('--testPathPattern', `${filepaths.join('|')}`)
     } else if (filepathWithTestOrSuiteCount != describeIts.length) {
       log.warn(
         'Detected entry that includes a filepath but does not include a test suite/name! ' +
