@@ -14,26 +14,55 @@ for all progress towards 1.0.0. ❗️**
 
 universal-test-runner is a command-line tool that uses the [Test Execution
 Protocol](./protocol/README.md) to run tests for any programming language and
-any test framework. For example, to run a single test named "my test" in a
-project using [Jest](https://jestjs.io/), you can run the following:
+any test framework.
+
+**Installation**: Install globally using npm:
 
 ```
-npm install -g @aws/universal-test-runner 
-export TEP_TESTS_TO_RUN="my test" 
-run-tests jest
+$ npm install -g @aws/universal-test-runner 
 ```
 
-How about running a test named "my_test", but for a project using
+Now the `run-tests` executable is available to be used.
+
+**Usage**: For example, to run a single test named "test1" in a
+project using [jest](https://jestjs.io/), you can run the following:
+
+```
+$ export TEP_TESTS_TO_RUN="test1" # set by IDE or CI/CD system
+
+$ run-tests jest
+PASS  ./index.test.js
+  Suite1
+    ✓ test1 (2 ms)
+    ○ skipped test2
+    ○ skipped test3
+
+Test Suites: 1 passed, 1 total
+Tests:       2 skipped, 1 passed, 3 total
+Snapshots:   0 total
+Time:        0.288 s, estimated 1 s
+Ran all test suites with tests matching "test1".
+```
+
+How about running a test named "test1", but for a project using
 [pytest](https://pytest.org)? Easy -- we can use the same command!
 
 ```
-export TEP_TESTS_TO_RUN="my_test" 
-run-tests pytest
+$ export TEP_TESTS_TO_RUN="test1 # set by IDE or CI/CD system
+
+$ run-tests pytest
+================== test session starts =====================
+platform darwin -- Python 3.10.9, pytest-7.1.3, pluggy-1.0.0
+collected 3 items / 2 deselected / 1 selected
+
+test_example.py .
 ```
 
-Check out [RFC 0001](./protocol/rfcs/0001/README.md) for the motivation behind
-universal-test-runner and the Test Execution Protocol, and why it's useful to
-have a common interface for passing arguments to test runners.
+As shown in these examples, the Test Execution Protocol is used to establish a
+unified interface for passing arguments to different test frameworks and
+runners.  Check out [RFC 0001](./protocol/rfcs/0001/README.md) for the
+motivation behind universal-test-runner and the Test Execution Protocol, and
+why having a common interface is so useful.
 
 ## 🤔 When should I use universal-test-runner?
 
@@ -47,11 +76,11 @@ You should install universal-test-runner in the following cases:
 
 First-party test adapter support is provided for the following frameworks/build tools:
 
-* Jest: https://jestjs.io/
-* Pytest: https://pytest.org
-* Maven: https://maven.apache.org/
-* Gradle: https://gradle.org/
-* Dotnet: https://learn.microsoft.com/en-us/dotnet/core/tools/
+* jest: https://jestjs.io/
+* pytest: https://pytest.org
+* maven: https://maven.apache.org/
+* gradle: https://gradle.org/
+* dotnet: https://learn.microsoft.com/en-us/dotnet/core/tools/
 
 See the [1.0.0 milestone](https://github.com/aws/universal-test-runner/milestone/1)
 for all frameworks and build tools we plan to support for v1.0.0.
@@ -59,7 +88,7 @@ for all frameworks and build tools we plan to support for v1.0.0.
 ## 📦 Packages in this monorepo
 
 The only package you should install and depend on is
-[`@sentinel-internal/universal-test-runner`](./packages/universal-test-runner),
+[`@aws/universal-test-runner`](./packages/universal-test-runner),
 which follows [semantic versioning](https://semver.org/).
 
 The other packages are either internal utilities or adapters that have unstable
