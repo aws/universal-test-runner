@@ -678,6 +678,210 @@ exports[`jest adapter runs a subset of tests 1`] = `
 }
 `;
 
+exports[`jest adapter runs a subset of tests 2`] = `
+{
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_END",
+    },
+    {
+      "data": {
+        "TEP_LOG_FILE_NAME": "logs/logs.json",
+        "TEP_TESTS_TO_RUN": "#Suite1#test1|#Suite2#test2",
+        "TEP_VERSION": "0.1.0",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "DISCOVERED_PROTOCOL_ENV_VARS",
+    },
+    {
+      "data": "0.1.0",
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_VERSION",
+    },
+    {
+      "data": {
+        "data": "jest",
+        "type": "ADAPTER_PATH",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_START",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_END",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_END",
+    },
+  ],
+}
+`;
+
+exports[`jest adapter runs a subset of tests 3`] = `
+{
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_END",
+    },
+    {
+      "data": {
+        "TEP_LOG_FILE_NAME": "logs/logs.json",
+        "TEP_TESTS_TO_RUN": "index.test.js#Suite1#test1",
+        "TEP_VERSION": "0.1.0",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "DISCOVERED_PROTOCOL_ENV_VARS",
+    },
+    {
+      "data": "0.1.0",
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_VERSION",
+    },
+    {
+      "data": {
+        "data": "jest",
+        "type": "ADAPTER_PATH",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_START",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_END",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_END",
+    },
+  ],
+}
+`;
+
+exports[`jest adapter runs a subset of tests 4`] = `
+{
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_END",
+    },
+    {
+      "data": {
+        "TEP_LOG_FILE_NAME": "logs/logs.json",
+        "TEP_TESTS_TO_RUN": "index.test2.js#Suite2#test2|index.test.js#Suite1#test1",
+        "TEP_VERSION": "0.1.0",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "DISCOVERED_PROTOCOL_ENV_VARS",
+    },
+    {
+      "data": "0.1.0",
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_VERSION",
+    },
+    {
+      "data": {
+        "data": "jest",
+        "type": "ADAPTER_PATH",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_START",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_END",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_END",
+    },
+  ],
+}
+`;
+
 exports[`jest adapter runs all tests 1`] = `
 {
   "logs": [

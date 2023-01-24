@@ -6,6 +6,7 @@ import { log } from './log'
 
 import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
 
+// not safe for windows, need to handle backslashes
 // Transforms filepath input from 'folderA/folderB/file.java' to 'folderA.folderB'
 export const parsePackagePath = (filepath: string): string => {
   return filepath.substring(0, filepath.lastIndexOf('/')).replace('/', '.')
