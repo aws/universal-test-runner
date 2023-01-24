@@ -10,13 +10,20 @@ import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
 // and to 'folderA.folderB.file' if suiteName DNE
 export const parsePackagePath = (filepath: string, suiteName: string | undefined): string => {
   if (suiteName && filepath.includes(suiteName)) {
-    return filepath.substring(0, filepath.indexOf(suiteName) - 1).replace(/\/|\\/g, '.')
+    filepath = filepath.substring(0, filepath.indexOf(suiteName) - 1)
   }
-  const fileExtensionIndex = filepath.lastIndexOf('.')
-  if (fileExtensionIndex != -1) {
-    filepath = filepath.substring(0, fileExtensionIndex)
+  else {
+    const fileExtensionIndex = filepath.lastIndexOf('.')
+    if (fileExtensionIndex != -1) {
+      filepath = filepath.substring(0, fileExtensionIndex)
+    }
   }
-  return filepath.replace(/\/|\\/g, '.')
+
+  filepath = filepath.replace(/\/|\\/g, '.')
+  if (filepath.endsWith('.')) {
+    return filepath.substring(0, filepath.length - 1)
+  }
+  return filepath
 }
 
 export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
@@ -24,10 +31,15 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
   const args = ['test']
   const fullyQualifiedNames = testsToRun.map(({ testName, suiteName, filepath }) => {
     //Search the AND of the 2, since FullyQualifiedName~ is a contains
-    //avoid the replace at the end if possible, prob a bit expensive
-    return `(FullyQualifiedName~${filepath ? parsePackagePath(filepath, suiteName) + '.' : ''}.${
-      suiteName ? suiteName + '.' : ''
-    }.${testName})`.replace(/\.+/g, '.')
+    if (!suiteName || (!suiteName && !filepath)) {
+      return (
+        '(' + (filepath ? `FullyQualifiedName~${parsePackagePath(filepath, suiteName)} & ` : '') +
+        `FullyQualifiedName~.${testName})`
+      )
+    }
+    return `(FullyQualifiedName~${
+      filepath ? parsePackagePath(filepath, suiteName) : ''
+    }.${suiteName ? suiteName + '.' : '.'}${testName})`
   })
   if (fullyQualifiedNames.length > 0) {
     args.push(`--filter`)

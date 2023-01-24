@@ -20,7 +20,7 @@ describe('Dotnet adapter', () => {
       testsToRun: [
         { testName: 'TestGet' },
         {
-          filepath: 'Company/ServerlessFunctions/UnitTests/ValuesControllerTests',
+          filepath: 'Company/ServerlessFunctions/UnitTests/ValuesControllerTests.java',
           testName: 'TestGet2',
         },
         { suiteName: 'ValuesControllerTests', testName: 'TestGet3' },
@@ -32,7 +32,7 @@ describe('Dotnet adapter', () => {
       'test',
       '--filter',
       '(FullyQualifiedName~.TestGet) | ' +
-        '(FullyQualifiedName~Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet2) | ' +
+        '(FullyQualifiedName~Company.ServerlessFunctions.UnitTests.ValuesControllerTests & FullyQualifiedName~.TestGet2) | ' +
         '(FullyQualifiedName~.ValuesControllerTests.TestGet3)',
     ])
   })
