@@ -11,8 +11,7 @@ import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
 export const parsePackagePath = (filepath: string, suiteName: string | undefined): string => {
   if (suiteName && filepath.includes(suiteName)) {
     filepath = filepath.substring(0, filepath.indexOf(suiteName) - 1)
-  }
-  else {
+  } else {
     const fileExtensionIndex = filepath.lastIndexOf('.')
     if (fileExtensionIndex != -1) {
       filepath = filepath.substring(0, fileExtensionIndex)
@@ -33,13 +32,14 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
     //Search the AND of the 2, since FullyQualifiedName~ is a contains
     if (!suiteName || (!suiteName && !filepath)) {
       return (
-        '(' + (filepath ? `FullyQualifiedName~${parsePackagePath(filepath, suiteName)} & ` : '') +
+        '(' +
+        (filepath ? `FullyQualifiedName~${parsePackagePath(filepath, suiteName)} & ` : '') +
         `FullyQualifiedName~.${testName})`
       )
     }
-    return `(FullyQualifiedName~${
-      filepath ? parsePackagePath(filepath, suiteName) : ''
-    }.${suiteName ? suiteName + '.' : '.'}${testName})`
+    return `(FullyQualifiedName~${filepath ? parsePackagePath(filepath, suiteName) : ''}.${
+      suiteName ? suiteName + '.' : '.'
+    }${testName})`
   })
   if (fullyQualifiedNames.length > 0) {
     args.push(`--filter`)
