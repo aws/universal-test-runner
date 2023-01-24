@@ -33,6 +33,7 @@
     "cli:maven": "npm run cli -- maven",
     "cli:pytest": "npm run cli -- pytest",
     "cli:gradle": "npm run cli -- gradle",
+    "cli:dotnet": "npm run cli -- dotnet",
     "generate-attributions": "ts-node ./scripts/generate-attributions",
     "validate-3p-licenses": "ts-node ./scripts/validate-3p-licenses",
     "prepare": "husky install",

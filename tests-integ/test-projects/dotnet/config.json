@@ -1,3 +1,4 @@
 {
-    "testsToRun": ["Prime.UnitTests.Services.PrimeService_IsPrimeShould.IsPrime_InputIs0_ReturnFalse|Prime.UnitTests.Services.PrimeService_IsPrimeShould.IsPrime_InputIs1_ReturnFalse"]
+    "testsToRun": ["Prime.UnitTests.Services#PrimeService_IsPrimeShould#IsPrime_InputIs0_ReturnFalse|Prime.UnitTests.Services#PrimeService_IsPrimeShould#IsPrime_InputIs1_ReturnFalse", 
+    "##IsPrime_InputIs0_ReturnFalse", "PrimeService_IsPrimeShould#IsPrime_InputIs0_ReturnFalse", "Prime.UnitTests.Services##IsPrime_InputIs0_ReturnFalse"]
 }

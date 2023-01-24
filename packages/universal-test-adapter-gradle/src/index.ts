@@ -8,7 +8,8 @@ import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
 
 // Transforms filepath input from 'folderA/folderB/file.java' to 'folderA.folderB'
 export const parsePackagePath = (filepath: string): string => {
-  return filepath.substring(0, filepath.lastIndexOf('/')).replace('/', '.')
+  const newFilepath = filepath.replace(/\\/g, '/')
+  return newFilepath.substring(0, filepath.lastIndexOf('/')).replace(/\//g, '.')
 }
 
 export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
