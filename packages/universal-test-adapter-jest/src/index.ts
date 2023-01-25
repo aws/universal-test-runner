@@ -35,9 +35,9 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
 
   // since we can't map test names/suites to a filepath for jest, we cannot include filepaths in this call
   if (filepaths.length > 0) {
-    if (describeIts.length == 0 || filepathWithTestOrSuiteCount == describeIts.length) {
+    if (describeIts.length === 0 || filepathWithTestOrSuiteCount === describeIts.length) {
       args.push('--testPathPattern', `${filepaths.join('|')}`)
-    } else if (filepathWithTestOrSuiteCount != describeIts.length) {
+    } else if (filepathWithTestOrSuiteCount !== describeIts.length) {
       log.warn(
         'Detected entry that includes a filepath but does not include a test suite/name! ' +
           'This is not supported since jest cannot map files to tests as input, ' +
