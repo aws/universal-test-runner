@@ -35,6 +35,7 @@
     "cli:gradle": "npm run cli -- gradle",
     "cli:dotnet": "npm run cli -- dotnet",
     "generate-attributions": "ts-node ./scripts/generate-attributions",
+    "generate-readmes": "ts-node ./scripts/generate-readmes",
     "validate-3p-licenses": "ts-node ./scripts/validate-3p-licenses",
     "prepare": "husky install",
     "bump:prerelease": "PRERELEASE_VERSION=\"$npm_package_version-$(echo $COMMIT_ID | cut -c 1-7).0\" bash ./scripts/bump-prerelease.sh",
