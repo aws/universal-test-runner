@@ -5,20 +5,26 @@ import { spawn } from '@aws/universal-test-runner-spawn'
 import { log } from './log'
 
 import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
+import path from 'path'
 
 // Transforms filepath input from 'folderA/folderB/file.java' to 'folderA.folderB' if filepath contains suiteName
 // and to 'folderA.folderB.file' if suiteName DNE
-export const parsePackagePath = (filepath: string, suiteName: string | undefined): string => {
-  if (suiteName && filepath.includes(suiteName)) {
-    filepath = filepath.substring(0, filepath.indexOf(suiteName) - 1)
-  } else {
-    const fileExtensionIndex = filepath.lastIndexOf('.')
-    if (fileExtensionIndex != -1) {
-      filepath = filepath.substring(0, fileExtensionIndex)
-    }
+export const parseFilepathAndClassName = (
+  filepath: string | undefined,
+  suiteName: string | undefined,
+): string => {
+  if (!filepath) {
+    return '.' + suiteName || ''
   }
 
-  filepath = filepath.replace(/\/|\\/g, '.')
+  const parsedPath = path.parse(filepath)
+  if (suiteName && parsedPath.name !== suiteName) {
+    filepath = `${parsedPath.dir ? parsedPath.dir + '.' : ''}${parsedPath.name}.${suiteName}`
+  } else {
+    filepath = `${parsedPath.dir ? parsedPath.dir + '.' : ''}${parsedPath.name}`
+  }
+
+  filepath = filepath.replace(/\/+|\\+/g, '.')
   if (filepath.endsWith('.')) {
     return filepath.substring(0, filepath.length - 1)
   }
@@ -30,16 +36,14 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
   const args = ['test']
   const fullyQualifiedNames = testsToRun.map(({ testName, suiteName, filepath }) => {
     //Search the AND of the 2, since FullyQualifiedName~ is a contains
-    if (!suiteName || (!suiteName && !filepath)) {
+    if (!suiteName) {
       return (
         '(' +
-        (filepath ? `FullyQualifiedName~${parsePackagePath(filepath, suiteName)} & ` : '') +
+        (filepath ? `FullyQualifiedName~${parseFilepathAndClassName(filepath, suiteName)} & ` : '') +
         `FullyQualifiedName~.${testName})`
       )
     }
-    return `(FullyQualifiedName~${filepath ? parsePackagePath(filepath, suiteName) : ''}.${
-      suiteName ? suiteName + '.' : '.'
-    }${testName})`
+    return `(FullyQualifiedName~${parseFilepathAndClassName(filepath, suiteName)}.${testName})`
   })
   if (fullyQualifiedNames.length > 0) {
     args.push(`--filter`)
