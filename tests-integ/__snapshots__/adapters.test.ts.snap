@@ -1017,6 +1017,210 @@ exports[`maven adapter runs a subset of tests 1`] = `
 }
 `;
 
+exports[`maven adapter runs a subset of tests 2`] = `
+{
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_END",
+    },
+    {
+      "data": {
+        "TEP_LOG_FILE_NAME": "logs/logs.json",
+        "TEP_TESTS_TO_RUN": "#AppTest#test1|#AppTest2#test1",
+        "TEP_VERSION": "0.1.0",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "DISCOVERED_PROTOCOL_ENV_VARS",
+    },
+    {
+      "data": "0.1.0",
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_VERSION",
+    },
+    {
+      "data": {
+        "data": "maven",
+        "type": "ADAPTER_PATH",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_START",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_END",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_END",
+    },
+  ],
+}
+`;
+
+exports[`maven adapter runs a subset of tests 3`] = `
+{
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_END",
+    },
+    {
+      "data": {
+        "TEP_LOG_FILE_NAME": "logs/logs.json",
+        "TEP_TESTS_TO_RUN": "AppTest#AppTest#test1",
+        "TEP_VERSION": "0.1.0",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "DISCOVERED_PROTOCOL_ENV_VARS",
+    },
+    {
+      "data": "0.1.0",
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_VERSION",
+    },
+    {
+      "data": {
+        "data": "maven",
+        "type": "ADAPTER_PATH",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_START",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_END",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_END",
+    },
+  ],
+}
+`;
+
+exports[`maven adapter runs a subset of tests 4`] = `
+{
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_END",
+    },
+    {
+      "data": {
+        "TEP_LOG_FILE_NAME": "logs/logs.json",
+        "TEP_TESTS_TO_RUN": "com/amazonaws/testmaven/AppTest.java#AppTest#test1|testmaven2/#AppTest2#test1",
+        "TEP_VERSION": "0.1.0",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "DISCOVERED_PROTOCOL_ENV_VARS",
+    },
+    {
+      "data": "0.1.0",
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_VERSION",
+    },
+    {
+      "data": {
+        "data": "maven",
+        "type": "ADAPTER_PATH",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_START",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_END",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_END",
+    },
+  ],
+}
+`;
+
 exports[`maven adapter runs all tests 1`] = `
 {
   "logs": [
