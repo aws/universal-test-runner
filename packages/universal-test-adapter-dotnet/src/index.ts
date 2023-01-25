@@ -39,7 +39,9 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
     if (!suiteName) {
       return (
         '(' +
-        (filepath ? `FullyQualifiedName~${parseFilepathAndClassName(filepath, suiteName)} & ` : '') +
+        (filepath
+          ? `FullyQualifiedName~${parseFilepathAndClassName(filepath, suiteName)} & `
+          : '') +
         `FullyQualifiedName~.${testName})`
       )
     }
