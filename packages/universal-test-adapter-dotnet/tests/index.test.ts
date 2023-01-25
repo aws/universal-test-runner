@@ -4,17 +4,26 @@
 jest.mock('../src/log')
 
 describe('Dotnet adapter', () => {
-  it('executes dotnet test when given tests to run', async () => {
-    const spawn = jest.fn(() => ({ status: 0 }))
-    jest.doMock('@aws/universal-test-runner-spawn', () => ({ spawn }))
+  let spawn: any
 
+  beforeEach(() => {
+    spawn = jest.fn(() => ({ status: 0 }))
+
+    jest.resetModules()
+    jest.doMock('@aws/universal-test-runner-spawn', () => ({ spawn }))
+  })
+
+  it('executes dotnet test when given tests of various compositions to run', async () => {
     const { executeTests } = await import('../src/index')
 
     const { exitCode } = await executeTests({
       testsToRun: [
-        { testName: 'Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet' },
-        { testName: 'Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet2' },
-        { testName: 'Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet3' },
+        { testName: 'TestGet' },
+        {
+          filepath: 'Company/ServerlessFunctions/UnitTests/ValuesControllerTests.java',
+          testName: 'TestGet2',
+        },
+        { suiteName: 'ValuesControllerTests', testName: 'TestGet3' },
       ],
     })
 
@@ -22,9 +31,36 @@ describe('Dotnet adapter', () => {
     expect(spawn).toHaveBeenCalledWith('dotnet', [
       'test',
       '--filter',
-      '(FullyQualifiedName=Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet) | ' +
-        '(FullyQualifiedName=Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet2) | ' +
-        '(FullyQualifiedName=Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet3)',
+      '(FullyQualifiedName~.TestGet) | ' +
+        '(FullyQualifiedName~Company.ServerlessFunctions.UnitTests.ValuesControllerTests & FullyQualifiedName~.TestGet2) | ' +
+        '(FullyQualifiedName~.ValuesControllerTests.TestGet3)',
+    ])
+  })
+
+  it('executes dotnet test when given tests of full compositions to run', async () => {
+    const { executeTests } = await import('../src/index')
+
+    const { exitCode } = await executeTests({
+      testsToRun: [
+        {
+          filepath: 'Company/ServerlessFunctions/UnitTests/',
+          suiteName: 'ValuesControllerTests',
+          testName: 'TestGet4',
+        },
+        {
+          filepath: 'Company/ServerlessFunctions/UnitTests/ValuesControllerTests',
+          suiteName: 'ValuesControllerTests',
+          testName: 'TestGet5',
+        },
+      ],
+    })
+
+    expect(exitCode).toBe(0)
+    expect(spawn).toHaveBeenCalledWith('dotnet', [
+      'test',
+      '--filter',
+      '(FullyQualifiedName~Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet4) | ' +
+        '(FullyQualifiedName~Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet5)',
     ])
   })
 })

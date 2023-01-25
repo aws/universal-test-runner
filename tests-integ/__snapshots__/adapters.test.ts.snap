@@ -16,7 +16,211 @@ exports[`dotnet adapter runs a subset of tests 1`] = `
     {
       "data": {
         "TEP_LOG_FILE_NAME": "logs/logs.json",
-        "TEP_TESTS_TO_RUN": "Prime.UnitTests.Services.PrimeService_IsPrimeShould.IsPrime_InputIs0_ReturnFalse|Prime.UnitTests.Services.PrimeService_IsPrimeShould.IsPrime_InputIs1_ReturnFalse",
+        "TEP_TESTS_TO_RUN": "Prime.UnitTests.Services#PrimeService_IsPrimeShould#IsPrime_InputIs0_ReturnFalse|Prime.UnitTests.Services#PrimeService_IsPrimeShould#IsPrime_InputIs1_ReturnFalse",
+        "TEP_VERSION": "0.1.0",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "DISCOVERED_PROTOCOL_ENV_VARS",
+    },
+    {
+      "data": "0.1.0",
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_VERSION",
+    },
+    {
+      "data": {
+        "data": "dotnet",
+        "type": "ADAPTER_PATH",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_START",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_END",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_END",
+    },
+  ],
+}
+`;
+
+exports[`dotnet adapter runs a subset of tests 2`] = `
+{
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_END",
+    },
+    {
+      "data": {
+        "TEP_LOG_FILE_NAME": "logs/logs.json",
+        "TEP_TESTS_TO_RUN": "##IsPrime_InputIs0_ReturnFalse",
+        "TEP_VERSION": "0.1.0",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "DISCOVERED_PROTOCOL_ENV_VARS",
+    },
+    {
+      "data": "0.1.0",
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_VERSION",
+    },
+    {
+      "data": {
+        "data": "dotnet",
+        "type": "ADAPTER_PATH",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_START",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_END",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_END",
+    },
+  ],
+}
+`;
+
+exports[`dotnet adapter runs a subset of tests 3`] = `
+{
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_END",
+    },
+    {
+      "data": {
+        "TEP_LOG_FILE_NAME": "logs/logs.json",
+        "TEP_TESTS_TO_RUN": "PrimeService_IsPrimeShould#IsPrime_InputIs0_ReturnFalse",
+        "TEP_VERSION": "0.1.0",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "DISCOVERED_PROTOCOL_ENV_VARS",
+    },
+    {
+      "data": "0.1.0",
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_VERSION",
+    },
+    {
+      "data": {
+        "data": "dotnet",
+        "type": "ADAPTER_PATH",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_START",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_END",
+      },
+      "level": "DEBUG",
+      "timestamp": "MOCK_VALUE",
+      "type": "CUSTOM",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "TEST_RUN_END",
+    },
+  ],
+}
+`;
+
+exports[`dotnet adapter runs a subset of tests 4`] = `
+{
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": "MOCK_VALUE",
+      "type": "PROTOCOL_READ_END",
+    },
+    {
+      "data": {
+        "TEP_LOG_FILE_NAME": "logs/logs.json",
+        "TEP_TESTS_TO_RUN": "Prime.UnitTests.Services##IsPrime_InputIs0_ReturnFalse",
         "TEP_VERSION": "0.1.0",
       },
       "level": "DEBUG",
