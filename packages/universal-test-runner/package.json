@@ -30,7 +30,7 @@
   },
   "devDependencies": {
     "@aws/universal-test-runner-types": "*",
-    "@types/yargs": "^17.0.19"
+    "@types/yargs": "^17.0.20"
   },
   "repository": {
     "type": "git",
