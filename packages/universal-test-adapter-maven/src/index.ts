@@ -24,7 +24,6 @@ export const parseFilepathAndClassName = (
   }
 
   const parsedPath = path.parse(filepath)
-  console.log(JSON.stringify(parsedPath))
   filepath = `${parsedPath.dir ? parsedPath.dir + '/' : ''}${parsedPath.name}`
   if (suiteName) {
     if (parsedPath.name != suiteName) {
