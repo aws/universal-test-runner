@@ -26,7 +26,8 @@ export function getReadmeText(packageName: string): string {
 This package is part of the Universal Test Runner project, see the full documentation on GitHub: https://github.com/aws/universal-test-runner#readme
 
 ${
-  packageName !== '@aws/universal-test-runner'
+  packageName !== '@aws/universal-test-runner' &&
+  packageName !== '@sentinel-internal/universal-test-runner'
     ? '**This package is internal to the Universal Test Runner project, and is not guaranteed to follow semantic versioning. You should have no need to install it yourself or depend on it directly.** See [these docs](https://github.com/aws/universal-test-runner#-packages-in-this-monorepo) for more information.'
     : ''
 }

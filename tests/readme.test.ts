@@ -14,7 +14,7 @@ describe('README file', () => {
     async ({ packageJson, packageRoot }) => {
       const readme = await fs.readFileSync(path.join(packageRoot, 'README.md'), 'utf-8')
       const expectedReadmeStart = getReadmeText(packageJson.name)
-      expect(readme.startsWith(expectedReadmeStart)).toBe(true)
+      expect(readme.slice(0, expectedReadmeStart.length)).toBe(expectedReadmeStart)
     },
   )
 })
