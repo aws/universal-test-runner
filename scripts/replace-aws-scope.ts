@@ -19,7 +19,13 @@ function run() {
     filesWithAwsScope.map(async (file) => {
       const filePath = path.join(process.cwd(), file)
       const contents = await fs.readFile(filePath, 'utf-8')
-      await fs.writeFile(filePath, contents.replace(/@aws/g, '@sentinel-internal'))
+      const newContents = contents
+        .replace(/@aws/g, '@sentinel-internal')
+        .replace(
+          new RegExp(encodeURIComponent('@aws'), 'g'),
+          encodeURIComponent('@sentinel-internal'),
+        )
+      await fs.writeFile(filePath, newContents)
     }),
   )
 }
