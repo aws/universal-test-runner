@@ -15,7 +15,7 @@ describe('Jest adapter', () => {
 
   it('executes jest when given tests to run', async () => {
     jest.doMock('../src/buildBaseTestCommand', () => ({
-      buildBaseTestCommand: () => ['./node_modules/.bin/jest', []],
+      buildBaseTestCommand: () => ['jest', []],
     }))
 
     const spawn = jest.fn(() => ({ status: 0 }))
