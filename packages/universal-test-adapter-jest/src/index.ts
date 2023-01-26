@@ -3,6 +3,7 @@
 
 import { spawn } from '@aws/universal-test-runner-spawn'
 import { log } from './log'
+import { buildBaseTestCommand } from './buildBaseTestCommand'
 
 import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
 
@@ -12,9 +13,7 @@ const toUnixPath = (filepath: string): string => {
 }
 
 export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
-  //const [executable, args] = await buildBaseTestCommand()
-  const executable = 'jest'
-  const args = []
+  const [executable, args] = await buildBaseTestCommand()
 
   const filepaths: string[] = []
   const describeIts: string[] = []
