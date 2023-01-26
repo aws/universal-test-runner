@@ -15,8 +15,11 @@ git fetch --tags origin
 
 npm run clean
 npm run compile
-# npm run bump:release
+npm run bump:release
 
-# npm login
+npm login
 
-npm publish --workspaces --dry-run --access public
+# You may have to enter an OTP for every single publish here
+npm publish --workspaces --access public
+
+git push --tags origin main
