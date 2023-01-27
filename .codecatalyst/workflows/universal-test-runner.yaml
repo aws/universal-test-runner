@@ -27,7 +27,12 @@ Actions:
 
     Configuration:
       Steps:
+        - Run: curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        - Run: unzip awscliv2.zip
+        - Run: ./aws/install
         - Run: . ./setup-node.sh
+        - Run: node -v
+        - Run: npm -v
         - Run: npm ci
         - Run: npm run build
         - Run: COMMIT_ID=${WorkflowSource.CommitId} npm run bump:prerelease
@@ -37,7 +42,7 @@ Actions:
         - Run: npm publish --workspaces --unsafe-perm
       Container:
         Registry: DockerHub
-        Image: ubuntu:latest
+        Image: buildpack-deps:latest # Node.js 18 can't be installed in default curated image yet
 
   PushToDocker:
     Identifier: aws/build@v1
