@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:18
 
 # https://stackoverflow.com/questions/20635472/using-the-run-instruction-in-a-dockerfile-with-source-does-not-work
 SHELL ["/bin/bash", "-c"]
