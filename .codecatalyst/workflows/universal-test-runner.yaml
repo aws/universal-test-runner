@@ -35,6 +35,9 @@ Actions:
         - Run: npm test # re-run tests after we prepare the prerelease to make sure we did everything correctly
         - Run: aws codeartifact login --tool npm --repository ${Secrets.CodeArtifactRepository} --domain ${Secrets.CodeArtifactDomain} --domain-owner ${Secrets.CodeArtifactDomainOwner} --region us-west-2
         - Run: npm publish --workspaces --unsafe-perm
+      Container:
+        Registry: DockerHub
+        Image: ubuntu:latest
 
   PushToDocker:
     Identifier: aws/build@v1
