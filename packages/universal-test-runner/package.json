@@ -4,6 +4,9 @@
   "license": "Apache-2.0",
   "main": "dist/lib/src/index.js",
   "types": "dist/types/src/index.d.ts",
+  "engines": {
+    "node": ">=14"
+  },
   "bin": {
     "universal-test-runner": "dist/lib/bin/cli.js",
     "run-tests": "dist/lib/bin/cli.js"
