@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-set -e
+# Can't use `set -e` here when running in buildpack-deps docker image,
+# possibly related to https://github.com/nvm-sh/nvm/issues/1985
+# set -e
 
 # Used to install the right Node.js (and NPM) version when running in some CI
 # environments When installing Node.js in your local dev env, use the
