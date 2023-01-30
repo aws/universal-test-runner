@@ -19,6 +19,7 @@ RUN mvn --version
 # https://gradle.org/install/#with-a-package-manager
 RUN apt install -y zip
 RUN curl -s "https://get.sdkman.io" | bash
+RUN rm -rf "$HOME/.sdkman/libexec" # Remove mysterious executables that break some sdkman commands
 RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk version
 RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && sdk install gradle 7.6
 RUN source "$HOME/.sdkman/bin/sdkman-init.sh" && gradle --version
