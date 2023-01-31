@@ -48,7 +48,7 @@ How about running a test named "test1", but for a project using
 [pytest](https://pytest.org)? Easy -- we can use the same command!
 
 ```
-$ export TEP_TESTS_TO_RUN="test1 # set by IDE or CI/CD system
+$ export TEP_TESTS_TO_RUN="test1" # set by IDE or CI/CD system
 
 $ run-tests pytest
 ================== test session starts =====================
