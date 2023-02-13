@@ -12,7 +12,9 @@ const toUnixPath = (filepath: string): string => {
   return filepath.replace(/[\\/]+/g, '/').replace(/^([a-zA-Z]+:|\.\/)/, '')
 }
 
-export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests(adapterInput: AdapterInput): Promise<AdapterOutput> {
+  const { testsToRun = [], reportFormat } = adapterInput
+
   const [executable, args] = await buildBaseTestCommand()
 
   const filepaths: string[] = []
@@ -46,6 +48,20 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
   }
   if (describeIts.length > 0) {
     args.push('--testNamePattern', `${describeIts.join('|')}`)
+  }
+
+  switch (reportFormat) {
+    case 'default':
+      // Pass the 'jest-junit' reporter so that jest generates a junit report
+      args.push('--reporters', 'jest-junit')
+      // Pass the 'default' reporter as well so jest still shows console output
+      // Note that this is a different 'default' from the reportFormat 'default' from TEP
+      args.push('--reporters', 'default')
+      break
+    case undefined:
+      break
+    default:
+      log.warn(`Report format '${reportFormat} not supported!'`)
   }
 
   log.info(`Running tests with jest using command: ${[executable, ...args].join(' ')}`)

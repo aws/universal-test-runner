@@ -31,8 +31,12 @@ export function runCli(adapter: string, env: { [key: string]: string | undefined
   })
 }
 
+export function readFile(adapter: string, fileName: string): string {
+  return fs.readFileSync(path.resolve(getCwd(adapter), fileName), 'utf-8')
+}
+
 export function parseLogFile(adapter: string, logFileName: string) {
-  const logs = JSON.parse(fs.readFileSync(path.resolve(getCwd(adapter), logFileName), 'utf-8'))
+  const logs = JSON.parse(readFile(adapter, logFileName))
   logs.logs.forEach((log: any) => {
     log.timestamp = 'MOCK_VALUE'
   })
@@ -82,9 +86,9 @@ function runScript(adapter: string, scriptName: string, env: { [key: string]: st
   })
 
   console.debug(
-    `cwd = ${getCwd(adapter)}, 
-    adapter = ${adapter}, 
-    scriptName = ${scriptName}, 
+    `cwd = ${getCwd(adapter)},
+    adapter = ${adapter},
+    scriptName = ${scriptName},
     env = ${JSON.stringify(env)}`,
   )
 

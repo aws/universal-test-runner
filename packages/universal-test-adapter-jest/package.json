@@ -15,7 +15,8 @@
   ],
   "dependencies": {
     "@aws/universal-test-runner-logger": "^0.1.0",
-    "@aws/universal-test-runner-spawn": "^0.1.0"
+    "@aws/universal-test-runner-spawn": "^0.1.0",
+    "jest-junit": "^15.0.0"
   },
   "devDependencies": {
     "@aws/universal-test-runner-types": "*"
