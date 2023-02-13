@@ -15,23 +15,16 @@ export interface ProtocolResult {
   version: string
   testsToRun: TestCase[]
   logFileName?: string
+  reportFormat?: string
 }
 
 export function readProtocol(env: Environment): [ProtocolResult, { [key: string]: string }] {
   const rawValues = {}
   const result = {
     version: mapEnvToResult(env, [ProtocolEnvVars.VERSION], readVersion, rawValues),
-    testsToRun: mapEnvToResult(
-      env,
-      [
-        ProtocolEnvVars.TESTS_TO_RUN,
-        // Keeping this old name around for now, for backwards compatibility
-        'CAWS_TEST_NAMES_TO_RUN',
-      ],
-      readTestsToRun,
-      rawValues,
-    ),
+    testsToRun: mapEnvToResult(env, [ProtocolEnvVars.TESTS_TO_RUN], readTestsToRun, rawValues),
     logFileName: mapEnvToResult(env, [ProtocolEnvVars.LOG_FILE_NAME], readLogFileName, rawValues),
+    reportFormat: mapEnvToResult(env, [ProtocolEnvVars.REPORT_FORMAT], readReportFormat, rawValues),
   }
   return [result, rawValues]
 }
@@ -64,4 +57,8 @@ function readTestsToRun(input: string | undefined): TestCase[] {
 
 function readLogFileName(logFileName: string | undefined): string | undefined {
   return logFileName
+}
+
+function readReportFormat(reportFormat: string | undefined): string | undefined {
+  return reportFormat
 }
