@@ -6,7 +6,9 @@ import { log } from './log'
 
 import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
 
-export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests(input: AdapterInput): Promise<AdapterOutput> {
+  const { testsToRun = [], reportFormat } = input
+
   const executable = 'pytest'
   const args = []
 
@@ -34,6 +36,16 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
     matchTestsDirectly
       ? args.push('-v', `${testNamesToRun.join(' ')}`)
       : args.push('-k', `${testNamesToRun.join(' or ')}`)
+  }
+
+  switch (reportFormat) {
+    case 'default':
+      args.push('--junitxml=junit.xml')
+      break
+    case undefined:
+      break
+    default:
+      log.warn(`Report format ${reportFormat} not supported!`)
   }
 
   // spawnSync will automatically quote any args with spaces in them, so we don't need to
