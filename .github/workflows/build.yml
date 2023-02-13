@@ -9,8 +9,6 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
-    environment: development
 
     strategy:
       matrix:
