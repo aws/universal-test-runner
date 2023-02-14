@@ -31,9 +31,12 @@ export const parseFilepathAndClassName = (
   return filepath
 }
 
-export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests(input: AdapterInput): Promise<AdapterOutput> {
+  const { testsToRun = [], reportFormat } = input
+
   const executable = 'dotnet'
   const args = ['test']
+
   const fullyQualifiedNames = testsToRun.map(({ testName, suiteName, filepath }) => {
     //Search the AND of the 2, since FullyQualifiedName~ is a contains
     if (!suiteName) {
@@ -47,14 +50,33 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
     }
     return `(FullyQualifiedName~${parseFilepathAndClassName(filepath, suiteName)}.${testName})`
   })
+
   if (fullyQualifiedNames.length > 0) {
     args.push(`--filter`)
     args.push(`${fullyQualifiedNames.join(' | ')}`)
   }
+
+  // https://github.com/Microsoft/vstest-docs/blob/main/docs/report.md#syntax-of-default-loggers
+  switch (reportFormat) {
+    case 'default':
+      // Push trx logger argument so dotnet generates a trx report
+      args.push('--logger', `trx;LogFileName=${path.join(process.cwd(), 'results.trx')}`)
+      // Push console logger argument so dotnet still shows the default output
+      args.push('--logger', 'console')
+      break
+    case undefined:
+      break
+    default:
+      log.warn(`Report format ${reportFormat} not supported!`)
+  }
+
   log.info(`Running tests with dotnet test using command: ${[executable, ...args].join(' ')}`)
+
   const { status, error } = await spawn(executable, args)
+
   if (error) {
     log.error(error)
   }
+
   return { exitCode: status ?? 1 }
 }

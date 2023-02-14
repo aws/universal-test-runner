@@ -59,4 +59,20 @@ describe('Pytest adapter', () => {
       'fileA.py::suiteA::bill fileB.py::suiteB::bob fileC.py::suiteC::mary',
     ])
   })
+
+  it('passes the correct arguments for report format', async () => {
+    const { executeTests } = await import('../src/index')
+
+    const { exitCode } = await executeTests({
+      testsToRun: [{ testName: 'bill' }, { testName: 'bob' }, { testName: 'mary' }],
+      reportFormat: 'default',
+    })
+
+    expect(exitCode).toBe(0)
+    expect(spawn).toHaveBeenCalledWith('pytest', [
+      '-k',
+      '(bill) or (bob) or (mary)',
+      '--junitxml=junit.xml',
+    ])
+  })
 })
