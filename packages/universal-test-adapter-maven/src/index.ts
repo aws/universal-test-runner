@@ -24,10 +24,10 @@ export const parseFilepathAndClassName = (
   }
 
   const parsedPath = path.parse(filepath)
-  filepath = `${parsedPath.dir ? parsedPath.dir + '/' : ''}${parsedPath.name}`
+  filepath = `${parsedPath.dir ? `${parsedPath.dir}/` : ''}${parsedPath.name}`
   if (suiteName) {
     if (parsedPath.name !== suiteName) {
-      filepath = filepath + '/' + suiteName
+      filepath = `${filepath}/${suiteName}`
     }
   }
 
@@ -43,7 +43,7 @@ export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<A
       `-Dtest=${testsToRun
         .map(({ testName, suiteName, filepath }) => {
           const parsedFilepath = parseFilepathAndClassName(filepath, suiteName)
-          return parsedFilepath + '#' + testName
+          return `${parsedFilepath}#${testName}`
         })
         .join(',')}`,
     )
