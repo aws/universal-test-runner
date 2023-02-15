@@ -70,6 +70,13 @@
       "/node_modules/",
       "/dist/",
       "/tests-integ\\/test-projects/"
+    ],
+    "collectCoverageFrom": [
+      "<rootDir>/packages/**/*.ts",
+      "!**/*.test.ts",
+      "!**/tests/**",
+      "!**/dist/**",
+      "!**/node_modules/**"
     ]
   }
 }
