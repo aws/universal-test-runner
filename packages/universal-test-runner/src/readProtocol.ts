@@ -56,9 +56,9 @@ function readTestsToRun(input: string | undefined): TestCase[] {
 }
 
 function readLogFileName(logFileName: string | undefined): string | undefined {
-  return logFileName
+  return logFileName || undefined
 }
 
 function readReportFormat(reportFormat: string | undefined): string | undefined {
-  return reportFormat
+  return reportFormat || undefined
 }
