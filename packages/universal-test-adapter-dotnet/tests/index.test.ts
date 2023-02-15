@@ -63,4 +63,24 @@ describe('Dotnet adapter', () => {
         '(FullyQualifiedName~Company.ServerlessFunctions.UnitTests.ValuesControllerTests.TestGet5)',
     ])
   })
+
+  it('passes the right arguments for default report format', async () => {
+    const { executeTests } = await import('../src/index')
+
+    const { exitCode } = await executeTests({
+      testsToRun: [{ testName: 'TestGet' }],
+      reportFormat: 'default',
+    })
+
+    expect(exitCode).toBe(0)
+    expect(spawn).toHaveBeenCalledWith('dotnet', [
+      'test',
+      '--filter',
+      '(FullyQualifiedName~.TestGet)',
+      '--logger',
+      `trx;LogFileName=${process.cwd()}/results.trx`,
+      '--logger',
+      'console',
+    ])
+  })
 })

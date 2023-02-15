@@ -11,16 +11,12 @@ describe('Jest adapter', () => {
 
     jest.resetModules()
     jest.doMock('@aws/universal-test-runner-spawn', () => ({ spawn }))
-  })
-
-  it('executes jest when given tests to run', async () => {
     jest.doMock('../src/buildBaseTestCommand', () => ({
       buildBaseTestCommand: () => ['jest', []],
     }))
+  })
 
-    const spawn = jest.fn(() => ({ status: 0 }))
-    jest.doMock('@aws/universal-test-runner-spawn', () => ({ spawn }))
-
+  it('executes jest when given tests to run', async () => {
     const { executeTests } = await import('../src/index')
 
     const { exitCode } = await executeTests({
@@ -63,6 +59,25 @@ describe('Jest adapter', () => {
       '(package/fileB.ext)|(.*/package/.*/dirC/fileC.ext)|(/package/dirA/fileD.ext)',
       '--testNamePattern',
       '(bob)|(w bob)|(bob)',
+    ])
+  })
+
+  it('adds the correct arguments for report generation', async () => {
+    const { executeTests } = await import('../src/index')
+
+    const { exitCode } = await executeTests({
+      testsToRun: [{ testName: 'bill' }, { testName: 'bob' }, { testName: 'mary' }],
+      reportFormat: 'default',
+    })
+
+    expect(exitCode).toBe(0)
+    expect(spawn).toHaveBeenCalledWith('jest', [
+      '--testNamePattern',
+      '(bill)|(bob)|(mary)',
+      '--reporters',
+      'jest-junit',
+      '--reporters',
+      'default',
     ])
   })
 })

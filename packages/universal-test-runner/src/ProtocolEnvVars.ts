@@ -18,4 +18,6 @@ export const ProtocolEnvVars = {
   TESTS_TO_RUN: 'TEP_TESTS_TO_RUN',
 
   LOG_FILE_NAME: 'TEP_LOG_FILE_NAME',
+
+  REPORT_FORMAT: 'TEP_REPORT_FORMAT',
 } as const
