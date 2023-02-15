@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import fs from 'fs/promises'
+import fileSystem from 'fs/promises'
 import path from 'path'
 import { log } from './log'
 
@@ -26,13 +26,18 @@ interface LogEntry {
   data: any
 }
 
+export type FsType = Pick<typeof fileSystem, 'writeFile' | 'access' | 'mkdir'>
+export type NowType = () => number
+
 export class ProtocolLogger {
-  private now: () => number
+  private now: NowType
+  private fs: FsType
   private logs: LogEntry[]
   private logFileName?: string
 
-  constructor(now = () => Date.now()) {
+  constructor(now: NowType = () => Date.now(), fs: FsType = fileSystem) {
     this.now = now
+    this.fs = fs
     this.logs = []
     this.logFileName = undefined
   }
@@ -101,20 +106,24 @@ export class ProtocolLogger {
     this.logCustom('ADAPTER_PATH', framework)
   }
 
-  async write(): Promise<void> {
+  async write(): Promise<string> {
     if (!this.logFileName) {
-      return
+      return ''
     }
 
     const logFileDir = path.dirname(this.logFileName)
     try {
-      await fs.access(logFileDir)
+      await this.fs.access(logFileDir)
     } catch (e) {
-      await fs.mkdir(logFileDir, { recursive: true })
+      await this.fs.mkdir(logFileDir, { recursive: true })
     }
 
-    await fs.writeFile(this.logFileName, JSON.stringify({ logs: this.logs }, null, 2))
+    const loggingJson = JSON.stringify({ logs: this.logs }, null, 2)
+
+    await this.fs.writeFile(this.logFileName, loggingJson)
 
     log.info('Wrote logging information to', this.logFileName)
+
+    return loggingJson
   }
 }

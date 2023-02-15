@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProtocolLogger writes the log file correctly 1`] = `
+{
+  "logs": [
+    {
+      "level": "INFO",
+      "timestamp": 1,
+      "type": "PROTOCOL_READ_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": 2,
+      "type": "PROTOCOL_READ_END",
+    },
+    {
+      "data": {
+        "llamas": "Larger than frogs",
+      },
+      "level": "DEBUG",
+      "timestamp": 3,
+      "type": "DISCOVERED_PROTOCOL_ENV_VARS",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_START",
+      },
+      "level": "DEBUG",
+      "timestamp": 4,
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "data": "some/cool/adapter",
+        "type": "ADAPTER_PATH",
+      },
+      "level": "DEBUG",
+      "timestamp": 5,
+      "type": "CUSTOM",
+    },
+    {
+      "data": {
+        "type": "ADAPTER_LOAD_END",
+      },
+      "level": "DEBUG",
+      "timestamp": 6,
+      "type": "CUSTOM",
+    },
+    {
+      "level": "INFO",
+      "timestamp": 7,
+      "type": "TEST_RUN_START",
+    },
+    {
+      "level": "INFO",
+      "timestamp": 8,
+      "type": "TEST_RUN_END",
+    },
+    {
+      "data": "some informative error message",
+      "level": "ERROR",
+      "timestamp": 9,
+      "type": "MESSAGE",
+    },
+  ],
+}
+`;
