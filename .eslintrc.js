@@ -19,6 +19,9 @@ module.exports = {
   },
   rules: {
     eqeqeq: 'error',
+    'no-fallthrough': 'error',
+    'prefer-template': 'error',
+    'require-await': 'error',
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/no-explicit-any': 'off',
     '@typescript-eslint/no-empty-function': 'off',
@@ -44,6 +47,5 @@ module.exports = {
         message: 'Use named exports instead of default exports',
       },
     ],
-    'require-await': 'error',
   },
 }

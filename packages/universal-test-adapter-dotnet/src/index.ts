@@ -14,14 +14,14 @@ export const parseFilepathAndClassName = (
   suiteName: string | undefined,
 ): string => {
   if (!filepath) {
-    return '.' + suiteName || ''
+    return `.${suiteName}` || ''
   }
 
   const parsedPath = path.parse(filepath)
   if (suiteName && parsedPath.name !== suiteName) {
-    filepath = `${parsedPath.dir ? parsedPath.dir + '.' : ''}${parsedPath.name}.${suiteName}`
+    filepath = `${parsedPath.dir ? `${parsedPath.dir}.` : ''}${parsedPath.name}.${suiteName}`
   } else {
-    filepath = `${parsedPath.dir ? parsedPath.dir + '.' : ''}${parsedPath.name}`
+    filepath = `${parsedPath.dir ? `${parsedPath.dir}.` : ''}${parsedPath.name}`
   }
 
   filepath = filepath.replace(/\/+|\\+/g, '.')
@@ -40,13 +40,9 @@ export async function executeTests(input: AdapterInput): Promise<AdapterOutput> 
   const fullyQualifiedNames = testsToRun.map(({ testName, suiteName, filepath }) => {
     //Search the AND of the 2, since FullyQualifiedName~ is a contains
     if (!suiteName) {
-      return (
-        '(' +
-        (filepath
-          ? `FullyQualifiedName~${parseFilepathAndClassName(filepath, suiteName)} & `
-          : '') +
-        `FullyQualifiedName~.${testName})`
-      )
+      return `(${
+        filepath ? `FullyQualifiedName~${parseFilepathAndClassName(filepath, suiteName)} & ` : ''
+      }FullyQualifiedName~.${testName})`
     }
     return `(FullyQualifiedName~${parseFilepathAndClassName(filepath, suiteName)}.${testName})`
   })

@@ -24,11 +24,7 @@ export async function executeTests(input: AdapterInput): Promise<AdapterOutput> 
     return matchTestsDirectly
       ? `${filepath}::${suiteName}::${testName}`
       : // Concats each filepath, suitName, testName by 'and' (ex. '(filepath and suiteName and testName)')
-        '(' +
-          (filepath ? filepath + ' and ' : '') +
-          (suiteName ? suiteName + ' and ' : '') +
-          testName +
-          ')'
+        `(${filepath ? `${filepath} and ` : ''}${suiteName ? `${suiteName} and ` : ''}${testName})`
   })
 
   if (testNamesToRun.length > 0) {
