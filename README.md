@@ -3,6 +3,7 @@
 [![npm version](https://img.shields.io/npm/v/@aws/universal-test-runner)](https://www.npmjs.com/package/@aws/universal-test-runner)
 [![npm downloads](https://img.shields.io/npm/dm/@aws/universal-test-runner)](https://npm-stat.com/charts.html?package=%40aws%2Funiversal-test-runner)
 [![build status](https://github.com/aws/universal-test-runner/actions/workflows/build.yml/badge.svg)](https://github.com/aws/universal-test-runner/actions/workflows/build.yml)
+[![codecov](https://codecov.io/github/aws/universal-test-runner/branch/main/graph/badge.svg?token=6TIM7H9HC5)](https://codecov.io/github/aws/universal-test-runner)
 
 A universal test runner for any language and test framework.
 
