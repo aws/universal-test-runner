@@ -1,32 +1,34 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { ProtocolLogger, FsType, NowType } from '../src/ProtocolLogger'
+import path from 'path'
+import { ProtocolLogger, NowType } from '../src/ProtocolLogger'
+import { vol } from 'memfs'
 
 jest.mock('../src/log')
+jest.mock('fs')
 
 describe('ProtocolLogger', () => {
   let logger: ProtocolLogger
   let mockNow: NowType
-  let mockFs: FsType
 
   beforeEach(() => {
+    vol.reset()
+
     mockNow = (() => {
       let count = 1
       return () => count++
     })()
 
-    mockFs = {
-      writeFile: jest.fn(() => Promise.resolve()),
-      mkdir: jest.fn<any, any, any>(),
-      access: jest.fn(() => Promise.resolve()),
-    }
-
-    logger = new ProtocolLogger(mockNow, mockFs)
+    logger = new ProtocolLogger(mockNow)
   })
 
   it('writes the log file correctly', async () => {
-    logger.setLogFileName('llamas.json')
+    vol.fromJSON({}, '.')
+
+    const logFileName = path.join('some', 'dir', 'llamas.json')
+
+    logger.setLogFileName(logFileName)
     logger.logProtocolReadStart()
     logger.logProtocolReadEnd()
     logger.logDiscoveredProtocolEnvVars({ llamas: 'Larger than frogs' })
@@ -39,8 +41,8 @@ describe('ProtocolLogger', () => {
 
     const result = await logger.write()
 
-    expect(mockFs.writeFile).toHaveBeenCalledWith('llamas.json', result)
-
+    expect(vol.readFileSync(logFileName, 'utf-8')).toBe(result)
+    expect(logger.getLogFileName()).toBe(logFileName)
     expect(JSON.parse(result)).toMatchSnapshot()
   })
 })

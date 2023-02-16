@@ -3,17 +3,28 @@
 
 import { buildBaseTestCommand } from '../src/buildBaseTestCommand'
 import path from 'path'
+import { vol } from 'memfs'
+
+jest.mock('fs')
 
 describe('buildBaseTestCommand', () => {
+  beforeEach(() => {
+    vol.reset()
+  })
+
   it('returns path to locally installed jest if it exists', async () => {
-    const [executable, args] = await buildBaseTestCommand(() => Promise.resolve())
+    vol.fromJSON({ './node_modules/.bin/jest': 'thisisthejestexecutablelol' }, '.')
+
+    const [executable, args] = await buildBaseTestCommand()
 
     expect(executable).toBe(['node_modules', '.bin', 'jest'].join(path.sep))
     expect(args).toEqual([])
   })
 
   it('returns path to global jest if local jest is not installed', async () => {
-    const [executable, args] = await buildBaseTestCommand(() => Promise.reject())
+    vol.fromJSON({}, '.')
+
+    const [executable, args] = await buildBaseTestCommand()
 
     expect(executable).toBe('jest')
     expect(args).toEqual([])
