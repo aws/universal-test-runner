@@ -22,6 +22,7 @@ const PERMISSIBLE_DEVELOPMENT_USE_LICENSES = [
   '(MIT OR Apache-2.0)',
   'CC0-1.0',
   'CC-BY-3.0',
+  'Unlicense',
 ]
 
 async function validateLicenses(

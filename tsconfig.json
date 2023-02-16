@@ -20,6 +20,7 @@
     "tests-integ",
     ".eslintrc.js",
     "babel.config.js",
-    "commitlint.config.js"
+    "commitlint.config.js",
+    "__mocks__"
   ]
 }
