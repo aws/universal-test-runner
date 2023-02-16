@@ -1,14 +1,49 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { promises as fs } from 'fs'
+
 import { log } from './log'
-import { Adapter, AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
+import { Adapter, AdapterInput, AdapterOutput, TestCase } from '@aws/universal-test-runner-types'
 import { ProtocolResult } from './readProtocol'
 import { ErrorCodes } from '../bin/ErrorCodes'
 
-function mapProtocolResultToAdapterInput(protocolResult: ProtocolResult): AdapterInput {
+function parseTestCasesToRun(testCaseString: string | undefined): TestCase[] {
+  const TEST_CASE_SEPARATOR = '|'
+  const TEST_LOCATION_SEPARATOR = '#'
+
+  return (
+    testCaseString?.split(TEST_CASE_SEPARATOR).map((testCase) => {
+      const [testName, suiteName, filepath] = testCase.split(TEST_LOCATION_SEPARATOR).reverse()
+      return {
+        testName,
+        suiteName: suiteName || undefined,
+        filepath: filepath || undefined,
+      }
+    }) ?? []
+  )
+}
+
+async function getTestCaseString(protocolResult: ProtocolResult): Promise<string | undefined> {
+  const { testsToRunFile, testsToRun } = protocolResult
+
+  if (testsToRunFile) {
+    try {
+      return await fs.readFile(testsToRunFile, 'utf-8')
+    } catch (e: any) {
+      log.error(`Failed to read input file ${testsToRunFile}`)
+      throw e
+    }
+  }
+
+  return testsToRun
+}
+
+async function mapProtocolResultToAdapterInput(
+  protocolResult: ProtocolResult,
+): Promise<AdapterInput> {
   return {
-    testsToRun: protocolResult.testsToRun,
+    testsToRun: parseTestCasesToRun(await getTestCaseString(protocolResult)),
     reportFormat: protocolResult.reportFormat,
   }
 }
@@ -17,7 +52,7 @@ export async function run(
   adapter: Adapter,
   protocolResult: ProtocolResult,
 ): Promise<AdapterOutput> {
-  const adapterInput = mapProtocolResultToAdapterInput(protocolResult)
+  const adapterInput = await mapProtocolResultToAdapterInput(protocolResult)
   try {
     log.info('Calling executeTests on adapter...')
     const adapterOutput = await adapter.executeTests(adapterInput)

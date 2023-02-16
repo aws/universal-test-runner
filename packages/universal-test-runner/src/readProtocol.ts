@@ -5,17 +5,12 @@ import { mapEnvToResult, Environment } from './mapEnvToResult'
 import { log } from './log'
 import { ProtocolEnvVars } from './ProtocolEnvVars'
 
-interface TestCase {
-  testName: string
-  suiteName?: string
-  filepath?: string
-}
-
 export interface ProtocolResult {
   version: string
-  testsToRun: TestCase[]
+  testsToRun?: string
   logFileName?: string
   reportFormat?: string
+  testsToRunFile?: string
 }
 
 export function readProtocol(env: Environment): [ProtocolResult, { [key: string]: string }] {
@@ -25,7 +20,20 @@ export function readProtocol(env: Environment): [ProtocolResult, { [key: string]
     testsToRun: mapEnvToResult(env, [ProtocolEnvVars.TESTS_TO_RUN], readTestsToRun, rawValues),
     logFileName: mapEnvToResult(env, [ProtocolEnvVars.LOG_FILE_NAME], readLogFileName, rawValues),
     reportFormat: mapEnvToResult(env, [ProtocolEnvVars.REPORT_FORMAT], readReportFormat, rawValues),
+    testsToRunFile: mapEnvToResult(
+      env,
+      [ProtocolEnvVars.TESTS_TO_RUN_FILE],
+      readTestsToRunFile,
+      rawValues,
+    ),
   }
+
+  if (result.testsToRun && result.testsToRunFile) {
+    log.warn(
+      `${ProtocolEnvVars.TESTS_TO_RUN_FILE} will be preferred over ${ProtocolEnvVars.TESTS_TO_RUN}`,
+    )
+  }
+
   return [result, rawValues]
 }
 
@@ -39,20 +47,12 @@ function readVersion(input: string | undefined): string {
   return input ?? DEFAULT_VERSION
 }
 
-function readTestsToRun(input: string | undefined): TestCase[] {
-  const TEST_CASE_SEPARATOR = '|'
-  const TEST_LOCATION_SEPARATOR = '#'
+function readTestsToRun(input: string | undefined): string | undefined {
+  return input || undefined
+}
 
-  return (
-    input?.split(TEST_CASE_SEPARATOR).map((testCase) => {
-      const [testName, suiteName, filepath] = testCase.split(TEST_LOCATION_SEPARATOR).reverse()
-      return {
-        testName,
-        suiteName: suiteName || undefined,
-        filepath: filepath || undefined,
-      }
-    }) ?? []
-  )
+function readTestsToRunFile(filePath: string | undefined): string | undefined {
+  return filePath || undefined
 }
 
 function readLogFileName(logFileName: string | undefined): string | undefined {

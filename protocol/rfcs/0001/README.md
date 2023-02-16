@@ -56,6 +56,8 @@ From the above example we can pull out some important concepts:
 
 ## Protocol version 0.1.0
 
+⚠️ **The first version of the protocol is still being finalized, and variables and specifications may be added, removed, or changed without a version bump up until 1.0.0.** ⚠️
+
 We define the first version of the protocol with the following environment variables:
 
 * `TEP_VERSION` (string; required): The version of the protocol being used, adhering to [semantic-versioning](https://semver.org/).
@@ -69,6 +71,11 @@ We define the first version of the protocol with the following environment varia
     * Example: `export TEP_TESTS_TO_RUN="file.js#Test suite name#test1|file2.js#Test suite name#test4"`
   * In order to specify the file name without the suite name, leave the suite name blank, resulting in a double hash between the file name and test name:
     * Example: `export TEP_TESTS_TO_RUN="file.js##test1"`
+* `TEP_TESTS_TO_RUN_FILE` (string; optional): Path to a file containing the contents of `TEP_TESTS_TO_RUN` input; useful in the case that the string of tests to be run exceeds the maximum length of environment variables allowed by the shell.
+  * Example: `export TEP_TESTS_TO_RUN_FILE="./path/to/file"`, where the contents of `file` is `test1|test4|test9` as in the format specified for `TEP_TESTS_TO_RUN`.
+  * The file path can be relative or absolute; relative paths must be resolved relative to the directory from which the runner is invoked.
+  * If the file does not exist, the runner must exit with an error.
+  * If both `TEP_TESTS_TO_RUN_FILE` and `TEP_TESTS_TO_RUN` are specified, the runner must prefer `TEP_TESTS_TO_RUN_FILE` and print a warning indicating that `TEP_TESTS_TO_RUN` is ignored.
 * `TEP_TEST_REPORT_FORMAT` (string; optional): Format of the test report to generate; defaults to no report
   * Valid values: 
       * `default`: The adapter chooses which format to use for report generation
