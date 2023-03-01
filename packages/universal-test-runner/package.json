@@ -29,7 +29,7 @@
     "@aws/universal-test-adapter-pytest": "^0.2.0",
     "@aws/universal-test-adapter-dotnet": "^0.2.0",
     "@aws/universal-test-runner-logger": "^0.2.0",
-    "yargs": "^17.7.0"
+    "yargs": "^17.7.1"
   },
   "devDependencies": {
     "@aws/universal-test-runner-types": "*",
