@@ -180,6 +180,26 @@ your package.json points to a file that exports an `executeTests` function.
 
 TODO
 
+## Node.js support
+
+All Active and Maintenance LTS versions of Node.js versions are supported.
+Please see the Node.js [release schedule](https://github.com/nodejs/release#release-schedule)
+for full details on the LTS process. We'll support the newest Current versions
+scheduled for LTS one month after their first release, and maintain support for
+old Maintenance versions for at least one month after they go end-of-life.
+
+For example, as of writing, Node.js 14 and 16 are Maintenance LTS releases, and
+Node.js 18 is Active LTS, so all three are supported. Once Node.js 14 goes
+end-of-life in May 2023, universal-test-runner will support it until June 2023,
+after which it will be removed from CI builds. Node.js 20 will become Current
+in April 2023, and LTS in October 2023, so universal-test-runner will support
+it as early as June 2023.
+
+(In the case that universal-test-runner's dependencies don't permit extended
+Maintenance support or early Current support, these one-month paddings may not
+be possible, e.g. Jest drops support for Node.js 14 as soon as it goes
+end-of-life, or can't run on Node.js 20 until it goes LTS.)
+
 ## 🔀 Contributing
 
 Please see the [contributing guide](./CONTRIBUTING.md) for all the logistical
