@@ -1,4 +1,6 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-// TODO: Node.js API
+export { run } from '../src/run'
+export { loadAdapter, builtInAdapters } from '../src/loadAdapter'
+export { readProtocol, ProtocolResult } from '../src/readProtocol'
