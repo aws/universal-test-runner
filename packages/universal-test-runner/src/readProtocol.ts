@@ -1,17 +1,10 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { ProtocolResult } from '@aws/universal-test-runner-types'
 import { mapEnvToResult, Environment } from './mapEnvToResult'
 import { log } from './log'
 import { ProtocolEnvVars } from './ProtocolEnvVars'
-
-export interface ProtocolResult {
-  version: string
-  testsToRun?: string
-  logFileName?: string
-  reportFormat?: string
-  testsToRunFile?: string
-}
 
 export function readProtocol(env: Environment): [ProtocolResult, { [key: string]: string }] {
   const rawValues = {}

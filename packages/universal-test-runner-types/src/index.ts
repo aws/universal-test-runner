@@ -19,3 +19,11 @@ export interface AdapterOutput {
 export interface Adapter {
   executeTests(options: AdapterInput): Promise<AdapterOutput> | AdapterOutput
 }
+
+export interface ProtocolResult {
+  version: string
+  testsToRun?: string
+  logFileName?: string
+  reportFormat?: string
+  testsToRunFile?: string
+}
