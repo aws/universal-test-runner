@@ -76,7 +76,7 @@ We define the first version of the protocol with the following environment varia
   * The file path can be relative or absolute; relative paths must be resolved relative to the directory from which the runner is invoked.
   * If the file does not exist, the runner must exit with an error.
   * If both `TEP_TESTS_TO_RUN_FILE` and `TEP_TESTS_TO_RUN` are specified, the runner must prefer `TEP_TESTS_TO_RUN_FILE` and print a warning indicating that `TEP_TESTS_TO_RUN` is ignored.
-* `TEP_TEST_REPORT_FORMAT` (string; optional): Format of the test report to generate; defaults to no report
+* `TEP_REPORT_FORMAT` (string; optional): Format of the test report to generate; defaults to no report
   * Valid values: 
       * `default`: The adapter chooses which format to use for report generation
   * Example: `export TEP_REPORT_FORMAT="default"`
