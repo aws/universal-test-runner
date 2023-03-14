@@ -4,8 +4,13 @@
 import { promises as fs } from 'fs'
 
 import { log } from './log'
-import { Adapter, AdapterInput, AdapterOutput, TestCase } from '@aws/universal-test-runner-types'
-import { ProtocolResult } from './readProtocol'
+import {
+  Adapter,
+  AdapterInput,
+  AdapterOutput,
+  TestCase,
+  ProtocolResult,
+} from '@aws/universal-test-runner-types'
 import { ErrorCodes } from '../bin/ErrorCodes'
 
 function parseTestCasesToRun(testCaseString: string | undefined): TestCase[] {

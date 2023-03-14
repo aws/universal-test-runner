@@ -11,12 +11,12 @@ import yargs from 'yargs/yargs'
 import { hideBin } from 'yargs/helpers'
 
 import { run } from '../src/run'
-import { readProtocol as _readProtocol, ProtocolResult } from '../src/readProtocol'
+import { readProtocol as _readProtocol } from '../src/readProtocol'
 import { loadAdapter as _loadAdapter, builtInAdapters } from '../src/loadAdapter'
 import { log } from '../src/log'
 import { ProtocolLogger } from '../src/ProtocolLogger'
 import { ErrorCodes, UniversalTestRunnerError } from './ErrorCodes'
-import { Adapter } from '@aws/universal-test-runner-types'
+import { Adapter, ProtocolResult } from '@aws/universal-test-runner-types'
 
 const argv = yargs(hideBin(process.argv))
   .command(
