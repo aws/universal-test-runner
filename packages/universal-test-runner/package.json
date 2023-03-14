@@ -19,6 +19,7 @@
   "files": [
     "dist/lib/src",
     "dist/lib/bin",
+    "dist/types/src",
     "NOTICE",
     "THIRD_PARTY_LICENSES"
   ],
