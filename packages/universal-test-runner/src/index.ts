@@ -3,4 +3,4 @@
 
 export { run } from '../src/run'
 export { loadAdapter, builtInAdapters } from '../src/loadAdapter'
-export { readProtocol, ProtocolResult } from '../src/readProtocol'
+export { readProtocol } from '../src/readProtocol'
