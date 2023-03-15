@@ -1,6 +1,6 @@
 {
   "name": "@aws/universal-test-adapter-dotnet",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "license": "Apache-2.0",
   "main": "dist/lib/src/index.js",
   "scripts": {
@@ -14,8 +14,8 @@
     "THIRD_PARTY_LICENSES"
   ],
   "dependencies": {
-    "@aws/universal-test-runner-logger": "^0.2.0",
-    "@aws/universal-test-runner-spawn": "^0.2.0"
+    "@aws/universal-test-runner-logger": "^0.3.0",
+    "@aws/universal-test-runner-spawn": "^0.3.0"
   },
   "devDependencies": {
     "@aws/universal-test-runner-types": "*"
