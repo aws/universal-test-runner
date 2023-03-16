@@ -4,7 +4,7 @@
 import { spawn } from '@aws/universal-test-runner-spawn'
 import { log } from './log'
 
-import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
+import { AdapterInput, AdapterOutput, RunnerContext } from '@aws/universal-test-runner-types'
 import path from 'path'
 
 // Transforms filepath input from 'folderA/folderB/file.java' to 'folderA.folderB' if filepath contains suiteName
@@ -31,11 +31,14 @@ export const parseFilepathAndClassName = (
   return filepath
 }
 
-export async function executeTests(input: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests(
+  input: AdapterInput,
+  context: RunnerContext,
+): Promise<AdapterOutput> {
   const { testsToRun = [], reportFormat } = input
 
   const executable = 'dotnet'
-  const args = ['test']
+  const args = [...context.extraArgs, 'test']
 
   const fullyQualifiedNames = testsToRun.map(({ testName, suiteName, filepath }) => {
     //Search the AND of the 2, since FullyQualifiedName~ is a contains
@@ -56,7 +59,8 @@ export async function executeTests(input: AdapterInput): Promise<AdapterOutput> 
   switch (reportFormat) {
     case 'default':
       // Push trx logger argument so dotnet generates a trx report
-      args.push('--logger', `trx;LogFileName=${path.join(process.cwd(), 'results.trx')}`)
+      // nosemgrep: javascript.lang.security.audit.path-traversal.path-join-resolve-traversal.path-join-resolve-traversal
+      args.push('--logger', `trx;LogFileName=${path.join(context.cwd, 'results.trx')}`)
       // Push console logger argument so dotnet still shows the default output
       args.push('--logger', 'console')
       break

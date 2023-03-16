@@ -1,13 +1,17 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { RunnerContext } from '@aws/universal-test-runner-types'
+
 jest.mock('../src/log')
 
 describe('Dotnet adapter', () => {
   let spawn: any
+  let mockContext: RunnerContext
 
   beforeEach(() => {
     spawn = jest.fn(() => ({ status: 0 }))
+    mockContext = { cwd: '/mock/cwd', extraArgs: [] }
 
     jest.resetModules()
     jest.doMock('@aws/universal-test-runner-spawn', () => ({ spawn }))
@@ -16,16 +20,19 @@ describe('Dotnet adapter', () => {
   it('executes dotnet test when given tests of various compositions to run', async () => {
     const { executeTests } = await import('../src/index')
 
-    const { exitCode } = await executeTests({
-      testsToRun: [
-        { testName: 'TestGet' },
-        {
-          filepath: 'Company/ServerlessFunctions/UnitTests/ValuesControllerTests.java',
-          testName: 'TestGet2',
-        },
-        { suiteName: 'ValuesControllerTests', testName: 'TestGet3' },
-      ],
-    })
+    const { exitCode } = await executeTests(
+      {
+        testsToRun: [
+          { testName: 'TestGet' },
+          {
+            filepath: 'Company/ServerlessFunctions/UnitTests/ValuesControllerTests.java',
+            testName: 'TestGet2',
+          },
+          { suiteName: 'ValuesControllerTests', testName: 'TestGet3' },
+        ],
+      },
+      mockContext,
+    )
 
     expect(exitCode).toBe(0)
     expect(spawn).toHaveBeenCalledWith('dotnet', [
@@ -40,20 +47,23 @@ describe('Dotnet adapter', () => {
   it('executes dotnet test when given tests of full compositions to run', async () => {
     const { executeTests } = await import('../src/index')
 
-    const { exitCode } = await executeTests({
-      testsToRun: [
-        {
-          filepath: 'Company/ServerlessFunctions/UnitTests/',
-          suiteName: 'ValuesControllerTests',
-          testName: 'TestGet4',
-        },
-        {
-          filepath: 'Company/ServerlessFunctions/UnitTests/ValuesControllerTests',
-          suiteName: 'ValuesControllerTests',
-          testName: 'TestGet5',
-        },
-      ],
-    })
+    const { exitCode } = await executeTests(
+      {
+        testsToRun: [
+          {
+            filepath: 'Company/ServerlessFunctions/UnitTests/',
+            suiteName: 'ValuesControllerTests',
+            testName: 'TestGet4',
+          },
+          {
+            filepath: 'Company/ServerlessFunctions/UnitTests/ValuesControllerTests',
+            suiteName: 'ValuesControllerTests',
+            testName: 'TestGet5',
+          },
+        ],
+      },
+      mockContext,
+    )
 
     expect(exitCode).toBe(0)
     expect(spawn).toHaveBeenCalledWith('dotnet', [
@@ -67,10 +77,13 @@ describe('Dotnet adapter', () => {
   it('passes the right arguments for default report format', async () => {
     const { executeTests } = await import('../src/index')
 
-    const { exitCode } = await executeTests({
-      testsToRun: [{ testName: 'TestGet' }],
-      reportFormat: 'default',
-    })
+    const { exitCode } = await executeTests(
+      {
+        testsToRun: [{ testName: 'TestGet' }],
+        reportFormat: 'default',
+      },
+      mockContext,
+    )
 
     expect(exitCode).toBe(0)
     expect(spawn).toHaveBeenCalledWith('dotnet', [
@@ -78,7 +91,7 @@ describe('Dotnet adapter', () => {
       '--filter',
       '(FullyQualifiedName~.TestGet)',
       '--logger',
-      `trx;LogFileName=${process.cwd()}/results.trx`,
+      `trx;LogFileName=/mock/cwd/results.trx`,
       '--logger',
       'console',
     ])

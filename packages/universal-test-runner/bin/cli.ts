@@ -16,9 +16,14 @@ import { loadAdapter as _loadAdapter, builtInAdapters } from '../src/loadAdapter
 import { log } from '../src/log'
 import { ProtocolLogger } from '../src/ProtocolLogger'
 import { ErrorCodes, UniversalTestRunnerError } from './ErrorCodes'
-import { Adapter, ProtocolResult } from '@aws/universal-test-runner-types'
+import { Adapter, ProtocolResult, RunnerContext } from '@aws/universal-test-runner-types'
 
 const argv = yargs(hideBin(process.argv))
+  .parserConfiguration({
+    // Tells yargs to put anything after '--' (the "end-of-args marker") in the argv['--'] field
+    // See https://github.com/yargs/yargs-parser#populate---
+    'populate--': true,
+  })
   .command(
     '$0 <adapter|packageName|adapterPath>',
     'Run tests according to the Test Execution Protocol',
@@ -39,6 +44,10 @@ const argv = yargs(hideBin(process.argv))
           type: 'string',
         })
         .example('$0 ./my-adapter.js', 'Run tests with a custom adapter')
+        .example(
+          '$0 jest -- --config ./custom-jest-config.js',
+          'Pass custom arguments and flags directly to an adapter',
+        )
     },
   )
   .demandCommand(1, 1)
@@ -47,6 +56,7 @@ const argv = yargs(hideBin(process.argv))
   .help()
   .alias('help', 'h')
   .strict(true)
+  .wrap(null)
   .parseSync()
 
 const protocolLogger = new ProtocolLogger()
@@ -56,7 +66,10 @@ void (async () => {
     const protocolResult = readProtocol()
     validateProtocolVersion(protocolResult.version)
     const adapter = await loadAdapter(String(argv.adapterPath))
-    const exitCode = await runTests(adapter, protocolResult)
+    const exitCode = await runTests(adapter, protocolResult, {
+      cwd: process.cwd(),
+      extraArgs: ((argv['--'] as any[]) ?? []).map((arg: any) => String(arg)),
+    })
     await cleanUp()
     process.exit(exitCode)
   } catch (e: any) {
@@ -118,10 +131,14 @@ async function loadAdapter(adapterPath: string): Promise<Adapter> {
   }
 }
 
-async function runTests(adapter: Adapter, protocolResult: ProtocolResult): Promise<number> {
+async function runTests(
+  adapter: Adapter,
+  protocolResult: ProtocolResult,
+  context: RunnerContext,
+): Promise<number> {
   try {
     protocolLogger.logTestRunStart()
-    const { exitCode } = await run(adapter, protocolResult)
+    const { exitCode } = await run(adapter, protocolResult, context)
     protocolLogger.logTestRunEnd()
     return exitCode ?? ErrorCodes.ADAPTER_EXIT_CODE_ERROR
   } catch (e: any) {

@@ -10,6 +10,7 @@ import {
   AdapterOutput,
   TestCase,
   ProtocolResult,
+  RunnerContext,
 } from '@aws/universal-test-runner-types'
 import { ErrorCodes } from '../bin/ErrorCodes'
 
@@ -56,11 +57,12 @@ async function mapProtocolResultToAdapterInput(
 export async function run(
   adapter: Adapter,
   protocolResult: ProtocolResult,
+  context: RunnerContext = { extraArgs: [], cwd: process.cwd() },
 ): Promise<AdapterOutput> {
   const adapterInput = await mapProtocolResultToAdapterInput(protocolResult)
   try {
     log.info('Calling executeTests on adapter...')
-    const adapterOutput = await adapter.executeTests(adapterInput)
+    const adapterOutput = await adapter.executeTests(adapterInput, context)
     log.info('Finished executing tests.')
     if (adapterOutput.exitCode !== 0) {
       log.error(`Test run failed with exit code ${adapterOutput.exitCode}`)

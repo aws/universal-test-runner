@@ -171,6 +171,28 @@ The adapter is passed to the runner as follows:
 run-tests ./adapter.js
 ```
 
+Adapters can also accept a second argument called `context` of type
+[`RunnerContext`](./packages/universal-test-runner-types/src/index.ts):
+- `context.cwd`: prefer this value over using `process.cwd()` in your adapter. This allows the runner to execute the adapter in a different working directory from where the runner is executed, if needed, while still allowing the adapter to produce any artifacts (like reports) in the correct location.
+- `context.extraArgs`: Any unparsed, tokenized values passed to the runner after the end-of-argument marker `--`. Allows adapters to accommodate arbitrary flags being passed through the runner to the adapter.
+  - For example, you could pass a custom jest config to the jest adapter by running `run-tests jest -- --config ./path/to/config.js`
+
+Here's an abridged example of an adapter using context:
+
+```javascript
+const path = require('path')
+
+export function executeTests({ testNamesToRun }, { cwd, extraArgs }) {
+  // Pass unparsed args to the underlying framework, if the adapter needs to support arbitrary user flags
+  const [pass, report] = doTestExecution(extraArgs, testNamesToRun)
+
+  // prefer cwd over process.cwd() if needed
+  report.write(path.join(cwd, 'reports', 'junit.xml'))
+
+  return { exitCode: pass ? 0 : 1 }
+}
+```
+
 ### Publishing adapters to npm
 
 Structure your adapter as described above, and make sure the `main` field in
