@@ -11,8 +11,7 @@
     "prepack": "npm run clean && npm run compile"
   },
   "files": [
-    "dist/lib/src",
-    "dist/types/src",
+    "dist",
     "NOTICE",
     "THIRD_PARTY_LICENSES"
   ],
