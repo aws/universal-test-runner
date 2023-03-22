@@ -94,4 +94,25 @@ describe('Jest adapter', () => {
       'default',
     ])
   })
+
+  it('adds extra arguments when specified', async () => {
+    mockContext.extraArgs = ['--config', './some/custom/config.js']
+
+    const { executeTests } = await import('../src/index')
+
+    const { exitCode } = await executeTests(
+      {
+        testsToRun: [{ testName: 'one' }, { testName: 'two' }, { testName: 'three' }],
+      },
+      mockContext,
+    )
+
+    expect(exitCode).toBe(0)
+    expect(spawn).toHaveBeenCalledWith('jest', [
+      '--config',
+      './some/custom/config.js',
+      '--testNamePattern',
+      '(one)|(two)|(three)',
+    ])
+  })
 })

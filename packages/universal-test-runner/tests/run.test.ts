@@ -193,4 +193,29 @@ describe('Run function', () => {
       EMPTY_CONTEXT,
     )
   })
+
+  it('passes context to the adapter', async () => {
+    const mockAdapter = { executeTests: jest.fn(() => ({ exitCode: 0 })) }
+
+    const mockContext = {
+      cwd: '/some/mock/cwd',
+      extraArgs: ['--some', '--extra', '--args'],
+    }
+
+    await run(
+      mockAdapter,
+      {
+        version: '0.1.0',
+        testsToRun: 'one|two|three',
+      },
+      mockContext,
+    )
+
+    expect(mockAdapter.executeTests).toHaveBeenCalledWith(
+      {
+        testsToRun: [{ testName: 'one' }, { testName: 'two' }, { testName: 'three' }],
+      },
+      mockContext,
+    )
+  })
 })

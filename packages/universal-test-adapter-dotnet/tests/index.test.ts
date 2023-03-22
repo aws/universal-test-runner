@@ -96,4 +96,26 @@ describe('Dotnet adapter', () => {
       'console',
     ])
   })
+
+  it('adds extra arguments when specified', async () => {
+    mockContext.extraArgs = ['--additional-deps', './deps.json']
+
+    const { executeTests } = await import('../src/index')
+
+    const { exitCode } = await executeTests(
+      {
+        testsToRun: [{ testName: 'TestGet' }],
+      },
+      mockContext,
+    )
+
+    expect(exitCode).toBe(0)
+    expect(spawn).toHaveBeenCalledWith('dotnet', [
+      '--additional-deps',
+      './deps.json',
+      'test',
+      '--filter',
+      '(FullyQualifiedName~.TestGet)',
+    ])
+  })
 })
