@@ -1,6 +1,6 @@
 {
   "name": "@aws/universal-test-adapter-maven",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "license": "Apache-2.0",
   "main": "dist/lib/src/index.js",
   "scripts": {
@@ -14,8 +14,8 @@
     "THIRD_PARTY_LICENSES"
   ],
   "dependencies": {
-    "@aws/universal-test-runner-logger": "^0.3.1",
-    "@aws/universal-test-runner-spawn": "^0.3.1"
+    "@aws/universal-test-runner-logger": "^0.4.0",
+    "@aws/universal-test-runner-spawn": "^0.4.0"
   },
   "devDependencies": {
     "@aws/universal-test-runner-types": "*"
