@@ -16,8 +16,11 @@ export interface AdapterOutput {
   exitCode?: number | null
 }
 
+type ExecuteTestsReturnValue = Promise<AdapterOutput> | AdapterOutput
+
 export interface Adapter {
-  executeTests(options: AdapterInput): Promise<AdapterOutput> | AdapterOutput
+  executeTests(options: AdapterInput): ExecuteTestsReturnValue
+  executeTests(options: AdapterInput, context: RunnerContext): ExecuteTestsReturnValue
 }
 
 export interface ProtocolResult {
@@ -26,4 +29,9 @@ export interface ProtocolResult {
   logFileName?: string
   reportFormat?: string
   testsToRunFile?: string
+}
+
+export interface RunnerContext {
+  extraArgs: string[]
+  cwd: string
 }

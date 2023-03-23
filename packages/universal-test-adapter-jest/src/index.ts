@@ -5,17 +5,22 @@ import { spawn } from '@aws/universal-test-runner-spawn'
 import { log } from './log'
 import { buildBaseTestCommand } from './buildBaseTestCommand'
 
-import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
+import { AdapterInput, AdapterOutput, RunnerContext } from '@aws/universal-test-runner-types'
 
 const toUnixPath = (filepath: string): string => {
   // https://quickref.me/convert-a-windows-file-path-to-unix-path
   return filepath.replace(/[\\/]+/g, '/').replace(/^([a-zA-Z]+:|\.\/)/, '')
 }
 
-export async function executeTests(adapterInput: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests(
+  adapterInput: AdapterInput,
+  context: RunnerContext,
+): Promise<AdapterOutput> {
   const { testsToRun = [], reportFormat } = adapterInput
 
   const [executable, args] = await buildBaseTestCommand()
+
+  args.push(...context.extraArgs)
 
   const filepaths: string[] = []
   const describeIts: string[] = []

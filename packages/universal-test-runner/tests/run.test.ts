@@ -9,6 +9,8 @@ import { vol } from 'memfs'
 jest.mock('../src/log')
 jest.mock('fs')
 
+const EMPTY_CONTEXT = { cwd: process.cwd(), extraArgs: [] }
+
 describe('Run function', () => {
   beforeEach(() => {
     vol.reset()
@@ -44,21 +46,25 @@ describe('Run function', () => {
     it('reads a list of test names', async () => {
       await run(mockAdapter, { version: '0.1.0', testsToRun: 'test1|test4|test9' })
 
-      expect(mockAdapter.executeTests).toHaveBeenCalledWith({
-        testsToRun: [{ testName: 'test1' }, { testName: 'test4' }, { testName: 'test9' }],
-      })
+      expect(mockAdapter.executeTests).toHaveBeenCalledWith(
+        { testsToRun: [{ testName: 'test1' }, { testName: 'test4' }, { testName: 'test9' }] },
+        EMPTY_CONTEXT,
+      )
     })
 
     it('reads the test suite for a single test', async () => {
       await run(mockAdapter, { version: '0.1.0', testsToRun: 'test1|test4|suitename#test9' })
 
-      expect(mockAdapter.executeTests).toHaveBeenCalledWith({
-        testsToRun: [
-          { testName: 'test1' },
-          { testName: 'test4' },
-          { testName: 'test9', suiteName: 'suitename' },
-        ],
-      })
+      expect(mockAdapter.executeTests).toHaveBeenCalledWith(
+        {
+          testsToRun: [
+            { testName: 'test1' },
+            { testName: 'test4' },
+            { testName: 'test9', suiteName: 'suitename' },
+          ],
+        },
+        EMPTY_CONTEXT,
+      )
     })
 
     it('reads the test suite for a many tests', async () => {
@@ -67,13 +73,16 @@ describe('Run function', () => {
         testsToRun: 'suite1#test1|suite2#test4|suitename#test9',
       })
 
-      expect(mockAdapter.executeTests).toHaveBeenCalledWith({
-        testsToRun: [
-          { testName: 'test1', suiteName: 'suite1' },
-          { testName: 'test4', suiteName: 'suite2' },
-          { testName: 'test9', suiteName: 'suitename' },
-        ],
-      })
+      expect(mockAdapter.executeTests).toHaveBeenCalledWith(
+        {
+          testsToRun: [
+            { testName: 'test1', suiteName: 'suite1' },
+            { testName: 'test4', suiteName: 'suite2' },
+            { testName: 'test9', suiteName: 'suitename' },
+          ],
+        },
+        EMPTY_CONTEXT,
+      )
     })
 
     it('reads the filepath only for many tests', async () => {
@@ -82,43 +91,52 @@ describe('Run function', () => {
         testsToRun: 'file1.js##test1|file2.js##test4|file3.js##test9',
       })
 
-      expect(mockAdapter.executeTests).toHaveBeenCalledWith({
-        testsToRun: [
-          { testName: 'test1', filepath: 'file1.js' },
-          { testName: 'test4', filepath: 'file2.js' },
-          { testName: 'test9', filepath: 'file3.js' },
-        ],
-      })
+      expect(mockAdapter.executeTests).toHaveBeenCalledWith(
+        {
+          testsToRun: [
+            { testName: 'test1', filepath: 'file1.js' },
+            { testName: 'test4', filepath: 'file2.js' },
+            { testName: 'test9', filepath: 'file3.js' },
+          ],
+        },
+        EMPTY_CONTEXT,
+      )
     })
 
     it('reads the filepath only for one test', async () => {
       await run(mockAdapter, { version: '0.1.0', testsToRun: 'test1|test4|file3.js##test9' })
 
-      expect(mockAdapter.executeTests).toHaveBeenCalledWith({
-        testsToRun: [
-          { testName: 'test1' },
-          { testName: 'test4' },
-          { testName: 'test9', filepath: 'file3.js' },
-        ],
-      })
+      expect(mockAdapter.executeTests).toHaveBeenCalledWith(
+        {
+          testsToRun: [
+            { testName: 'test1' },
+            { testName: 'test4' },
+            { testName: 'test9', filepath: 'file3.js' },
+          ],
+        },
+        EMPTY_CONTEXT,
+      )
     })
 
     it('reads the filepath and suite name for one test', async () => {
       await run(mockAdapter, { version: '0.1.0', testsToRun: 'test1|test4|file3.js#suite1#test9' })
 
-      expect(mockAdapter.executeTests).toHaveBeenCalledWith({
-        testsToRun: [
-          { testName: 'test1' },
-          { testName: 'test4' },
-          { testName: 'test9', suiteName: 'suite1', filepath: 'file3.js' },
-        ],
-      })
+      expect(mockAdapter.executeTests).toHaveBeenCalledWith(
+        {
+          testsToRun: [
+            { testName: 'test1' },
+            { testName: 'test4' },
+            { testName: 'test9', suiteName: 'suite1', filepath: 'file3.js' },
+          ],
+        },
+        EMPTY_CONTEXT,
+      )
     })
 
     it('reads an empty list when value is not present', async () => {
       await run(mockAdapter, { version: '0.1.0' })
 
-      expect(mockAdapter.executeTests).toHaveBeenCalledWith({ testsToRun: [] })
+      expect(mockAdapter.executeTests).toHaveBeenCalledWith({ testsToRun: [] }, EMPTY_CONTEXT)
     })
   })
 
@@ -134,9 +152,12 @@ describe('Run function', () => {
 
     await run(mockAdapter, { version: '0.1.0', testsToRunFile: '/tmp/verycoolfile' })
 
-    expect(mockAdapter.executeTests).toHaveBeenCalledWith({
-      testsToRun: [{ testName: 'test1' }, { testName: 'test4' }, { testName: 'test9' }],
-    })
+    expect(mockAdapter.executeTests).toHaveBeenCalledWith(
+      {
+        testsToRun: [{ testName: 'test1' }, { testName: 'test4' }, { testName: 'test9' }],
+      },
+      EMPTY_CONTEXT,
+    )
   })
 
   it('throws an error if test cases cannot be read from a file', async () => {
@@ -165,8 +186,36 @@ describe('Run function', () => {
       testsToRun: 'wont|be|executed',
     })
 
-    expect(mockAdapter.executeTests).toHaveBeenCalledWith({
-      testsToRun: [{ testName: 'test1' }, { testName: 'test4' }, { testName: 'test9' }],
-    })
+    expect(mockAdapter.executeTests).toHaveBeenCalledWith(
+      {
+        testsToRun: [{ testName: 'test1' }, { testName: 'test4' }, { testName: 'test9' }],
+      },
+      EMPTY_CONTEXT,
+    )
+  })
+
+  it('passes context to the adapter', async () => {
+    const mockAdapter = { executeTests: jest.fn(() => ({ exitCode: 0 })) }
+
+    const mockContext = {
+      cwd: '/some/mock/cwd',
+      extraArgs: ['--some', '--extra', '--args'],
+    }
+
+    await run(
+      mockAdapter,
+      {
+        version: '0.1.0',
+        testsToRun: 'one|two|three',
+      },
+      mockContext,
+    )
+
+    expect(mockAdapter.executeTests).toHaveBeenCalledWith(
+      {
+        testsToRun: [{ testName: 'one' }, { testName: 'two' }, { testName: 'three' }],
+      },
+      mockContext,
+    )
   })
 })
