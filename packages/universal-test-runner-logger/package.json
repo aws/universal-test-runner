@@ -18,6 +18,9 @@
   "dependencies": {
     "chalk": "^4.1.2"
   },
+  "devDependencies": {
+    "@aws/universal-test-runner-types": "*"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/aws/universal-test-runner"

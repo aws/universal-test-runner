@@ -11,7 +11,7 @@ describe('Dotnet adapter', () => {
 
   beforeEach(() => {
     spawn = jest.fn(() => ({ status: 0 }))
-    mockContext = { cwd: '/mock/cwd', extraArgs: [] }
+    mockContext = { cwd: '/mock/cwd', extraArgs: [], logLevel: 'info' }
 
     jest.resetModules()
     jest.doMock('@aws/universal-test-runner-spawn', () => ({ spawn }))

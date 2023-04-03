@@ -176,18 +176,30 @@ Adapters can also accept a second argument called `context` of type
 - `context.cwd`: prefer this value over using `process.cwd()` in your adapter. This allows the runner to execute the adapter in a different working directory from where the runner is executed, if needed, while still allowing the adapter to produce any artifacts (like reports) in the correct location.
 - `context.extraArgs`: Any unparsed, tokenized values passed to the runner after the end-of-argument marker `--`. Allows adapters to accommodate arbitrary flags being passed through the runner to the adapter.
   - For example, you could pass a custom jest config to the jest adapter by running `run-tests jest -- --config ./path/to/config.js`
+- `context.logLevel`: The log level passed by the user to the runner when invoked from the command line, of type [`LogLevel`](./packages/universal-test-runner-types/src/index.ts). If adapters log anything when being executed, they should set the log level of their logger according to this value, where level rank from highest to lowest is `error`, `warn`, `info`, `debug`. Logs should only be written if their level rank is at least the rank of the specified log level, e.g. if the log level is `warn`, only logs of rank `error` and `warn` should be written.
 
 Here's an abridged example of an adapter using context:
 
 ```javascript
 const path = require('path')
 
-export function executeTests({ testNamesToRun }, { cwd, extraArgs }) {
+export function executeTests({ testNamesToRun }, { cwd, extraArgs, logLevel }) {
+  // Use the log level specified by the runner
+  logger.setLogLevel(context.logLevel)
+
+  logger.info('Running tests...')
+
   // Pass unparsed args to the underlying framework, if the adapter needs to support arbitrary user flags
   const [pass, report] = doTestExecution(extraArgs, testNamesToRun)
 
-  // prefer cwd over process.cwd() if needed
+  logger.info('Running writing report...')
+
+  // If cwd is needed, prefer context.cwd over process.cwd()
   report.write(path.join(cwd, 'reports', 'junit.xml'))
+
+  if (!pass) {
+    logger.error('Tests failed!')
+  }
 
   return { exitCode: pass ? 0 : 1 }
 }
