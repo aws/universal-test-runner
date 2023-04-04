@@ -3,13 +3,13 @@
 
 import { run } from '../src/run'
 import { ErrorCodes } from '../bin/ErrorCodes'
-import { Adapter } from '@aws/universal-test-runner-types'
+import { Adapter, RunnerContext } from '@aws/universal-test-runner-types'
 import { vol } from 'memfs'
 
 jest.mock('../src/log')
 jest.mock('fs')
 
-const EMPTY_CONTEXT = { cwd: process.cwd(), extraArgs: [] }
+const EMPTY_CONTEXT: RunnerContext = { cwd: process.cwd(), extraArgs: [], logLevel: 'info' }
 
 describe('Run function', () => {
   beforeEach(() => {
@@ -197,9 +197,10 @@ describe('Run function', () => {
   it('passes context to the adapter', async () => {
     const mockAdapter = { executeTests: jest.fn(() => ({ exitCode: 0 })) }
 
-    const mockContext = {
+    const mockContext: RunnerContext = {
       cwd: '/some/mock/cwd',
       extraArgs: ['--some', '--extra', '--args'],
+      logLevel: 'info',
     }
 
     await run(

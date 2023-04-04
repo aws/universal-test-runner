@@ -4,9 +4,14 @@
 import { spawn } from '@aws/universal-test-runner-spawn'
 import { log } from './log'
 
-import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
+import { AdapterInput, AdapterOutput, RunnerContext } from '@aws/universal-test-runner-types'
 
-export async function executeTests(input: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests(
+  input: AdapterInput,
+  context?: RunnerContext,
+): Promise<AdapterOutput> {
+  context && log.setLogLevel(context.logLevel)
+
   const { testsToRun = [], reportFormat } = input
 
   const executable = 'pytest'

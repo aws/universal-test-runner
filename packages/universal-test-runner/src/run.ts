@@ -57,7 +57,7 @@ async function mapProtocolResultToAdapterInput(
 export async function run(
   adapter: Adapter,
   protocolResult: ProtocolResult,
-  context: RunnerContext = { extraArgs: [], cwd: process.cwd() },
+  context: RunnerContext = { extraArgs: [], cwd: process.cwd(), logLevel: 'info' },
 ): Promise<AdapterOutput> {
   const adapterInput = await mapProtocolResultToAdapterInput(protocolResult)
   try {

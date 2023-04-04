@@ -31,7 +31,10 @@ export interface ProtocolResult {
   testsToRunFile?: string
 }
 
+export type LogLevel = 'debug' | 'info' | 'warn' | 'error'
+
 export interface RunnerContext {
   extraArgs: string[]
   cwd: string
+  logLevel: LogLevel
 }

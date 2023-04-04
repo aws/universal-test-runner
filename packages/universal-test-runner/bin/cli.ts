@@ -16,7 +16,7 @@ import { loadAdapter as _loadAdapter, builtInAdapters } from '../src/loadAdapter
 import { log } from '../src/log'
 import { ProtocolLogger } from '../src/ProtocolLogger'
 import { ErrorCodes, UniversalTestRunnerError } from './ErrorCodes'
-import { Adapter, ProtocolResult, RunnerContext } from '@aws/universal-test-runner-types'
+import { Adapter, ProtocolResult, RunnerContext, LogLevel } from '@aws/universal-test-runner-types'
 
 const argv = yargs(hideBin(process.argv))
   .parserConfiguration({
@@ -44,6 +44,13 @@ const argv = yargs(hideBin(process.argv))
           type: 'string',
         })
         .example('$0 ./my-adapter.js', 'Run tests with a custom adapter')
+        .option('log-level', {
+          alias: 'l',
+          choices: ['debug', 'info', 'warn', 'error'] as LogLevel[],
+          type: 'string',
+          default: 'info',
+          describe: 'Set the log level',
+        })
         .example(
           '$0 jest -- --config ./custom-jest-config.js',
           'Pass custom arguments and flags directly to an adapter',
@@ -59,6 +66,8 @@ const argv = yargs(hideBin(process.argv))
   .wrap(null)
   .parseSync()
 
+log.setLogLevel(argv.logLevel as LogLevel)
+
 const protocolLogger = new ProtocolLogger()
 
 void (async () => {
@@ -69,6 +78,7 @@ void (async () => {
     const exitCode = await runTests(adapter, protocolResult, {
       cwd: process.cwd(),
       extraArgs: ((argv['--'] as any[]) ?? []).map((arg: any) => String(arg)),
+      logLevel: argv.logLevel as LogLevel,
     })
     await cleanUp()
     process.exit(exitCode)

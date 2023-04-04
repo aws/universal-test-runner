@@ -16,6 +16,8 @@ export async function executeTests(
   adapterInput: AdapterInput,
   context: RunnerContext,
 ): Promise<AdapterOutput> {
+  log.setLogLevel(context.logLevel)
+
   const { testsToRun = [], reportFormat } = adapterInput
 
   const [executable, args] = await buildBaseTestCommand()

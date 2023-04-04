@@ -4,7 +4,7 @@
 import { spawn } from '@aws/universal-test-runner-spawn'
 import { log } from './log'
 
-import { AdapterInput, AdapterOutput } from '@aws/universal-test-runner-types'
+import { AdapterInput, AdapterOutput, RunnerContext } from '@aws/universal-test-runner-types'
 
 import path from 'path'
 
@@ -34,7 +34,12 @@ export const parseFilepathAndClassName = (
   return toUnixPath(filepath)
 }
 
-export async function executeTests({ testsToRun = [] }: AdapterInput): Promise<AdapterOutput> {
+export async function executeTests(
+  { testsToRun = [] }: AdapterInput,
+  context?: RunnerContext,
+): Promise<AdapterOutput> {
+  context && log.setLogLevel(context.logLevel)
+
   const executable = 'mvn'
   const args = []
 

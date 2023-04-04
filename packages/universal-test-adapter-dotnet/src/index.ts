@@ -35,6 +35,8 @@ export async function executeTests(
   input: AdapterInput,
   context: RunnerContext,
 ): Promise<AdapterOutput> {
+  log.setLogLevel(context.logLevel)
+
   const { testsToRun = [], reportFormat } = input
 
   const executable = 'dotnet'
