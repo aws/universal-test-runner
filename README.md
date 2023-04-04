@@ -96,6 +96,16 @@ The other packages are either internal utilities or adapters that have unstable
 APIs and won't necessarily follow semver. You should avoid depending on them
 directly.
 
+## 🏰 Architecture
+
+universal-test-runner is a "Test Execution Protocol-aware" runner that uses an
+adapter model to provide support for test frameworks.  The runner itself is not
+aware of any frameworks, but delegates to the appropriate adapter in order to
+execute tests for a specific framework.  For more details on the architecture,
+see the following documentation:
+* [RFC 1](./protocol/rfcs/0001/README.md) for an explanation of the Test Execution Protocol
+* universal-test-runner [architecture documentation](./docs/architecture.md), for a description of the runner, the adapters, and how they interact
+
 ## 🔋 Custom adapters
 
 It's possible to write custom adapters and pass them to universal-test-runner,
