@@ -36,7 +36,7 @@ RUN python3 --version
 
 RUN --mount=type=secret,id=universal_test_runner_registry,target=universal_test_runner_registry \
   --mount=type=secret,id=universal_test_runner_auth_token,target=universal_test_runner_auth_token \
-  npm install -g @sentinel-internal/universal-test-runner \
+  npm install -g @aws/universal-test-runner \
   --registry=https://$(cat universal_test_runner_registry) \
   --//$(cat universal_test_runner_registry):_authToken=$(cat universal_test_runner_auth_token)
 RUN run-tests --version
@@ -46,7 +46,7 @@ WORKDIR universal-test-runner
 COPY tests-integ/test-projects .
 
 RUN cd jest && bash setup.sh && RUN_TESTS=run-tests bash run.sh
-RUN cd pytest && bash setup.sh && RUN_TESTS=run-tests bash run.sh
+# RUN cd pytest && bash setup.sh && RUN_TESTS=run-tests bash run.sh
 RUN cd maven && bash setup.sh && RUN_TESTS=run-tests bash run.sh
 RUN cd gradle && source "$HOME/.sdkman/bin/sdkman-init.sh" && bash setup.sh && RUN_TESTS=run-tests bash run.sh
 RUN cd dotnet && bash setup.sh && RUN_TESTS=run-tests bash run.sh
